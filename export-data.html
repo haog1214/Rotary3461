@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>資料匯出</title>
+<style>
+  body { font-family: sans-serif; padding: 40px; background: #f5f5f5; }
+  h2 { color: #1a458b; }
+  button {
+    padding: 14px 32px; font-size: 16px; cursor: pointer;
+    background: #1a458b; color: #fff; border: none;
+    border-radius: 8px; margin: 8px;
+  }
+  button:hover { background: #0f2d60; }
+  pre { background: #fff; border: 1px solid #ddd; padding: 20px;
+        border-radius: 8px; overflow: auto; max-height: 400px;
+        font-size: 12px; }
+  .count { font-size: 18px; font-weight: bold; color: #1a458b; margin: 16px 0; }
+</style>
+</head>
+<body>
+<h2>🔄 後台資料匯出工具</h2>
+<p>點擊按鈕將本地後台資料下載為檔案，再傳給 Claude 即可同步到線上。</p>
+
+<button onclick="exportData()">⬇️ 下載資料檔案</button>
+<button onclick="showData()">👁️ 預覽資料</button>
+
+<div class="count" id="count"></div>
+<pre id="preview" style="display:none"></pre>
+
+<script>
+function getData() {
+  const keys = Object.keys(localStorage).filter(k => k.startsWith('r3461_'));
+  const out = {};
+  keys.forEach(k => {
+    try { out[k] = JSON.parse(localStorage.getItem(k)); }
+    catch(e) { out[k] = localStorage.getItem(k); }
+  });
+  return { keys, out };
+}
+
+function exportData() {
+  const { keys, out } = getData();
+  document.getElementById('count').textContent = '共 ' + keys.length + ' 筆資料：' + keys.join(', ');
+  const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'rotary3461-data.json';
+  a.click();
+  alert('✅ 下載完成！請把 rotary3461-data.json 傳給 Claude');
+}
+
+function showData() {
+  const { keys, out } = getData();
+  document.getElementById('count').textContent = '共 ' + keys.length + ' 筆資料';
+  const pre = document.getElementById('preview');
+  pre.style.display = 'block';
+  pre.textContent = JSON.stringify(out, null, 2);
+}
+</script>
+</body>
+</html>
