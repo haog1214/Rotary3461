@@ -1927,8 +1927,13 @@ renderNewsPage();
   const poster = document.getElementById('infoPoster');
   const placeholder = document.getElementById('infoPosterPlaceholder');
   if (!poster) return;
+  /* 預設海報（後台未設定時顯示） */
+  const DEFAULT_POSTER = [
+    'https://pshop.myqr.com.tw/images/RWD_M1_1_Image/1/16775.jpg?273',
+  ];
   function load() {
-    const imgs = JSON.parse(localStorage.getItem('r3461_poster') || '[]').filter(Boolean);
+    const saved = JSON.parse(localStorage.getItem('r3461_poster') || '[]').filter(Boolean);
+    const imgs = saved.length ? saved : DEFAULT_POSTER;
     poster.querySelectorAll('img').forEach(el => el.remove());
     if (!imgs.length) { placeholder.style.display = 'flex'; return; }
     placeholder.style.display = 'none';
