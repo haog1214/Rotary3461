@@ -1,7 +1,7 @@
-/* data-defaults.js — 網站預設資料，由 export-data.html 自動生成
-   localStorage 如有資料則優先使用，否則套用此預設值 */
+/* data-defaults.js — 網站預設資料
+   localStorage 有資料則優先使用，否則套用此預設值 */
 (function() {
-  const DEFAULTS = {
+  var DEFAULTS = {
   "r3461_news": [
     {
       "date": "2026.06.17",
@@ -250,10 +250,9 @@
     "designer": "傳啓資訊股份有限公司 AI設計"
   }
 };
-  Object.entries(DEFAULTS).forEach(([key, val]) => {
+  Object.keys(DEFAULTS).forEach(function(key) {
     if (!localStorage.getItem(key)) {
-      localStorage.setItem(key, JSON.stringify(val));
+      localStorage.setItem(key, JSON.stringify(DEFAULTS[key]));
     }
   });
-  console.log('[Rotary3461] 預設資料已載入');
 })();
