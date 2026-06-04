@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D3461 · 202602 · 國際扶輪第 3461 地區</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1a3a5c;
+      --gold:  #f7b731;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #1a1f2e;
+      font-family: 'Noto Sans TC', 'Roboto', sans-serif;
+      color: #fff;
+    }
+
+    /* ───── TOP BAR ───── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 52px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, transparent 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    .topbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: all;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 32px; height: 32px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 11px;
+      color: var(--navy);
+    }
+
+    .logo-text { line-height: 1.25; }
+    .logo-text strong { display: block; font-size: 13px; color: #fff; }
+    .logo-text span   { font-size: 10.5px; color: rgba(255,255,255,0.5); }
+
+    .topbar-right {
+      display: flex; align-items: center; gap: 10px;
+      pointer-events: all;
+    }
+
+    .topbar-btn {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.8);
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .topbar-btn:hover { background: rgba(255,255,255,0.22); color: #fff; }
+
+    /* ───── STAGE ───── */
+    .stage {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    /* ───── FLIPBOOK ROW ───── */
+    .flipbook-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-btn {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.1s;
+      flex-shrink: 0;
+      user-select: none;
+      line-height: 1;
+    }
+    .nav-btn:hover   { background: rgba(255,255,255,0.22); }
+    .nav-btn:active  { transform: scale(0.9); }
+    .nav-btn:disabled { opacity: 0.2; cursor: not-allowed; transform: none; }
+
+    .book-wrap {
+      border-radius: 2px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        0 24px 70px rgba(0,0,0,0.8),
+        0 4px 18px rgba(0,0,0,0.5);
+    }
+
+    #flipbook { display: block; }
+
+    /* ───── BOTTOM BAR ───── */
+    .bottombar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 52px;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      z-index: 200;
+    }
+
+    .page-pill {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.75);
+      font-size: 12px;
+      padding: 4px 16px;
+      border-radius: 12px;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 0.3px;
+    }
+
+    .key-hint { color: rgba(255,255,255,0.3); font-size: 11px; }
+
+    /* ───── LOADING / ERROR ───── */
+    .center-msg {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 48px; height: 48px;
+      border: 4px solid rgba(255,255,255,0.1);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.85s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ───── THUMBNAIL STRIP (optional) ───── */
+    .thumb-strip {
+      position: fixed;
+      bottom: 52px; left: 0; right: 0;
+      height: 0;
+      overflow: hidden;
+      transition: height 0.3s;
+      background: rgba(10,15,25,0.9);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 8px;
+      z-index: 150;
+    }
+
+    /* ───── RESPONSIVE ───── */
+    @media (max-width: 600px) {
+      .nav-btn { display: none; }
+      .key-hint { display: none; }
+      .topbar-btn span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <a class="topbar-logo" href="index.html">
+    <div class="logo-mark">RI</div>
+    <div class="logo-text">
+      <strong>國際扶輪 D3461</strong>
+      <span>2026 / 02 期</span>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <a class="topbar-btn" href="pdf-viewer.html">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>文件庫</span>
+    </a>
+    <button class="topbar-btn" id="btnFullscreen" title="全螢幕">
+      <svg id="fsIcon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+        <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+      </svg>
+      <span>全螢幕</span>
+    </button>
+  </div>
+</div>
+
+<!-- STAGE -->
+<div class="stage" id="stage">
+  <div class="flipbook-row" id="flipbookRow">
+    <button class="nav-btn" id="btnPrev" aria-label="上一頁">&#8249;</button>
+    <div class="book-wrap" id="bookWrap">
+      <div id="flipbook"></div>
+    </div>
+    <button class="nav-btn" id="btnNext" aria-label="下一頁">&#8250;</button>
+  </div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottombar">
+  <span class="page-pill" id="pagePill">載入中…</span>
+  <span class="key-hint">← → 鍵翻頁 · 拖曳翻頁</span>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  // ── PDF 來源 ──
+  // 優先使用本地檔案；如找不到則嘗試外部網址
+  const PDF_LOCAL  = 'pdfs/D3461-202602.pdf';
+  const PDF_REMOTE = 'https://cdnc.heyzine.com/flip-book/pdf/19d5287820b8692edd22d7671669400a68cd3621.pdf';
+
+  // ── DOM ──
+  const bookWrap    = document.getElementById('bookWrap');
+  const flipbookEl  = document.getElementById('flipbook');
+  const btnPrev     = document.getElementById('btnPrev');
+  const btnNext     = document.getElementById('btnNext');
+  const pagePill    = document.getElementById('pagePill');
+  const btnFullscreen = document.getElementById('btnFullscreen');
+
+  let pageFlip  = null;
+  let totalPages = 0;
+
+  // ── Show loading in book area ──
+  function showLoading(msg = 'PDF 載入中…') {
+    bookWrap.innerHTML = `
+      <div style="width:520px;height:680px;display:flex;align-items:center;justify-content:center;">
+        <div class="center-msg">
+          <div class="spinner"></div>
+          <div>${msg}</div>
+        </div>
+      </div>`;
+  }
+
+  function showError(msg) {
+    bookWrap.innerHTML = `
+      <div style="width:520px;height:680px;display:flex;align-items:center;justify-content:center;">
+        <div class="center-msg">
+          <div style="font-size:40px">⚠️</div>
+          <div>${msg}</div>
+          <div style="font-size:11px;opacity:0.5;margin-top:8px;">請確認 PDF 檔案已放置於 pdfs/D3461-202602.pdf</div>
+        </div>
+      </div>`;
+    pagePill.textContent = '載入失敗';
+  }
+
+  // ── Calculate page size to fill viewport ──
+  function calcPageSize(pdfW, pdfH) {
+    const availH = window.innerHeight - 120;
+    const availW = (window.innerWidth  - 160) / 2;
+    const scale  = Math.min(availH / pdfH, availW / pdfW, 1.8);
+    return {
+      w: Math.round(pdfW * scale),
+      h: Math.round(pdfH * scale),
+      scale,
+    };
+  }
+
+  // ── Render all pages → data-URLs ──
+  async function renderPages(pdf, scale) {
+    const urls = [];
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const vp   = page.getViewport({ scale });
+      const cv   = document.createElement('canvas');
+      cv.width   = Math.round(vp.width);
+      cv.height  = Math.round(vp.height);
+      const ctx  = cv.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      await page.render({ canvasContext: ctx, viewport: vp }).promise;
+      urls.push(cv.toDataURL('image/jpeg', 0.93));
+
+      const pct = Math.round((i / pdf.numPages) * 100);
+      pagePill.textContent = `渲染中… ${pct}%`;
+    }
+    return urls;
+  }
+
+  // ── Build flipbook ──
+  function buildFlipbook(imgUrls, pageW, pageH) {
+    // Remove loading placeholder, restore real flipbook element
+    bookWrap.innerHTML = '';
+    const el = document.createElement('div');
+    el.id = 'flipbook';
+    bookWrap.appendChild(el);
+    bookWrap.style.removeProperty('width');
+    bookWrap.style.removeProperty('height');
+
+    pageFlip = new St.PageFlip(el, {
+      width:    pageW,
+      height:   pageH,
+      size:     'fixed',
+      minWidth: pageW, maxWidth: pageW,
+      minHeight: pageH, maxHeight: pageH,
+      showCover:    true,
+      usePortrait:  false,
+      drawShadow:   true,
+      flippingTime: 650,
+      useMouseEvents:    true,
+      swipeDistance:     30,
+      clickEventForward: true,
+    });
+
+    pageFlip.loadFromImages(imgUrls);
+    updatePill();
+    pageFlip.on('flip', updatePill);
+    pageFlip.on('changeState', updatePill);
+  }
+
+  function updatePill() {
+    if (!pageFlip) return;
+    const idx = pageFlip.getCurrentPageIndex();
+    pagePill.textContent = `第 ${idx + 1} 頁 / 共 ${totalPages} 頁`;
+    btnPrev.disabled = idx === 0;
+    btnNext.disabled = idx >= totalPages - 1;
+  }
+
+  // ── Try local then remote ──
+  async function loadPDF(url) {
+    return pdfjsLib.getDocument({ url, withCredentials: false }).promise;
+  }
+
+  async function init() {
+    showLoading('PDF 載入中…');
+    pagePill.textContent = '載入中…';
+
+    let pdf = null;
+
+    // Try local first
+    try {
+      pdf = await loadPDF(PDF_LOCAL);
+    } catch (_) {
+      // fallback to remote
+      try {
+        pagePill.textContent = '取得外部 PDF…';
+        pdf = await loadPDF(PDF_REMOTE);
+      } catch (err) {
+        showError('PDF 載入失敗：' + err.message);
+        return;
+      }
+    }
+
+    totalPages = pdf.numPages;
+
+    const firstPage = await pdf.getPage(1);
+    const vp0 = firstPage.getViewport({ scale: 1 });
+    const { w, h, scale } = calcPageSize(vp0.width, vp0.height);
+
+    const imgUrls = await renderPages(pdf, scale);
+    buildFlipbook(imgUrls, w, h);
+  }
+
+  // ── Buttons ──
+  btnPrev.addEventListener('click', () => pageFlip?.flipPrev());
+  btnNext.addEventListener('click', () => pageFlip?.flipNext());
+
+  // ── Keyboard ──
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') pageFlip?.flipNext();
+    if (e.key === 'ArrowLeft')  pageFlip?.flipPrev();
+  });
+
+  // ── Fullscreen ──
+  btnFullscreen.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    const icon = document.getElementById('fsIcon');
+    if (document.fullscreenElement) {
+      icon.innerHTML = `<polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/>`;
+    } else {
+      icon.innerHTML = `<polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>`;
+    }
+  });
+
+  // ── Window resize: rebuild ──
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(init, 400);
+  });
+
+  init();
+</script>
+</body>
+</html>

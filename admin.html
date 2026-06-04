@@ -1,0 +1,2814 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>後台管理 | Rotary D3461</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:   #1A458B;
+      --primary2:  #2563eb;
+      --accent:    #F5A800;
+      --grad:      linear-gradient(135deg, #1A458B 0%, #2563eb 60%, #38bdf8 100%);
+      --sidebar-w: 240px;
+      --header-h:  64px;
+      --danger:    #ef4444;
+      --success:   #10b981;
+      --border:    #e5e7eb;
+      --bg:        #f0f4ff;
+      --card:      #ffffff;
+      --text:      #111827;
+      --muted:     #6b7280;
+      --radius:    14px;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--grad);
+      min-height: 100vh;
+      position: fixed;
+      top: 0; left: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      box-shadow: 4px 0 24px rgba(26,69,139,0.18);
+    }
+
+    .sidebar-logo {
+      padding: 28px 22px 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .sidebar-logo-dot {
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,0.18);
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 13px; color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .sidebar-logo-text strong { display: block; color: #fff; font-size: 14px; font-weight: 700; }
+    .sidebar-logo-text span   { color: rgba(255,255,255,0.55); font-size: 11px; }
+
+    .sidebar-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+      margin: 0 16px 10px;
+    }
+
+    .nav-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.38);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 14px 22px 6px;
+    }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 11px;
+      margin: 2px 10px;
+      padding: 11px 14px;
+      color: rgba(255,255,255,0.72);
+      cursor: pointer;
+      font-size: 14px; font-weight: 500;
+      border-radius: 10px;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .nav-item.active { background: rgba(255,255,255,0.22); color: #fff; }
+    .nav-item.active .nav-dot { opacity: 1; }
+    .nav-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      margin-left: auto;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 16px 16px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-footer a {
+      display: flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .sidebar-footer a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    /* ── MAIN ── */
+    .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      height: var(--header-h);
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px;
+      position: sticky; top: 0; z-index: 50;
+      box-shadow: 0 1px 12px rgba(0,0,0,0.05);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .topbar-badge {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 11px; color: var(--muted);
+      padding: 4px 12px;
+    }
+    .topbar-title { font-size: 18px; font-weight: 700; color: var(--text); }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .topbar-logo { height: 36px; width: auto; display: block; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      padding: 9px 20px; border-radius: 10px; border: none;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+      transition: all 0.15s; font-family: inherit;
+    }
+    .btn:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--grad); color: #fff; }
+    .btn-accent  { background: var(--accent); color: #fff; }
+    .btn-danger  { background: var(--danger); color: #fff; }
+    .btn-ghost   { background: #f3f4f6; color: var(--text); border: 1px solid var(--border); }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-sm      { padding: 6px 13px; font-size: 12px; border-radius: 8px; }
+
+    /* ── CONTENT ── */
+    .content { padding: 28px 30px; flex: 1; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+    .card-header {
+      padding: 18px 22px;
+      border-bottom: 1px solid #f3f4f6;
+      display: flex; align-items: center; justify-content: space-between;
+      background: #fafbfc;
+    }
+    .card-title { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .card-body  { padding: 22px; }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+    .stat-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      padding: 22px 22px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--grad);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .stat-icon {
+      width: 40px; height: 40px;
+      background: var(--bg);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px;
+      color: var(--primary2);
+    }
+    .stat-label { font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+    .stat-value { font-size: 30px; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
+
+    /* ── TABLE ── */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      background: #f8f9fb;
+      padding: 11px 16px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    td { padding: 13px 16px; border-bottom: 1px solid #f3f4f6; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafbff; }
+    .td-img { width: 62px; height: 42px; object-fit: cover; border-radius: 8px; background: #eee; display: block; }
+    .td-actions { display: flex; gap: 6px; }
+
+    /* ── FORM ── */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-row.single { grid-template-columns: 1fr; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.3px; }
+    input, select, textarea {
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      font-size: 13px; font-family: inherit;
+      color: var(--text);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      background: #fff;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary2);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+    textarea { resize: vertical; min-height: 80px; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(15,23,42,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 18px;
+      width: 580px; max-width: 96vw;
+      max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.22);
+      animation: modalIn 0.22s ease;
+    }
+    @keyframes modalIn { from { opacity:0; transform: scale(0.95) translateY(10px); } to { opacity:1; transform: none; } }
+    .modal-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-title { font-size: 17px; font-weight: 700; }
+    .modal-close {
+      width: 32px; height: 32px;
+      background: #f3f4f6; border: none;
+      border-radius: 8px; font-size: 18px;
+      cursor: pointer; color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: #e5e7eb; }
+    .modal-body   { padding: 22px 24px; }
+    .modal-footer {
+      padding: 14px 24px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: flex-end; gap: 10px;
+      background: #fafbfc;
+    }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-flex; align-items: center;
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 700;
+    }
+    .badge-blue  { background: #eff6ff; color: #1d4ed8; }
+    .badge-gold  { background: #fffbeb; color: #92400e; }
+    .badge-green { background: #ecfdf5; color: #065f46; }
+    .badge-gray  { background: #f3f4f6; color: var(--muted); }
+    .badge-red   { background: #fef2f2; color: #b91c1c; }
+
+    /* ── QUICK ACTIONS ── */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .quick-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.18s;
+    }
+    .quick-card:hover { border-color: var(--primary2); background: #f0f6ff; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,0.12); }
+    .quick-card-icon { font-size: 26px; margin-bottom: 8px; }
+    .quick-card-label { font-size: 13px; font-weight: 600; color: var(--text); }
+    .quick-card-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 26px; right: 26px;
+      background: #0f172a; color: #fff;
+      padding: 13px 22px; border-radius: 12px;
+      font-size: 13px; font-weight: 500;
+      opacity: 0; transform: translateY(8px);
+      transition: all 0.28s; z-index: 999;
+      pointer-events: none;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.success { background: var(--success); }
+    #toast.error   { background: var(--danger); }
+
+    /* ── SAVE BAR ── */
+    .save-bar {
+      display: flex; align-items: center; justify-content: flex-end;
+      padding-top: 4px;
+    }
+
+    /* ── DIRTY DOT ── */
+    .save-dirty-dot {
+      width: 9px; height: 9px;
+      background: #ef4444;
+      border-radius: 50%;
+      display: none;
+      flex-shrink: 0;
+      animation: pulseDot 1.4s ease-in-out infinite;
+    }
+    .save-dirty-dot.show { display: block; }
+    @keyframes pulseDot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.5); }
+      50%       { box-shadow: 0 0 0 5px rgba(239,68,68,0); }
+    }
+
+    .empty-row td { text-align: center; color: var(--muted); padding: 40px; font-size: 13px; }
+
+    /* ── SUB TABS ── */
+    .sub-tabs {
+      display: flex; gap: 6px;
+      background: #f3f4f6;
+      border-radius: 12px;
+      padding: 5px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .sub-tab {
+      padding: 8px 18px; border-radius: 9px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; color: var(--muted);
+      border: none; background: none;
+      transition: all 0.15s; font-family: inherit;
+    }
+    .sub-tab.active { background: #fff; color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .sub-panel { display: none; }
+    .sub-panel.active { display: block; }
+
+    /* ── MENU TREE ── */
+    .menu-item-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 13px;
+    }
+    .menu-item-row:last-child { border-bottom: none; }
+    .menu-item-row.level2 { padding-left: 38px; background: #fafbfc; }
+    .menu-drag-handle { color: #ccc; cursor: grab; font-size: 16px; }
+    .menu-item-label { flex: 1; font-weight: 500; }
+    .menu-item-url   { flex: 1; font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* ── MEDIA UPLOAD ── */
+    .media-dropzone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 36px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: #fafbff;
+      margin-bottom: 16px;
+    }
+    .media-dropzone:hover { border-color: var(--primary2); background: #eff6ff; }
+    .media-dropzone-icon { font-size: 36px; margin-bottom: 8px; }
+    .media-dropzone-text { font-size: 13px; color: var(--muted); }
+    .media-preview-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 12px; margin-top: 16px;
+    }
+    .media-thumb {
+      aspect-ratio: 16/9; border-radius: 8px;
+      background: #eee; overflow: hidden;
+      position: relative;
+    }
+    .media-thumb img, .media-thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .media-thumb-del {
+      position: absolute; top: 4px; right: 4px;
+      width: 22px; height: 22px;
+      background: rgba(0,0,0,0.55); color: #fff;
+      border: none; border-radius: 50%; font-size: 13px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── SOCIAL LINKS ── */
+    .social-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .social-icon { width: 36px; height: 36px; border-radius: 8px; object-fit: contain; flex-shrink: 0; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .social-label { width: 100px; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+
+    /* ── NAV GROUP (expandable) ── */
+    .nav-group-toggle {
+      display: flex; align-items: center; gap: 11px;
+      margin: 2px 10px;
+      padding: 11px 14px;
+      color: rgba(255,255,255,0.72);
+      cursor: pointer;
+      font-size: 14px; font-weight: 500;
+      border-radius: 10px;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+    }
+    .nav-group-toggle:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .nav-group-toggle.open  { background: rgba(255,255,255,0.12); color: #fff; }
+    .toggle-arrow { margin-left: auto; transition: transform 0.22s; flex-shrink: 0; }
+    .nav-group-toggle.open .toggle-arrow { transform: rotate(90deg); }
+    .nav-group-items { overflow: hidden; transition: max-height 0.25s ease; max-height: 0; }
+    .nav-group-items.open { max-height: 300px; }
+    .nav-sub-item {
+      display: flex; align-items: center; gap: 9px;
+      margin: 1px 10px 1px 26px;
+      padding: 9px 13px;
+      color: rgba(255,255,255,0.58);
+      cursor: pointer;
+      font-size: 13px; font-weight: 500;
+      border-radius: 8px;
+      border-left: 2px solid rgba(255,255,255,0.08);
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+    .nav-sub-item:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.3); }
+    .nav-sub-item.active { background: rgba(255,255,255,0.16); color: #fff; border-color: var(--accent); }
+
+    /* ── INFO BOX ── */
+    .info-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 13px; color: #1e40af;
+      line-height: 1.8;
+    }
+  .poster-item { position:relative; border-radius:10px; overflow:hidden; cursor:pointer; border:3px solid transparent; transition:border-color .18s; }
+  .poster-item.selected { border-color:#3b82f6; }
+  .poster-item img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+  .poster-item .poster-check { position:absolute; top:6px; right:6px; width:22px; height:22px; background:#3b82f6; border-radius:50%; display:none; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; }
+  .poster-item.selected .poster-check { display:flex; }
+  .poster-item .poster-title { font-size:11px; padding:5px 7px; background:#f8f9fa; line-height:1.3; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-dot">RI</div>
+    <div class="sidebar-logo-text">
+      <strong>D3461 後台</strong>
+      <span>管理系統</span>
+    </div>
+  </div>
+  <div class="sidebar-divider"></div>
+
+  <nav style="flex:1;padding:4px 0;overflow-y:auto;">
+    <div class="nav-section-label">內容管理</div>
+    <div class="nav-item active" data-panel="dashboard">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      總覽 Dashboard
+      <span class="nav-dot"></span>
+    </div>
+
+    <!-- 頁首設定 expandable group -->
+    <div class="nav-group-toggle" id="navGroupToggle" onclick="toggleNavGroup()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+      頁首設定
+      <svg class="toggle-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+    <div class="nav-group-items" id="navGroupItems">
+      <div class="nav-sub-item" data-subtab="menu"     onclick="openPageSetup('menu')">📋 選單</div>
+      <div class="nav-sub-item" data-subtab="hero"     onclick="openPageSetup('hero')">🎬 滑圖區</div>
+      <div class="nav-sub-item" data-subtab="siteinfo" onclick="openPageSetup('siteinfo')">📍 資訊</div>
+      <div class="nav-sub-item" data-subtab="seo"      onclick="openPageSetup('seo')">🔍 SEO / GEO</div>
+      <div class="nav-sub-item" data-subtab="tracking" onclick="openPageSetup('tracking')">📊 追蹤碼</div>
+      <div class="nav-sub-item" data-subtab="site"     onclick="openPageSetup('site')">⚙️ 網站設定</div>
+    </div>
+
+    <div class="nav-item" data-panel="news">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      最新消息
+      <span class="nav-dot"></span>
+    </div>
+    <div class="nav-item" data-panel="activities">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      近期活動
+      <span class="nav-dot"></span>
+    </div>
+    <div class="nav-item" data-panel="videos">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+      影音專區
+      <span class="nav-dot"></span>
+    </div>
+    <div class="nav-item" data-panel="monthly">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      總監月刊
+      <span class="nav-dot"></span>
+    </div>
+    <div class="nav-section-label">設定</div>
+    <div class="nav-item" data-panel="sponsors">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0112 0v2"/></svg>
+      贊助單位
+      <span class="nav-dot"></span>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="index.html" target="_blank">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      開啟前台網站
+    </a>
+    <a href="#" onclick="exportIndexHtml();return false;" style="color:#22c55e;font-weight:600;">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      匯出更新版 index.html
+    </a>
+    <a href="#" onclick="exportData();return false;">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      匯出備份 JSON
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-title" id="panelTitle">總覽</div>
+      <span class="topbar-badge" id="topbarHost">localhost:8765</span>
+    </div>
+    <div class="topbar-right">
+      <button class="btn btn-primary" id="btnSaveAll" onclick="saveAll()">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        儲存全部
+        <span class="save-dirty-dot" id="saveDirtyDot"></span>
+      </button>
+      <img class="topbar-logo" src="images/logo_02.png" alt="Logo" onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="stat-label">最新消息</div>
+          <div class="stat-value" id="stat-news">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="stat-label">近期活動</div>
+          <div class="stat-value" id="stat-activities">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+          <div class="stat-label">影片數量</div>
+          <div class="stat-value" id="stat-videos">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0112 0v2"/></svg></div>
+          <div class="stat-label">贊助單位</div>
+          <div class="stat-value" id="stat-sponsors">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+          <div class="stat-label">月刊期數</div>
+          <div class="stat-value" id="stat-monthly">—</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:22px;">
+        <div class="card-header"><div class="card-title">⚡ 快速操作</div></div>
+        <div class="card-body">
+          <div class="quick-grid">
+            <div class="quick-card" onclick="switchPanel('news');openNewsModal()">
+              <div class="quick-card-icon">📝</div>
+              <div class="quick-card-label">新增消息</div>
+              <div class="quick-card-sub">最新消息區</div>
+            </div>
+            <div class="quick-card" onclick="switchPanel('activities');openActivityModal()">
+              <div class="quick-card-icon">📅</div>
+              <div class="quick-card-label">新增活動</div>
+              <div class="quick-card-sub">近期活動區</div>
+            </div>
+            <div class="quick-card" onclick="switchPanel('videos');openVideoModal()">
+              <div class="quick-card-icon">🎬</div>
+              <div class="quick-card-label">新增影片</div>
+              <div class="quick-card-sub">影音專區</div>
+            </div>
+            <div class="quick-card" onclick="window.open('index.html','_blank')">
+              <div class="quick-card-icon">🌐</div>
+              <div class="quick-card-label">預覽前台</div>
+              <div class="quick-card-sub">另開分頁</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">📖 使用說明</div></div>
+        <div class="card-body">
+          <div class="info-box" style="border-left-color:#22c55e;background:#f0fdf4;">
+            🚀 <strong>正確發佈流程（靜態主機）：</strong><br>
+            1️⃣ 在後台編輯完成後，點「儲存全部」<br>
+            2️⃣ 點左側欄「<strong>匯出更新版 index.html</strong>」下載檔案<br>
+            3️⃣ 將下載的 index.html <strong>上傳至伺服器</strong>取代舊檔<br>
+            4️⃣ 所有訪客即可看到最新內容（不再依賴瀏覽器快取）
+          </div>
+          <div class="info-box" style="margin-top:8px;">
+            💾 點選「儲存全部」或各區塊的儲存按鈕套用更改<br>
+            🔄 重新整理後台不會遺失資料（資料暫存於瀏覽器）<br>
+            📦 使用「匯出備份 JSON」下載目前設定備份檔
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ NEWS ═══ -->
+    <div class="panel" id="panel-news">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📝 最新消息管理</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost btn-sm" onclick="openPosterModal()">🖼 海報顯示</button>
+            <button class="btn btn-primary btn-sm" onclick="openNewsModal()">＋ 新增消息</button>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:68px">縮圖</th>
+              <th style="width:90px">日期</th>
+              <th>標題</th>
+              <th style="width:76px">瀏覽</th>
+              <th style="width:110px">操作</th>
+            </tr>
+          </thead>
+          <tbody id="newsTbody"></tbody>
+        </table>
+      </div>
+      <div class="save-bar"><button class="btn btn-success" onclick="saveSection('news')">💾 儲存最新消息</button></div>
+    </div>
+
+    <!-- ═══ ACTIVITIES ═══ -->
+    <div class="panel" id="panel-activities">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📅 近期活動管理</div>
+          <button class="btn btn-primary btn-sm" onclick="openActivityModal()">＋ 新增活動</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:90px">日期</th>
+              <th>活動名稱</th>
+              <th>地點</th>
+              <th style="width:80px">狀態</th>
+              <th style="width:110px">操作</th>
+            </tr>
+          </thead>
+          <tbody id="activityTbody"></tbody>
+        </table>
+      </div>
+      <div class="save-bar"><button class="btn btn-success" onclick="saveSection('activities')">💾 儲存近期活動</button></div>
+    </div>
+
+    <!-- ═══ VIDEOS ═══ -->
+    <div class="panel" id="panel-videos">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🎬 影音專區管理</div>
+          <button class="btn btn-primary btn-sm" onclick="openVideoModal()">＋ 新增影片</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:80px">縮圖</th>
+              <th>標題</th>
+              <th>YouTube ID</th>
+              <th style="width:110px">操作</th>
+            </tr>
+          </thead>
+          <tbody id="videoTbody"></tbody>
+        </table>
+      </div>
+      <div class="save-bar"><button class="btn btn-success" onclick="saveSection('videos')">💾 儲存影音</button></div>
+    </div>
+
+    <!-- ═══ SPONSORS ═══ -->
+    <div class="panel" id="panel-sponsors">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🤝 贊助單位管理</div>
+          <button class="btn btn-primary btn-sm" onclick="openSponsorModal()">＋ 新增</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:80px">圖片</th>
+              <th style="width:120px">名稱</th>
+              <th>圖片路徑</th>
+              <th>連結</th>
+              <th style="width:110px">操作</th>
+            </tr>
+          </thead>
+          <tbody id="sponsorTbody"></tbody>
+        </table>
+      </div>
+      <div class="save-bar"><button class="btn btn-success" onclick="saveSection('sponsors')">💾 儲存贊助單位</button></div>
+    </div>
+
+    <!-- contact panel removed; merged into pagesetup → siteinfo -->
+
+    <!-- ═══ MONTHLY ═══ -->
+    <div class="panel" id="panel-monthly">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📰 總監月刊管理</div>
+          <button class="btn btn-primary btn-sm" onclick="openYearModal(false)">＋ 新增年度</button>
+        </div>
+        <div class="card-body">
+          <div id="yearTabs" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <div style="font-size:15px;font-weight:700;" id="monthlyYearTitle" style="color:var(--text)">請選擇或新增年度</div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-ghost btn-sm" id="btnEditYear"   onclick="openYearModal(true)"  style="display:none">✏️ 編輯年度</button>
+              <button class="btn btn-danger btn-sm" id="btnDeleteYear" onclick="deleteYear()"         style="display:none">🗑️ 刪除年度</button>
+              <button class="btn btn-primary btn-sm" id="btnAddIssue"  onclick="openIssueModal()"     style="display:none">＋ 新增期刊</button>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:60px">期號</th>
+                <th style="width:140px">月份</th>
+                <th>Google Drive ID / 本地路徑</th>
+                <th style="width:60px">頁面</th>
+                <th style="width:120px">操作</th>
+              </tr>
+            </thead>
+            <tbody id="monthlyTbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="save-bar"><button class="btn btn-success" onclick="saveSection('monthly')">💾 儲存總監月刊</button></div>
+    </div>
+
+    <!-- ═══ PAGE SETUP ═══ -->
+    <div class="panel" id="panel-pagesetup">
+
+      <!-- Sub-tabs -->
+      <div class="sub-tabs">
+        <button class="sub-tab active" onclick="switchSubTab('menu')">📋 選單</button>
+        <button class="sub-tab" onclick="switchSubTab('hero')">🎬 滑圖區</button>
+        <button class="sub-tab" onclick="switchSubTab('siteinfo')">📍 資訊</button>
+        <button class="sub-tab" onclick="switchSubTab('seo')">🔍 SEO / GEO</button>
+        <button class="sub-tab" onclick="switchSubTab('tracking')">📊 追蹤碼</button>
+        <button class="sub-tab" onclick="switchSubTab('site')">⚙️ 網站設定</button>
+      </div>
+
+      <!-- ── 選單 ── -->
+      <div class="sub-panel active" id="subpanel-menu">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📋 選單管理</div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-ghost btn-sm" onclick="addMenuItem(1)">＋ 第一層</button>
+              <button class="btn btn-primary btn-sm" onclick="addMenuItem(2)">＋ 第二層</button>
+            </div>
+          </div>
+          <div id="menuList" style="min-height:60px;"></div>
+        </div>
+        <div class="save-bar"><button class="btn btn-success" onclick="saveSection('menu')">💾 儲存選單</button></div>
+      </div>
+
+      <!-- ── 滑圖區 ── -->
+      <div class="sub-panel" id="subpanel-hero">
+        <div class="card">
+          <div class="card-header"><div class="card-title">🎬 滑圖區媒體管理</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:16px;">支援填入影片網址（MP4 / YouTube）或圖片網址。每筆為一個輪播項目。</div>
+            <div id="heroMediaList"></div>
+            <button class="btn btn-ghost btn-sm" onclick="addHeroItem()" style="margin-top:8px;">＋ 新增媒體</button>
+          </div>
+        </div>
+        <div class="save-bar"><button class="btn btn-success" onclick="saveSection('hero')">💾 儲存滑圖區</button></div>
+      </div>
+
+      <!-- ── 資訊 ── -->
+      <div class="sub-panel" id="subpanel-siteinfo">
+        <div class="card">
+          <div class="card-header"><div class="card-title">📍 聯絡資訊</div></div>
+          <div class="card-body">
+            <div class="form-row single"><div class="form-group"><label>總監辦公室地址</label><input type="text" id="c-address" placeholder="404台中市北區三民路三段291巷30號2樓"></div></div>
+            <div class="form-row">
+              <div class="form-group"><label>辦公室電話</label><input type="text" id="c-phone" placeholder="0987-220-088"></div>
+              <div class="form-group"><label>Email</label><input type="text" id="c-email" placeholder="3461dg2425@gmail.com"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>版權文字（左側）</label><input type="text" id="c-copyright" placeholder="©2026 Rotary扶輪社3461"></div>
+              <div class="form-group"><label>設計單位（右側）</label><input type="text" id="c-designer" placeholder="傳啓資訊股份有限公司 AI設計"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🗺️ Google Map 嵌入</div></div>
+          <div class="card-body">
+            <div class="form-row single"><div class="form-group"><label>地址（文字顯示）</label><input type="text" id="si-address" placeholder="404台中市北區三民路三段291巷30號2樓"></div></div>
+            <div class="form-row single"><div class="form-group"><label>Google Maps Embed URL（iframe src）</label><input type="text" id="si-mapurl" placeholder="https://maps.google.com/maps?q=...&output=embed"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🔗 社群網址設定</div></div>
+          <div class="card-body">
+            <div class="social-row"><span class="social-icon">🗺️</span><span class="social-label">Google Map</span><input type="text" id="soc-map" placeholder="https://maps.app.goo.gl/..."></div>
+            <div class="social-row"><span class="social-icon">👥</span><span class="social-label">FB 社團</span><input type="text" id="soc-fbgroup" placeholder="https://www.facebook.com/groups/..."></div>
+            <div class="social-row"><span class="social-icon">📘</span><span class="social-label">FB 粉絲頁</span><input type="text" id="soc-fbpage" placeholder="https://www.facebook.com/RID3461"></div>
+            <div class="social-row"><span class="social-icon">💚</span><span class="social-label">Line Voom</span><input type="text" id="soc-line" placeholder="https://linevoom.line.me/..."></div>
+            <div class="social-row"><span class="social-icon">🎵</span><span class="social-label">TikTok</span><input type="text" id="soc-tiktok" placeholder="https://www.tiktok.com/@rotary3461"></div>
+            <div class="social-row"><span class="social-icon">▶️</span><span class="social-label">YouTube</span><input type="text" id="soc-youtube" placeholder="https://www.youtube.com/@Rotary3461/featured"></div>
+            <div class="social-row"><span class="social-icon">📱</span><span class="social-label">Shorts</span><input type="text" id="soc-shorts" placeholder="https://www.youtube.com/@Rotary3461/shorts"></div>
+          </div>
+        </div>
+        <div class="save-bar"><button class="btn btn-success" onclick="saveSection('siteinfo')">💾 儲存資訊設定</button></div>
+      </div>
+
+      <!-- ── SEO / GEO ── -->
+      <div class="sub-panel" id="subpanel-seo">
+        <div class="card">
+          <div class="card-header"><div class="card-title">🔍 SEO 基本設定</div></div>
+          <div class="card-body">
+            <div class="form-row single"><div class="form-group"><label>網頁標題 &lt;title&gt;（建議 50–60 字元）</label><input type="text" id="seo-title" placeholder="國際扶輪第3461地區 | Rotary District 3461 官方網站"></div></div>
+            <div class="form-row single"><div class="form-group"><label>描述 &lt;meta description&gt;（建議 120–160 字）</label><textarea id="seo-desc" rows="3" placeholder="國際扶輪第3461地區官方網站…"></textarea></div></div>
+            <div class="form-row single"><div class="form-group"><label>關鍵字 &lt;meta keywords&gt;（逗號分隔）</label><input type="text" id="seo-kw" placeholder="國際扶輪,扶輪社,Rotary,Rotary 3461,D3461…"></div></div>
+            <div class="form-row single"><div class="form-group"><label>Canonical URL（避免重複內容）</label><input type="text" id="seo-canonical" placeholder="https://www.rotary3461.org/"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">📤 Open Graph（FB / LINE 分享預覽）</div></div>
+          <div class="card-body">
+            <div class="form-row single"><div class="form-group"><label>OG 標題（og:title）</label><input type="text" id="og-title" placeholder="國際扶輪第3461地區"></div></div>
+            <div class="form-row single"><div class="form-group"><label>OG 描述（og:description）</label><input type="text" id="og-desc" placeholder="台中、彰化、南投地區扶輪社官方網站…"></div></div>
+            <div class="form-row single"><div class="form-group"><label>OG 圖片（og:image，建議 1200×630 px）</label><input type="text" id="og-image" placeholder="https://www.rotary3461.org/images/og-cover.jpg"></div></div>
+            <div class="form-row">
+              <div class="form-group"><label>OG 類型（og:type）</label>
+                <select id="og-type">
+                  <option value="website">website</option>
+                  <option value="organization">organization</option>
+                </select>
+              </div>
+              <div class="form-group"><label>網站名稱（og:site_name）</label><input type="text" id="og-sitename" placeholder="國際扶輪第3461地區"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🐦 Twitter / X Card</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:14px;">Twitter Card 決定推文分享時的預覽樣式，也影響部分 AI 爬蟲取得摘要的方式。</div>
+            <div class="form-row">
+              <div class="form-group"><label>Card 類型</label>
+                <select id="tw-card">
+                  <option value="summary_large_image">summary_large_image（大圖）</option>
+                  <option value="summary">summary（小縮圖）</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Twitter @帳號（加 @）</label><input type="text" id="tw-site" placeholder="@Rotary3461"></div>
+            </div>
+            <div class="form-row single"><div class="form-group"><label>Twitter 標題（留空同 OG 標題）</label><input type="text" id="tw-title" placeholder="留空則自動帶入 OG 標題"></div></div>
+            <div class="form-row single"><div class="form-group"><label>Twitter 圖片（留空同 OG 圖片）</label><input type="text" id="tw-image" placeholder="留空則自動帶入 OG 圖片"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🤖 GEO — AI 搜尋引擎優化</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:16px;">以下欄位生成 JSON-LD 結構化資料（Organization + LocalBusiness Schema），讓 ChatGPT、Perplexity、Google AI Overview 等 AI 引擎正確識別您的組織。</div>
+            <div class="form-row">
+              <div class="form-group"><label>組織名稱</label><input type="text" id="geo-orgname" placeholder="國際扶輪第3461地區"></div>
+              <div class="form-group"><label>組織別名（逗號分隔）</label><input type="text" id="geo-altnames" placeholder="Rotary District 3461, D3461, 扶輪3461"></div>
+            </div>
+            <div class="form-row single"><div class="form-group"><label>組織描述（給 AI 引擎看的完整描述）</label><textarea id="geo-desc" rows="3" placeholder="國際扶輪第3461地區（Rotary District 3461）致力於七大焦點領域服務，涵蓋台中、彰化、南投，設有70個扶輪社及10個委員社…"></textarea></div></div>
+            <div class="form-row">
+              <div class="form-group"><label>官網 URL</label><input type="text" id="geo-url" placeholder="https://www.rotary3461.org/"></div>
+              <div class="form-group"><label>成立年份</label><input type="text" id="geo-founded" placeholder="1950"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>服務地區</label><input type="text" id="geo-area" placeholder="台中市、彰化縣、南投縣"></div>
+              <div class="form-group"><label>扶輪社數量</label><input type="text" id="geo-members" placeholder="70"></div>
+            </div>
+            <div class="form-row single"><div class="form-group"><label>聯絡電話（Schema）</label><input type="text" id="geo-phone" placeholder="+886-987-220-088"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">❓ FAQ 結構化資料（GEO 強化）</div>
+            <button class="btn btn-ghost btn-sm" onclick="addFaqItem()">＋ 新增問答</button>
+          </div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:14px;">FAQ Schema 讓 Google 搜尋結果直接展開問答，也是 AI Overview、ChatGPT 引用您網站的重要訊號。</div>
+            <div id="faqList"></div>
+          </div>
+        </div>
+        <div class="save-bar"><button class="btn btn-success" onclick="saveSection('seo')">💾 儲存 SEO / GEO 設定</button></div>
+      </div>
+
+      <!-- ── 追蹤碼 ── -->
+      <div class="sub-panel" id="subpanel-tracking">
+        <div class="card">
+          <div class="card-header"><div class="card-title">📊 Google Tag Manager（GTM）</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:14px;">建議優先安裝 GTM，再透過 GTM 容器管理其他追蹤碼，統一管理最有效率。<br>GTM ID 格式：<strong>GTM-XXXXXXX</strong></div>
+            <div class="form-row">
+              <div class="form-group"><label>GTM ID</label><input type="text" id="gtm-id" placeholder="GTM-XXXXXXX" style="font-family:monospace;font-weight:700;font-size:15px;"></div>
+              <div class="form-group"><label>啟用狀態</label>
+                <select id="gtm-enabled"><option value="true">啟用</option><option value="false">停用</option></select>
+              </div>
+            </div>
+            <div id="gtm-status" style="margin-top:6px;font-size:12px;color:var(--muted);"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">📈 Google Analytics 4（GA4）</div></div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group"><label>Measurement ID（G-XXXXXXXXXX）</label><input type="text" id="ga4-id" placeholder="G-XXXXXXXXXX" style="font-family:monospace;"></div>
+              <div class="form-group"><label>啟用狀態</label>
+                <select id="ga4-enabled"><option value="true">啟用</option><option value="false">停用</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">👤 Facebook / Meta Pixel</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:12px;">安裝後可追蹤頁面瀏覽、投放 FB 再行銷廣告。在 Meta Business Manager → Events Manager 取得 Pixel ID。</div>
+            <div class="form-row">
+              <div class="form-group"><label>Pixel ID</label><input type="text" id="fb-pixel-id" placeholder="1234567890123456" style="font-family:monospace;"></div>
+              <div class="form-group"><label>啟用狀態</label>
+                <select id="fb-pixel-enabled"><option value="true">啟用</option><option value="false">停用</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">💚 LINE Tag（台灣市場必備）</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:12px;">LINE Tag 用於 LINE Ads 轉換追蹤與再行銷，台灣用戶觸及率最高。在 LINE Ads Manager → 追蹤 → LINE Tag 取得 ID。</div>
+            <div class="form-row">
+              <div class="form-group"><label>LINE Tag ID</label><input type="text" id="line-tag-id" placeholder="1234567890" style="font-family:monospace;"></div>
+              <div class="form-group"><label>啟用狀態</label>
+                <select id="line-tag-enabled"><option value="true">啟用</option><option value="false">停用</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🎵 TikTok Pixel</div></div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group"><label>Pixel ID</label><input type="text" id="tiktok-pixel-id" placeholder="CXXXXXXXXXXXXXXXXXXXXXXX" style="font-family:monospace;"></div>
+              <div class="form-group"><label>啟用狀態</label>
+                <select id="tiktok-pixel-enabled"><option value="true">啟用</option><option value="false">停用</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">💰 Google Ads 轉換追蹤</div></div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group"><label>Conversion ID（AW-XXXXXXXXX）</label><input type="text" id="gads-id" placeholder="AW-123456789" style="font-family:monospace;"></div>
+              <div class="form-group"><label>啟用狀態</label>
+                <select id="gads-enabled"><option value="true">啟用</option><option value="false">停用</option></select>
+              </div>
+            </div>
+            <div class="form-row single"><div class="form-group"><label>Conversion Label（選填）</label><input type="text" id="gads-label" placeholder="XXXXXXXXXXXXXXXX" style="font-family:monospace;"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🔥 Microsoft Clarity（熱力圖 · 免費）</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:12px;">Clarity 提供免費熱力圖、Session Recording，與 GA4 整合後可深度分析使用者點擊與捲動行為。</div>
+            <div class="form-row">
+              <div class="form-group"><label>Project ID</label><input type="text" id="clarity-id" placeholder="xxxxxxxxxx" style="font-family:monospace;"></div>
+              <div class="form-group"><label>啟用狀態</label>
+                <select id="clarity-enabled"><option value="true">啟用</option><option value="false">停用</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">💻 自訂程式碼（進階）</div></div>
+          <div class="card-body">
+            <div class="form-row single"><div class="form-group"><label>自訂 &lt;head&gt; 程式碼</label><textarea id="gtm-custom" rows="4" placeholder="<!-- 貼入 head 追蹤碼 -->" style="font-family:monospace;font-size:12px;"></textarea></div></div>
+            <div class="form-row single"><div class="form-group"><label>自訂 &lt;/body&gt; 前程式碼（noscript 等）</label><textarea id="tracking-body" rows="4" placeholder="<!-- 貼入 body 追蹤碼 -->" style="font-family:monospace;font-size:12px;"></textarea></div></div>
+          </div>
+        </div>
+        <div class="save-bar"><button class="btn btn-success" onclick="saveSection('tracking')">💾 儲存追蹤碼設定</button></div>
+      </div>
+
+      <!-- ── 網站設定 ── -->
+      <div class="sub-panel" id="subpanel-site">
+        <div class="card">
+          <div class="card-header"><div class="card-title">🌐 基本設定</div></div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group"><label>網站語言（lang 屬性）</label>
+                <select id="site-lang">
+                  <option value="zh-TW">繁體中文（zh-TW）</option>
+                  <option value="en">English（en）</option>
+                  <option value="zh-CN">简体中文（zh-CN）</option>
+                </select>
+              </div>
+              <div class="form-group"><label>主題色（Theme Color / 瀏覽器工具列顏色）</label>
+                <div style="display:flex;gap:8px;align-items:center;">
+                  <input type="color" id="site-theme-color" value="#1a3a5c" style="width:48px;height:38px;padding:2px;border-radius:8px;border:1.5px solid #e5e7eb;cursor:pointer;">
+                  <input type="text" id="site-theme-color-hex" placeholder="#1a3a5c" style="flex:1;font-family:monospace;" oninput="document.getElementById('site-theme-color').value=this.value">
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Meta Robots（搜尋引擎爬蟲規則）</label>
+                <select id="site-robots">
+                  <option value="index,follow">index, follow（允許收錄 ✅ 建議）</option>
+                  <option value="noindex,follow">noindex, follow（不收錄但追蹤連結）</option>
+                  <option value="index,nofollow">index, nofollow（收錄但不追蹤連結）</option>
+                  <option value="noindex,nofollow">noindex, nofollow（完全封鎖）</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Sitemap URL（提交給搜尋引擎）</label><input type="text" id="site-sitemap" placeholder="https://www.rotary3461.org/sitemap.xml"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🖼️ 圖示設定</div></div>
+          <div class="card-body">
+            <div class="form-row single"><div class="form-group"><label>Favicon URL（.ico 或 .png，顯示於瀏覽器標籤）</label><input type="text" id="site-favicon" placeholder="images/favicon.ico"></div></div>
+            <div class="form-row single"><div class="form-group"><label>Apple Touch Icon（iOS 書籤圖示，建議 180×180 px）</label><input type="text" id="site-apple-icon" placeholder="images/apple-touch-icon.png"></div></div>
+            <div class="form-row single"><div class="form-group"><label>Web App Manifest（PWA 支援，manifest.json）</label><input type="text" id="site-manifest" placeholder="manifest.json"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🔑 搜尋引擎所有權驗證</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:14px;">驗證後可使用 Search Console / Webmaster Tools 查看索引狀況與搜尋關鍵字數據。</div>
+            <div class="form-row single"><div class="form-group"><label>Google Search Console 驗證碼（meta content 值）</label><input type="text" id="verify-google" placeholder="google-site-verification=XXXXXXXXXX" style="font-family:monospace;font-size:12px;"></div></div>
+            <div class="form-row single"><div class="form-group"><label>Bing Webmaster 驗證碼（msvalidate.01 content 值）</label><input type="text" id="verify-bing" placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" style="font-family:monospace;font-size:12px;"></div></div>
+            <div class="form-row single"><div class="form-group"><label>Pinterest 驗證碼（p:domain_verify content 值）</label><input type="text" id="verify-pinterest" placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" style="font-family:monospace;font-size:12px;"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">⚡ 效能優化（Preconnect）</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:14px;">Preconnect 讓瀏覽器提前建立外部資源連線，可減少 DNS 查詢時間，加快首次載入速度（Core Web Vitals LCP）。每行一個網域。</div>
+            <div class="form-row single"><div class="form-group"><label>Preconnect 網域列表（每行一個）</label>
+              <textarea id="site-preconnect" rows="5" placeholder="https://fonts.googleapis.com&#10;https://fonts.gstatic.com&#10;https://www.googletagmanager.com&#10;https://connect.facebook.net" style="font-family:monospace;font-size:12px;"></textarea>
+            </div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🪄 AI 魔術分析設定</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:14px;">輸入 Anthropic Claude API Key，即可在新增消息／活動時使用「🪄 魔術幫」按鈕，上傳圖片自動辨識文字並填入欄位。<br>Key 僅儲存於本機瀏覽器，不會上傳至任何伺服器。</div>
+            <div class="form-row single"><div class="form-group">
+              <label>Claude API Key（sk-ant-…）</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="password" id="claude-api-key" placeholder="sk-ant-api03-…" style="flex:1;font-family:monospace;font-size:12px;" autocomplete="off">
+                <button class="btn btn-ghost btn-sm" onclick="toggleKeyVisibility()">👁</button>
+                <button class="btn btn-primary btn-sm" onclick="saveClaudeKey()">儲存 Key</button>
+              </div>
+              <div id="claude-key-status" style="font-size:12px;margin-top:4px;color:#9ca3af;"></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="save-bar"><button class="btn btn-success" onclick="saveSection('site')">💾 儲存網站設定</button></div>
+      </div>
+
+    </div><!-- /panel-pagesetup -->
+
+  </div>
+</div>
+
+<!-- MODAL: NEWS -->
+<div class="modal-overlay" id="newsModal">
+  <div class="modal" style="width:660px">
+    <div class="modal-header">
+      <div class="modal-title" id="newsModalTitle">新增消息</div>
+      <button class="modal-close" onclick="closeModal('newsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="news-edit-idx">
+      <div class="form-row">
+        <div class="form-group" style="flex:0 0 160px"><label>日期</label><input type="text" id="news-date" placeholder="2026.04.21"></div>
+        <div class="form-group"><label>瀏覽次數</label><input type="number" id="news-views" placeholder="0"></div>
+      </div>
+      <div class="form-row single"><div class="form-group"><label>標題</label><input type="text" id="news-title" placeholder="消息標題"></div></div>
+      <div class="form-row single"><div class="form-group"><label>封面圖片網址</label><input type="text" id="news-image" placeholder="https://..."></div></div>
+      <div class="form-row single"><div class="form-group"><label>活動連結</label><input type="text" id="news-activityUrl" placeholder="https://..."></div></div>
+      <div class="form-row single"><div class="form-group"><label>內容</label><textarea id="news-content" rows="6" placeholder="消息內容（支援換行）…"></textarea></div></div>
+      <div class="form-row single"><div class="form-group"><label>內文圖片 1</label><input type="text" id="news-img1" placeholder="https://..."></div></div>
+      <div class="form-row single"><div class="form-group"><label>內文圖片 2</label><input type="text" id="news-img2" placeholder="https://..."></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('newsModal')">取消</button>
+      <button class="btn btn-primary" onclick="saveNewsItem()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: POSTER -->
+<div class="modal-overlay" id="posterModal">
+  <div class="modal" style="width:700px">
+    <div class="modal-header">
+      <div class="modal-title">🖼 海報顯示設定</div>
+      <button class="modal-close" onclick="closeModal('posterModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:#666;margin-bottom:16px">勾選要在首頁海報輪播的新聞封面圖，按儲存後前台立即生效。</p>
+      <div id="posterGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;max-height:460px;overflow-y:auto;padding:2px"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('posterModal')">取消</button>
+      <button class="btn btn-primary" onclick="savePosterSelection()">💾 儲存並套用</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ACTIVITY -->
+<div class="modal-overlay" id="activityModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="activityModalTitle">新增活動</div>
+      <button class="modal-close" onclick="closeModal('activityModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="activity-edit-idx">
+      <div class="form-row single"><div class="form-group"><label>活動名稱</label><input type="text" id="activity-name" placeholder="活動名稱"></div></div>
+      <div class="form-row">
+        <div class="form-group"><label>地點</label><input type="text" id="activity-location" placeholder="台中"></div>
+        <div class="form-group"><label>連結</label><input type="text" id="activity-url" placeholder="#"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>日期狀態</label>
+          <select id="activity-tbd" onchange="toggleDateFields()">
+            <option value="false">確定日期</option>
+            <option value="true">待定（TBD）</option>
+          </select>
+        </div>
+      </div>
+      <div id="date-fields" class="form-row"><div class="form-group"><label>日期</label><input type="date" id="activity-date"></div></div>
+      <div id="tbd-fields" class="form-row" style="display:none;"><div class="form-group"><label>年份</label><input type="text" id="activity-year" placeholder="2026"></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('activityModal')">取消</button>
+      <button class="btn btn-primary" onclick="saveActivityItem()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: VIDEO -->
+<div class="modal-overlay" id="videoModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="videoModalTitle">新增影片</div>
+      <button class="modal-close" onclick="closeModal('videoModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="video-edit-idx">
+      <div class="form-row single"><div class="form-group"><label>影片標題</label><input type="text" id="video-title" placeholder="影片標題"></div></div>
+      <div class="form-row single"><div class="form-group"><label>YouTube 影片 ID（網址 v= 後的部分）</label><input type="text" id="video-ytid" placeholder="T0w0dpB67hw"></div></div>
+      <div class="form-row single"><div class="form-group"><label>縮圖網址（留空自動抓 YouTube 縮圖）</label><input type="text" id="video-image" placeholder="留空即可"></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('videoModal')">取消</button>
+      <button class="btn btn-primary" onclick="saveVideoItem()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SPONSOR -->
+<div class="modal-overlay" id="sponsorModal">
+  <div class="modal" style="width:520px">
+    <div class="modal-header">
+      <div class="modal-title" id="sponsorModalTitle">新增贊助單位</div>
+      <button class="modal-close" onclick="closeModal('sponsorModal')">✕</button>
+    </div>
+    <div id="magic-sponsor-status" style="display:none;padding:8px 20px;background:#faf5ff;border-bottom:1px solid #e9d5ff;font-size:13px;color:#7c3aed;align-items:center;gap:8px;">
+      <span style="width:14px;height:14px;border:2px solid #c4b5fd;border-top-color:#7c3aed;border-radius:50%;display:inline-block;animation:spin .8s linear infinite;"></span>
+      <span id="magic-sponsor-msg">魔術棒分析中…</span>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="sponsor-edit-idx">
+
+      <!-- 圖片上傳區 -->
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>上傳圖片</label>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <input type="file" id="sponsor-file" accept="image/*" style="display:none" onchange="handleSponsorFile(this)">
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('sponsor-file').click()" style="display:flex;align-items:center;gap:5px;">
+            📁 選擇圖片
+          </button>
+          <button class="btn btn-sm" style="background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;" onclick="document.getElementById('sponsor-magic-file').click()">
+            🪄 魔術棒
+          </button>
+          <input type="file" id="sponsor-magic-file" accept="image/*" style="display:none" onchange="magicSponsor(this)">
+        </div>
+        <!-- 圖片預覽（點擊放大） -->
+        <div id="sponsor-preview-wrap" style="display:none;margin-top:10px;">
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="position:relative;cursor:zoom-in;" onclick="toggleSponsorZoom()">
+              <img id="sponsor-preview-img" style="height:80px;width:auto;max-width:140px;border-radius:8px;border:2px solid #e5e7eb;object-fit:contain;background:#f9fafb;padding:4px;display:block;">
+              <div style="position:absolute;bottom:4px;right:4px;background:rgba(0,0,0,.45);color:#fff;font-size:10px;padding:1px 5px;border-radius:4px;">🔍</div>
+            </div>
+            <!-- 放大圖 -->
+            <div id="sponsor-zoom-panel" style="display:none;flex:1;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px;text-align:center;">
+              <img id="sponsor-zoom-img" style="max-height:200px;max-width:100%;object-fit:contain;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row single"><div class="form-group"><label>名稱 / 標題</label><input type="text" id="sponsor-title" placeholder="贊助單位名稱"></div></div>
+      <div class="form-row single"><div class="form-group">
+        <label>圖片路徑（儲存後可手動調整）</label>
+        <input type="text" id="sponsor-src" placeholder="images/sponsor/xxx.jpg" oninput="updateSponsorPreview(this.value)">
+        <div id="sponsor-file-hint" style="display:none;font-size:11px;color:#f59e0b;margin-top:3px;"></div>
+      </div></div>
+      <div class="form-row single"><div class="form-group">
+        <label>點擊連結（留空則不跳轉）</label>
+        <input type="text" id="sponsor-link" placeholder="https://...">
+      </div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('sponsorModal')">取消</button>
+      <button class="btn btn-primary" onclick="saveSponsorItem()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: YEAR -->
+<div class="modal-overlay" id="yearModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="yearModalTitle">新增年度</div>
+      <button class="modal-close" onclick="closeModal('yearModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="year-edit-mode">
+      <div class="form-row single"><div class="form-group"><label>年度代號（如 25-26）</label><input type="text" id="year-key" placeholder="25-26"></div></div>
+      <div class="form-row single"><div class="form-group"><label>年度標題（如 2025–26 年度）</label><input type="text" id="year-heading" placeholder="2025–26 年度"></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('yearModal')">取消</button>
+      <button class="btn btn-primary" onclick="saveYearModal()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ISSUE -->
+<div class="modal-overlay" id="issueModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="issueModalTitle">新增期刊</div>
+      <button class="modal-close" onclick="closeModal('issueModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="issue-edit-idx">
+      <div class="form-row">
+        <div class="form-group"><label>期號（如 NO.01）</label><input type="text" id="issue-no" placeholder="NO.01"></div>
+        <div class="form-group"><label>月份（如 2025.7 July）</label><input type="text" id="issue-month" placeholder="2025.7 July"></div>
+      </div>
+      <div class="form-row single"><div class="form-group"><label>Google Drive 檔案 ID（縮圖 &amp; 開啟連結，留空顯示預設封面）</label><input type="text" id="issue-id" placeholder="1bgweARrOcFVVxz5MR-1FwRhMjq9b-jQc" style="font-family:monospace;font-size:12px;"></div></div>
+      <div class="form-row single"><div class="form-group">
+        <label>本地 PDF 路徑（pdfs/ 開頭）</label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="text" id="issue-local" placeholder="pdfs/總監月刊-電子檔/25-26年度/D3461-202507.pdf" style="flex:1;">
+          <input type="file" id="issue-file" accept=".pdf" style="display:none" onchange="handlePdfFile(this)">
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('issue-file').click()">📂 選擇檔案</button>
+        </div>
+        <div id="issue-file-hint" style="font-size:11px;color:#f59e0b;margin-top:4px;display:none;">
+          請將 PDF 檔案複製到上方路徑後再儲存
+        </div>
+      </div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('issueModal')">取消</button>
+      <button class="btn btn-primary" onclick="saveIssueModal()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: 頁面編輯器 -->
+<div class="modal-overlay" id="pageEditorModal" style="align-items:stretch;">
+  <div class="modal" style="max-width:900px;width:95vw;height:92vh;display:flex;flex-direction:column;">
+    <div class="modal-header" style="flex-shrink:0;">
+      <div class="modal-title" id="pageEditorTitle">頁面連結／影音編輯</div>
+      <button class="modal-close" onclick="closeModal('pageEditorModal')">✕</button>
+    </div>
+    <div style="flex:1;overflow:auto;padding:16px;display:flex;gap:16px;">
+      <!-- 左：縮圖列 -->
+      <div id="pageThumbList" style="width:130px;flex-shrink:0;overflow-y:auto;display:flex;flex-direction:column;gap:8px;"></div>
+      <!-- 右：編輯區 -->
+      <div style="flex:1;min-width:0;">
+        <div id="pageEditorEmpty" style="color:#9ca3af;padding:32px 0;text-align:center;">請點選左側頁面縮圖</div>
+        <div id="pageEditorForm" style="display:none;">
+          <div style="font-weight:700;margin-bottom:12px;" id="pageEditorPageLabel">第 1 頁</div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>點擊連結（留空則不跳轉）</label>
+            <input type="text" id="pe-link" placeholder="https://..." style="width:100%;">
+          </div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>嵌入影音（YouTube / Vimeo 網址）</label>
+            <input type="text" id="pe-video" placeholder="https://www.youtube.com/watch?v=..." style="width:100%;">
+          </div>
+          <div id="pe-video-preview" style="margin-top:8px;"></div>
+          <div style="display:flex;gap:8px;margin-top:16px;">
+            <button class="btn btn-primary btn-sm" onclick="savePageEdit()">儲存此頁</button>
+            <button class="btn btn-ghost btn-sm" onclick="clearPageEdit()">清除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="flex-shrink:0;">
+      <button class="btn btn-ghost" onclick="closeModal('pageEditorModal')">關閉</button>
+      <button class="btn btn-success" onclick="savePageEditorAll()">儲存所有頁面設定</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const DEFAULTS = {
+  news: [
+  { date: '2026.04.21', title: '「People of Action」攝影暨短影音比賽結果正式出爐', content: '社團法人台灣扶輪出版暨網路資訊協會謹向所有獲獎者表示最誠摯的祝賀。本次比賽透過「攝影」與「短影音」兩大類別，廣邀全台扶輪社員與社會大眾共同記錄台灣扶輪的服務紀實。\n\n本次比賽共選出：\n🔹 攝影組：33 件傑出作品（含金、銀、銅牌、優選及佳作）\n🔹 短影音組：15 件動態佳作\n\n攝影組獲獎亮點：\n\n金牌作品：由 3470 地區劉弘毅先生以《陪你奔向光》奪冠，深刻詮釋了扶輪伴行的溫暖。\n\n銀牌作品：3481 地區葉金秀女士的《看不見也安心》，傳遞了服務中的信賴感。\n\n銅牌作品：3521 地區王良韻女士的《認真服務的背影》，記錄了最純粹的奉獻瞬間。\n\n我們感謝所有參賽者的熱情參與，每一幀影像都是 2026 台灣扶輪重要的歷史資產。完整名單與精選作品集現已於官方網站上線。\n\n🔗 詳情請見：官方獲獎頁面', activityUrl: '', image: 'https://pshop.myqr.com.tw/images/RWD_M1_1/0/6007.jpg?206', images: ['https://pshop.myqr.com.tw/images/RWD_M1_1_Image/1/16050.jpg?108'], views: 0 },
+  { date: '2025.11.05', title: '國際扶輪3461地區2026年度攝影暨短影音比賽簡章', content: '國際扶輪3461地區2026年度攝影暨短影音比賽簡章\n\n一、活動主旨：為響應台灣扶輪月刊推廣「扶輪是採取行動的人」( People of Action )所舉辦之2026「 People of Action 攝影暨短影音比賽」。特舉辦國際扶輪3461地區攝影暨短影音比賽活動。\n\n二、主辦單位：國際扶輪 3461 地區總監辦公室。\n協辦單位：地區公共形象委員會。\n\n三、報名辦法：比賽分為攝影組及短影音組：\n\n(一) 參加資格：3461地區之扶輪社社友、寶尊眷、執秘、扶少團員、扶青社員、扶輪社區服務團成員等均可參加。\n\n(二) 參賽辦法：各參賽者填妥報名表，於報名期限內，將報名表及參賽作品，透過各社彙整後（執秘、公共形象主委）於收件截止日前投稿至3461地區總監辦公室。\n\n(三) 參賽組別：\n\nA.攝影組：每人投稿不超過2件作品，規格5x7吋彩色或黑白相片。繳交作品10M以下之Jpg電子檔。前三名獎項得獎人不得重複，空拍機之作品不收。\n\nB.短影音組：各社投稿不超過1件，影片長度限90秒~3分鐘內，參賽作品格式限為MP4、MOV、AVI格式。前三名獎項得獎人不得重複。\n\n(四) 收件截止時間：即日起至2026年1月25日下午五點止，以送達為憑。', activityUrl: 'https://drive.google.com/drive/folders/1wE2u_xo2VVuuLgmJCMwifmEUTt5nuP8U?usp=drive_link', image: 'https://pshop.myqr.com.tw/images/RWD_M1_1/0/5845.jpg?866', images: [], views: 0 },
+  { date: '2025.11.04', title: '台灣扶輪 2026 People of Action 攝影暨短影音比賽辦法', content: '主辦單位：台灣扶輪月刊\n協辦單位：國際扶輪 3461、3462、3470、3481、3482、3490、3501、3502、3510、3521、3522、3523地區。\n\n活動主旨：\n國際扶輪唯一認證華文區域扶輪雜誌「台灣扶輪月刊」配合國際扶輪「行動計畫」( Action Plan )，並參考國際扶輪之「扶輪採取行動的人：影響力推動者」表彰計畫，展現「扶輪是採取行動的人」( People of Action )，因而舉行全台12個地區「台灣扶輪 2026 People of Action 攝影暨短影音比賽」。\n\n投稿之照片及短影音，需與扶輪活動相關，若能具體呈現「扶輪是採取行動的人」最佳。', activityUrl: 'https://www.taiwan-rotary.org/article/detail.php?id=1096', image: 'https://pshop.myqr.com.tw/images/RWD_M1_1/0/5844.jpg?946', images: [], views: 0 },
+  { date: '2025.10.31', title: '扶輪3461地區 25-26年度 2026 RYLA 青少年領袖獎訓練營', content: '', activityUrl: 'https://www.facebook.com/groups/772352209541120/', image: 'https://pshop.myqr.com.tw/images/RWD_M1_1/0/5871.jpg?262', images: [], views: 0 },
+  { date: '2025.09.25', title: '2025-26 年度扶輪日', content: '國際扶輪 3461地區「2025-26 年度扶輪日」\n\n指導單位\n台中市政府擔任指導單位，並與台中市政府衛生局共同籌劃主辦。\n「扶輪日（Rotary Days of Service）」的理念\n讓社區民眾認識及瞭解扶輪，以號召扶輪社友及社區民眾共同參與七大焦點領域的服務計畫，並透過媒體宣傳，提升扶輪服務在社區的公益形象。\n3.主軸\n\n活動將以嘉年華形式呈現，並「響應國家健康政策：肺癌篩檢」為主軸，融合各式精彩內容，歡迎各社共襄盛舉。\n\n4. 活動資訊\n\n活動日期：2025年11月22日（星期六）上午10:00 至下午16:30\n活動地點：台中市市民廣場及周邊區域\n參加對象：各扶輪社（含青少社）社友、寶眷、小扶輪、扶少團團員、扶輪社區服務團團員、國際青少年交換學生及其眷屬、生命橋樑計畫學生，以及社區民眾。\n5. 活動特色與內容\n\n• 公益嘉年華：\n\n響應國家健康政策，提供肺癌篩檢資訊，提升民眾早期篩檢意識。\n舉辦「扶輪反毒、反詐騙」宣導活動及公益園遊會。\n設置親子遊樂區，並有認識扶輪的互動遊戲。\n•多元選位區：\n\n彙集中部地區知名美食小吃、禮品與伴手禮名店。\n扶輪精品區，展示扶輪社友相關商品。\n精彩舞台，舉辦兒童美學繪畫比賽頒獎典禮，並有豐富的節目表演。\n6.報名與贊助方式（截止日期）：\n\n園遊券每張面額新台幣600元，立即贈送旅行用頸枕一顆\n認購園遊券可享指定地點免費停車及體驗親子遊樂區。\n攤位認購：\n\n誠邀社友及非社友贊助認購攤位及遊覽車票。\n為避免選位販售物品重複，扶輪日由執委會保有調整攤位的權利。\n7. 本次的活動截止日期\n\n攤位認購：2025年9月15日。\n遊券認購：2025年9月30日。', activityUrl: '', image: 'https://pshop.myqr.com.tw/images/RWD_M1_1/0/5806.jpeg?137', images: ['https://pshop.myqr.com.tw/images/RWD_M1_1_Image/1/15653.jpg?509', 'https://pshop.myqr.com.tw/images/RWD_M1_1_Image/1/15654.jpg?509'], views: 0 },
+  { date: '2025.09.20', title: '深化國際教育！中市府與扶輪社簽署備忘錄', content: '台中市政府教育局這天在文華高中舉辦「台中市高中生國際扶輪青少年交換計畫合作備忘錄」簽署儀式，未來將每年選拔10位台中市高中生前往海外交流學習，落實國際教育普及化。另外也舉辦114學年度國際教育中心專業工作人員授證典禮，展現台中市深化國際教育合作、培育具備全球競爭力學子的決心。\n\n新聞影音來源：https://youtu.be/ddsIooaYplM?si=IraNzyu2oJ4EzvPS\n', activityUrl: '', image: 'https://pshop.myqr.com.tw/images/RWD_M1_1/0/5799.jpg?871', images: [], views: 0 },
+  { date: '2025.09.16', title: '國際扶輪3461地區 25-26年度生命橋樑助學計劃', content: '想要拿獎學金又能增加職場實力嗎？\n📢 「國際扶輪3461地區 25-26年度 \n生命橋樑助學計劃」來啦～🔥\n為協助優秀清寒大學生提升職場接軌能力，國際扶輪3461地區攜手104人力銀行推出【生命橋樑助學計劃】！\n學生完成指定課程訓練，即可獲得獎學金，每人新台幣 32,000元！✨\n🔹 申請資格\n✔ 中華民國國籍、26歲以下就讀大學三、四年級、研究所或專科學校二技部\n✔ 有領取獎學金需求之學生\n✔ 無不良行為且具積極正向者\n🔹 申請時間\n📅 即日起至 2025/10/24 (五)\n📬 以書面寄送，逾期不受理\n🔹 必備文件\n ✢ 申請表（掃描QR code下載）\n ✢ 自傳（500字以內）\n ✢ 在校成績單正本\n ✢ 其他相關證明（清寒證明、推薦信、社團參與等）\n📍 收件處：國際扶輪3461地區總監辦事處（台中市北區三民路三段291巷30號）\n📞 聯絡電話：0920-323532 呂思瑩 小姐\n📈追蹤粉絲專頁，接收最新公告！\n#獎學金 #生命橋樑 #扶輪社 #助學金 #學生必看\n\n更詳細資訊：https://www.rotary3461.org/RWD/M1_1/tw/1617/4414/0', activityUrl: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4414/0', image: 'https://pshop.myqr.com.tw/images/RWD_M1_1/0/5800.jpg?645', images: [], views: 0 },
+  { date: '2025.09.09', title: '苑裡扶輪社迎50週年 攜手農會贈物資助弱勢', content: '〔記者蔡政珉／苗栗報導〕苗栗縣苑裡扶輪社今年迎來成立50週年，苑裡扶輪社有感前人努力讓扶輪社維持至今，秉持服務社會的信念，攜手苑裡鎮農會舉辦捐贈活動，致贈公益物資給長期投入協助精神障礙患者復健的芳苑會所社區復健中心。\n\n苑裡扶輪社與苑裡鎮農會合作，捐贈200份苑裡鎮農會公益用冷凍丹參雞腿包，苑裡扶輪社表示，將會持續結合地方資源，發揮公益力量，讓物資能有效運用於社區照顧與扶助。\n\n芳苑會所負責人馬淑霞則表示，感謝苑裡扶輪社及苑裡鎮農會捐贈物資，目前機構50多位學員，且安排心理治療師、職能治療師及護理師等協助弱勢學員銜接社會，希望協助擺脫枷鎖、融入社會生活。\n\n新聞來源：https://news.ltn.com.tw/news/Miaoli/breakingnews/5172048', activityUrl: '', image: 'https://pshop.myqr.com.tw/images/RWD_M1_1/0/5798.jpg?198', images: [], views: 0 },
+  { date: '2025.08.20', title: '團結行善 FUN轉世界-繪畫比賽', content: '團結行善 FUN轉世界 繪畫比賽\n收件日期：114年9月20日至114年10月30日截止（以郵戳為憑）。\n\n比賽宗旨\n為鼓勵兒童及青少年發揮藝術潛能與想像力，透過繪畫創作表達對「團結行善，共同創造美好未來」的理解與展望，並培養其對社會的關懷與責任感。\n\n參賽對象\n臺中市幼稚園、國小及國中學生，皆可報名參加。\n\n比賽辦法\n繪畫主題及組別：\n「團結行善 Unite For Good」：幼稚園組、國小低年級組（一、二年級）、國小中年級組（三、四年級）。\n\n「反賄選 Anti-Fraud」：國小高年級組（五、六年級）、國中組。\n\n以上主題依年齡分組自由發揮，以對以上主題想法與觀念表達於繪畫作品中。\n\n作品收件\n地址： 404010臺中市北區三民路三段291巷30號4樓（國際扶輪3461地區 收）。\n聯絡電話： 0987-200808\n方式： 請將作品以紙本及妥善包裝，並請妥善包裝以避免作品損壞，郵寄請自貼。\n\n獎勵辦法\n幼稚園組\n第一名（1名）： 獎金新台幣1500元、圖書禮書600元及其他。\n\n第二名（1名）： 獎金新台幣1000元、圖書禮書600元及其他。\n\n第三名（1名）： 獎金新台幣500元、圖書禮書600元及其他。\n\n佳作（5名）： 圖書禮書600元及其他。\n\n入選（10名）： 圖書禮書600元及其他。\n\n國小組（低年級、中年級、高年級，共三組）\n第一名（1名）： 獎金新台幣2000元、圖書禮書600元及其他。\n\n第二名（1名）： 獎金新台幣1500元、圖書禮書600元及其他。\n\n第三名（1名）： 獎金新台幣1000元、圖書禮書600元及其他。\n\n佳作（5名）： 圖書禮書600元及其他。\n\n入選（10名）： 圖書禮書600元及其他。\n\n國中組\n第一名（1名）： 獎金新台幣3000元、圖書禮書600元及其他。\n\n第二名（1名）： 獎金新台幣2000元、圖書禮書600元及其他。\n\n第三名（1名）： 獎金新台幣1500元、圖書禮書600元及其他。\n\n佳作（5名）： 圖書禮書600元及其他。\n\n入選（10名）： 圖書禮書600元及其他。\n\n單位\n指導單位： 臺中市政府文化局\n\n主辦單位： 國際扶輪3461地區扶輪社 台中中央扶輪社\n\n協辦單位： 台灣中部美術協會、台中市美術協會、臺中市美', activityUrl: '', image: 'https://pshop.myqr.com.tw/images/RWD_M1_1/0/5760.jpg?332', images: [], views: 0 },
+],
+  activities: [
+    { tbd: false, day: '11', month: '8月', year: '2026', sortDate: '2026-08-11', name: '地區扶輪日', location: '豐原', url: '#' },
+    { tbd: true,  day: '',   month: '',    year: '2026', sortDate: null,          name: 'RYLA 訓練營',  location: '地點待定', url: '#' },
+    { tbd: true,  day: '',   month: '',    year: '2026', sortDate: null,          name: '地區年會',     location: '台中',   url: '#' },
+    { tbd: false, day: '15', month: '9月', year: '2026', sortDate: '2026-09-15', name: '地區理監事會', location: '台中',   url: '#' },
+    { tbd: true,  day: '',   month: '',    year: '2026', sortDate: null,          name: '地區服務活動展', location: '地點待定', url: '#' },
+  ],
+  videos: [
+    { title: 'Rotary－歡迎歌', youtubeId: 'T0w0dpB67hw', image: 'https://pshop.myqr.com.tw/images/RWD_M7_1/0/945.png?407' },
+    { title: '六大任務',       youtubeId: 'DREKzBWTNSE', image: 'https://pshop.myqr.com.tw/images/RWD_M7_1/0/946.png?407' },
+  ],
+  sponsors: [
+    { src: 'images/sponsor/6522.png',         title: '6522' },
+    { src: 'images/sponsor/6605.png',         title: '6605' },
+    { src: 'images/sponsor/6704.jpg',         title: '6704' },
+    { src: 'images/sponsor/6705.jpg',         title: '6705' },
+    { src: 'images/sponsor/6707.jpg',         title: '6707' },
+    { src: 'images/sponsor/mamamiasunny.jpg', title: 'Mamamia Sunny' },
+    { src: 'images/sponsor/井船.jpg',          title: '井船' },
+    { src: 'images/sponsor/新亞東.jpg',        title: '新亞東' },
+  ],
+  contact: { address: '404台中市北區三民路三段291巷30號2樓', phone: '0987-220-088', email: '3461dg2425@gmail.com', copyright: '©2026 Rotary扶輪社3461', designer: '傳啓資訊股份有限公司 AI設計' },
+  monthly: {},
+};
+
+/* ── 前台 DATA_DEFAULTS（同步自 governor-monthly.html） ── */
+const MONTHLY_DEFAULTS = (() => {
+  const B = 'pdfs/總監月刊-電子檔/';
+  return {
+    '25-26': { heading: '2025–26 年度', issues: [
+      { no:'NO.01', month:'2025.7 July',      id:'1bgweARrOcFVVxz5MR-1FwRhMjq9b-jQc', local:B+'25-26年度/D3461-202507.pdf.pdf', pages:[] },
+      { no:'NO.02', month:'2025.8 August',    id:'14Oxend27jPw7ttQLqHhKT-UtlRTDp9R6', local:B+'25-26年度/D3461-202508.pdf', pages:[] },
+      { no:'NO.03', month:'2025.9 September', id:'1uI7yWHWz009uF88BaW7wDrrbhFCDVBJv', local:B+'25-26年度/D3461-202509.pdf', pages:[] },
+      { no:'NO.04', month:'2025.10 October',  id:null, local:B+'25-26年度/D3461-202510.pdf', pages:[] },
+      { no:'NO.05', month:'2025.11 November', id:null, local:B+'25-26年度/D3461-202511.pdf', pages:[] },
+      { no:'NO.06', month:'2025.12 December', id:null, local:B+'25-26年度/D3461-202512.pdf', pages:[] },
+      { no:'NO.07', month:'2026.1 January',   id:null, local:B+'25-26年度/D3461-202601.pdf.pdf', pages:[] },
+      { no:'NO.08', month:'2026.2 February',  id:null, local:B+'25-26年度/D3461-202602.pdf.pdf', pages:[] },
+      { no:'NO.09', month:'2026.3 March',     id:null, local:B+'25-26年度/D3461-202603.pdf.pdf', pages:[] },
+      { no:'NO.10', month:'2026.4 April',     id:null, local:B+'25-26年度/D3461-202604.pdf.pdf', pages:[] },
+      { no:'NO.11', month:'2026.5 May',       id:null, local:B+'25-26年度/D3461-202605.pdf', pages:[] },
+    ]},
+    '24-25': { heading: '2024–25 年度', issues: [
+      { no:'NO.01', month:'2024.7 July',      id:'1EBHdUybpvEwGAindyBXOwAfrrSfVOEn4', local:B+'24-25年度/d3461-202407 (2).pdf', pages:[] },
+      { no:'NO.02', month:'2024.8 August',    id:'1welnmUJUpq8eaWmcAZoVuVwN326JB_1Y', local:B+'24-25年度/D3461-202408 (1).pdf', pages:[] },
+      { no:'NO.03', month:'2024.9 September', id:'1C95vmYC9gGJmmg1sBeicmDYf6K-LNrYb', local:B+'24-25年度/扶輪3461總監月刊2024-09月電子檔.pdf', pages:[] },
+      { no:'NO.04', month:'2024.10 October',  id:'1_44xuTifWpUwRYeFo-cyiJkGWqfCrv0m', local:B+'24-25年度/D3461-202410.pdf', pages:[] },
+      { no:'NO.05', month:'2024.11 November', id:'1Njoz1EAgTXPMsi8KTZ3SCo65E1ypVy_b', local:B+'24-25年度/D3461-202411.pdf', pages:[] },
+      { no:'NO.06', month:'2024.12 December', id:'1QNY70QNnLyJxejvO_F8jXIMkOfFFoBTx', local:B+'24-25年度/D3461-202412.pdf', pages:[] },
+      { no:'NO.07', month:'2025.1 January',   id:'1wuLsXk9vvse33qgpeHn_13XvxO5lgbRS', local:B+'24-25年度/D3461-202501 (1).pdf', pages:[] },
+      { no:'NO.08', month:'2025.2 February',  id:'1kCSvnKPvgNtCr9U3Ty6j0a8flmSIRRZF', local:B+'24-25年度/D3461-202502 (1).pdf', pages:[] },
+      { no:'NO.09', month:'2025.3 March',     id:'1eyssX_ONTQ3JlkjW2CO29QYLe_JS8vV3', local:B+'24-25年度/D3461-202503 (1).pdf', pages:[] },
+      { no:'NO.10', month:'2025.4 April',     id:'1Ge1ZtnqMH-Dnc-1TPTu6WLLMmZZzQmHl', local:B+'24-25年度/D3462-202504.pdf', pages:[] },
+      { no:'NO.11', month:'2025.5 May',       id:'1Ynxe6xo3P1sNRkT1gJfpDtAWp4nisfC1', local:B+'24-25年度/D3461-202505.pdf', pages:[] },
+      { no:'NO.12', month:'2025.6 June',      id:'1qiq-bAdT98x7odP2MRx_OjnZtMn-qXZ4', local:B+'24-25年度/D3461-202506.pdf', pages:[] },
+    ]},
+    '23-24': { heading: '2023–24 年度', issues: [
+      { no:'NO.01', month:'2023.7 July',      id:'16weaX5OrPxOV2JGET5Udmzmr1msVcaDP', local:B+'23-24年度/7月電子檔-扶輪3461總監月刊2023.pdf', pages:[] },
+      { no:'NO.02', month:'2023.8 August',    id:'1YQSaur_EmqB_s586pzh9DmC15Yeut-Tf', local:B+'23-24年度/8月總監月刊_3461地區23-24年度.pdf', pages:[] },
+      { no:'NO.03', month:'2023.9 September', id:'1B4Xc5eRe12XxZ62Gg0oeaPTb2pVUQ195', local:B+'23-24年度/9月電子檔-扶輪3461總監月刊2023.pdf', pages:[] },
+      { no:'NO.04', month:'2023.10 October',  id:'1hcT-oZ5YiQd0jqxtVb6B-BEQuiHca-ex', local:B+'23-24年度/10月電子檔-扶輪3461總監月刊2023.pdf', pages:[] },
+      { no:'NO.05', month:'2023.11 November', id:'16wUH1VUPsedy8QqVjZPTzIjbHO04Q9cr', local:B+'23-24年度/11月電子檔-扶輪3461總監月刊2023pdf.pdf', pages:[] },
+      { no:'NO.06', month:'2023.12 December', id:'1OuiMCMEnQNylRSOzKNw9vN2a9USzjdPB', local:B+'23-24年度/12月電子檔-扶輪3461總監月刊2023.pdf', pages:[] },
+      { no:'NO.07', month:'2024.1 January',   id:'1pub-cll8S9xkUdQ_MlVWdBOkz8H1hJgJ', local:B+'23-24年度/1月電子檔-扶輪3461總監月刊2024.pdf', pages:[] },
+      { no:'NO.08', month:'2024.2 February',  id:'1f-muQbsCu283iC_-jVAFOqoF6xZ2HVs7', local:B+'23-24年度/2月電子檔-扶輪3461總監月刊2024pdf.pdf', pages:[] },
+      { no:'NO.09', month:'2024.3 March',     id:'1ILJ3O9I8PPOBigaB9lhldkWiAyG0ppOj', local:B+'23-24年度/3月電子檔-扶輪3461總監月刊2024pdf.pdf', pages:[] },
+      { no:'NO.10', month:'2024.4 April',     id:'1TN2LztGe3E1h2pmPqpnXmD3hcXO7rqC1', local:B+'23-24年度/4月電子檔-扶輪3461總監月刊2024pdf.pdf', pages:[] },
+      { no:'NO.11', month:'2024.5 May',       id:'1Q7YaPatM_KXGfEyPD5B4vtm43sZ4vrHn', local:B+'23-24年度/5月電子檔-扶輪3461總監月刊2024pdf.pdf', pages:[] },
+      { no:'NO.12', month:'2024.6 June',      id:'1sekTT75R_ZeOaUgnbHZcskbRdcNzvus4', local:B+'23-24年度/6月總監月刊_3461地區23-24年度.pdf', pages:[] },
+    ]},
+    '22-23': { heading: '2022–23 年度', issues: [
+      { no:'NO.01', month:'2022.7 July',      id:'1YZRavazx1R6wz8OMlEoMjL4rL4mpaxyG', local:B+'22-23年度/7月總監月刊_電子版ok.pdf', pages:[] },
+      { no:'NO.02', month:'2022.8 August',    id:'1FFhDM5VYJmV7L3ZUrn7_f4gI-16Vv7tT', local:B+'22-23年度/8月總監月刊_電子版ok.pdf', pages:[] },
+      { no:'NO.03', month:'2022.9 September', id:'1js6kl7mOu_lTj_1Bldeh_ldj6Ks_8dMm', local:B+'22-23年度/9月總監月刊_電子版ok.pdf', pages:[] },
+      { no:'NO.04', month:'2022.10 October',  id:'1jVk1P5I9DeknTFU-D3UkuFjGpozDuBTp', local:B+'22-23年度/10月總監月刊_電子版ok.pdf', pages:[] },
+      { no:'NO.05', month:'2022.11 November', id:'1iWIVbPAMkUrUAMtNQlg1Ow-amH4ZJQLr', local:B+'22-23年度/11月總監月刊_電子版ok_compressed.pdf', pages:[] },
+      { no:'NO.06', month:'2022.12 December', id:'11wRmFAsn0CXUuggDGbM-is0eUgiMDYQQ', local:B+'22-23年度/12月總監月刊_電子版ok_compressed.pdf', pages:[] },
+      { no:'NO.07', month:'2023.1 January',   id:'1ceiwFnk3Ta30feZCkHl0DUN4Tv72CCxo', local:B+'22-23年度/1月總監月刊_電子版ok.pdf', pages:[] },
+      { no:'NO.08', month:'2023.2 February',  id:'11qKUoMMAL0hsBc0m1AFCsS9vcmxaMHpo', local:B+'22-23年度/2月總監月刊_電子版ok_compressed.pdf', pages:[] },
+      { no:'NO.09', month:'2023.3 March',     id:'1XBZ20FcdELEb_YFXlYteOga31zN97Tv7', local:B+'22-23年度/3月總監月刊_電子版ok_compressed.pdf', pages:[] },
+      { no:'NO.10', month:'2023.4 April',     id:'17fx33y28AGl23TsBYI-MTzvQLxJhR85v', local:B+'22-23年度/4月總監月刊_電子版ok_compressed.pdf', pages:[] },
+      { no:'NO.11', month:'2023.5 May',       id:'1SPZ8m8T_4JQh8hI9T5u-Kx1Ya8UC2VkN', local:B+'22-23年度/5月總監月刊_電子版ok_compressed.pdf', pages:[] },
+      { no:'NO.12', month:'2023.6 June',      id:'1hbxKVXx4a6ozzryXy7hRxm_wrKBTaCLv', local:B+'22-23年度/6月總監月刊_電子版ok.pdf', pages:[] },
+    ]},
+    '21-22': { heading: '2021–22 年度', issues: [
+      { no:'NO.01', month:'2021.7 July',      id:'1FY8T1cw5P2i7-Fdl4LX84kI6voxnjQee', local:B+'21-22年度/D3461-202107.pdf', pages:[] },
+      { no:'NO.02', month:'2021.8 August',    id:'1OLPBRrpEWPPIUzMSwOOpaoZaU4vGodBP', local:B+'21-22年度/D3461-202108.pdf', pages:[] },
+      { no:'NO.03', month:'2021.9 September', id:'14CyFtNRC6VReQxvyUHo325itGKtzsIw1', local:B+'21-22年度/D3461-202109.pdf', pages:[] },
+      { no:'NO.04', month:'2021.10 October',  id:'1rSpPrQ1KKGTjSnbcrmTaRF6lLc8L7XXr', local:B+'21-22年度/D3461-202110.pdf', pages:[] },
+      { no:'NO.05', month:'2021.11 November', id:'1Mp0ySdv8sgHOVNIUAPkj67C5KkcvPa23', local:B+'21-22年度/D3461-202111.pdf', pages:[] },
+      { no:'NO.06', month:'2022.1 January',   id:'1TzH8olDh-K_gFAlAoltC1UUO-gSR9nIE', local:B+'21-22年度/D3461-202201.pdf', pages:[] },
+      { no:'NO.07', month:'2022.2 February',  id:'1aixSoin3IWsOoGHu5oLyUz7-YoDcoNvi', local:B+'21-22年度/D3461-202202.pdf', pages:[] },
+      { no:'NO.08', month:'2022.3 March',     id:'19PVmgG59-xtzh7WyN-U_EJkZkMBAEm8-', local:B+'21-22年度/D3461-202203.pdf', pages:[] },
+      { no:'NO.09', month:'2022.4 April',     id:'1ruPdFwqLS2kON6FT2we-xJqCZnYwYAcs', local:B+'21-22年度/D3461-202204.pdf', pages:[] },
+      { no:'NO.10', month:'2022.5 May',       id:'1n7dC8EglmpIFeJ7vmxN7FnhRHK2GF8SS', local:B+'21-22年度/D3461-202205.pdf', pages:[] },
+      { no:'NO.11', month:'2022.6 June',      id:'1h57AVnT-HrVvunHY-2JCbM3sJ6UCHVu1', local:B+'21-22年度/D3461-202206.pdf', pages:[] },
+    ]},
+  };
+})();
+
+let state = {};
+function loadState() {
+  ['news','activities','videos','sponsors'].forEach(k => {
+    const s = localStorage.getItem('r3461_' + k);
+    state[k] = s ? JSON.parse(s) : JSON.parse(JSON.stringify(DEFAULTS[k]));
+  });
+  const cs = localStorage.getItem('r3461_contact');
+  state.contact = cs ? JSON.parse(cs) : { ...DEFAULTS.contact };
+  const ms = localStorage.getItem('r3461_monthly');
+  const loaded = ms ? JSON.parse(ms) : {};
+  // 若後台無資料，自動帶入前台預設值
+  state.monthly = (loaded && Object.keys(loaded).length > 0) ? loaded : JSON.parse(JSON.stringify(MONTHLY_DEFAULTS));
+}
+function persistState() {
+  ['news','activities','videos','sponsors'].forEach(k => localStorage.setItem('r3461_' + k, JSON.stringify(state[k])));
+  localStorage.setItem('r3461_contact', JSON.stringify(state.contact));
+  localStorage.setItem('r3461_monthly', JSON.stringify(state.monthly));
+}
+
+// NAV
+document.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', () => switchPanel(item.dataset.panel)));
+
+// TOAST
+let toastTimer;
+function toast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = 'show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.className = '', 3000);
+}
+
+function updateStats() {
+  document.getElementById('stat-news').textContent       = state.news.length;
+  document.getElementById('stat-activities').textContent = state.activities.length;
+  document.getElementById('stat-videos').textContent     = state.videos.length;
+  document.getElementById('stat-sponsors').textContent   = state.sponsors.length;
+}
+
+// MODAL
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+// 點擊霧面背景不關閉 modal（需按 ✕ 或取消才關閉）
+
+// DIRTY TRACKING
+let dirty = false;
+function markDirty()  { dirty = true; }
+function clearDirty() { dirty = false; }
+
+// NEWS
+function renderNews() {
+  const tbody = document.getElementById('newsTbody');
+  tbody.innerHTML = '';
+  if (!state.news.length) { tbody.innerHTML = '<tr class="empty-row"><td colspan="5">尚無資料，請新增</td></tr>'; return; }
+  state.news.forEach((n, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><img class="td-img" src="${n.image}" onerror="this.src=''" alt=""></td>
+      <td style="font-size:12px">${n.date || ''}</td>
+      <td><div style="font-weight:600;line-height:1.4;max-width:300px">${n.title}</div></td>
+      <td><span class="badge badge-blue">${n.views || 0}</span></td>
+      <td><div class="td-actions"><button class="btn btn-ghost btn-sm" onclick="openNewsModal(${i})">編輯</button><button class="btn btn-danger btn-sm" onclick="deleteItem('news',${i})">刪除</button></div></td>`;
+    tbody.appendChild(tr);
+  });
+}
+function openNewsModal(idx = -1) {
+  document.getElementById('newsModalTitle').textContent = idx === -1 ? '新增消息' : '編輯消息';
+  document.getElementById('news-edit-idx').value = idx;
+  const n = idx === -1 ? {} : state.news[idx];
+  document.getElementById('news-date').value        = n.date        || '';
+  document.getElementById('news-title').value       = n.title       || '';
+  document.getElementById('news-image').value       = n.image       || '';
+  document.getElementById('news-activityUrl').value = n.activityUrl || '';
+  document.getElementById('news-content').value     = n.content     || '';
+  document.getElementById('news-img1').value        = (n.images && n.images[0]) || '';
+  document.getElementById('news-img2').value        = (n.images && n.images[1]) || '';
+  document.getElementById('news-views').value       = n.views       || 0;
+  openModal('newsModal');
+}
+function saveNewsItem() {
+  const idx  = parseInt(document.getElementById('news-edit-idx').value);
+  const imgs = [
+    document.getElementById('news-img1').value.trim(),
+    document.getElementById('news-img2').value.trim(),
+  ].filter(Boolean);
+  const item = {
+    date:        document.getElementById('news-date').value.trim(),
+    title:       document.getElementById('news-title').value.trim(),
+    content:     document.getElementById('news-content').value.trim(),
+    activityUrl: document.getElementById('news-activityUrl').value.trim(),
+    image:       document.getElementById('news-image').value.trim(),
+    images:      imgs,
+    views:       parseInt(document.getElementById('news-views').value) || 0,
+  };
+  if (!item.title) { toast('請填寫標題', 'error'); return; }
+  if (idx === -1) state.news.unshift(item); else state.news[idx] = item;
+  closeModal('newsModal'); renderNews(); markDirty();
+}
+
+// POSTER SELECTION
+function openPosterModal() {
+  const saved = JSON.parse(localStorage.getItem('r3461_poster') || '[]');
+  const grid = document.getElementById('posterGrid');
+  grid.innerHTML = '';
+  state.news.forEach((n, i) => {
+    if (!n.image) return;
+    const div = document.createElement('div');
+    div.className = 'poster-item' + (saved.includes(n.image) ? ' selected' : '');
+    div.dataset.img = n.image;
+    div.innerHTML = `<div class="poster-check">✓</div>
+      <img src="${n.image}" onerror="this.style.opacity='.3'" alt="">
+      <div class="poster-title">${n.title}</div>`;
+    div.onclick = () => div.classList.toggle('selected');
+    grid.appendChild(div);
+  });
+  openModal('posterModal');
+}
+function savePosterSelection() {
+  const selected = [...document.querySelectorAll('#posterGrid .poster-item.selected')].map(el => el.dataset.img);
+  localStorage.setItem('r3461_poster', JSON.stringify(selected));
+  closeModal('posterModal');
+  toast('✓ 海報設定已儲存，前台重新整理後生效', 'success');
+}
+
+// ACTIVITIES
+function renderActivities() {
+  const tbody = document.getElementById('activityTbody');
+  tbody.innerHTML = '';
+  if (!state.activities.length) { tbody.innerHTML = '<tr class="empty-row"><td colspan="5">尚無資料</td></tr>'; return; }
+  state.activities.forEach((a, i) => {
+    const dateStr = a.tbd ? `TBD ${a.year}` : `${a.month} ${a.day}日`;
+    const badge   = a.tbd ? '<span class="badge badge-gray">待定</span>' : '<span class="badge badge-green">確定</span>';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><strong style="font-size:12px">${dateStr}</strong></td><td>${a.name}</td><td>${a.location}</td><td>${badge}</td>
+      <td><div class="td-actions"><button class="btn btn-ghost btn-sm" onclick="openActivityModal(${i})">編輯</button><button class="btn btn-danger btn-sm" onclick="deleteItem('activities',${i})">刪除</button></div></td>`;
+    tbody.appendChild(tr);
+  });
+}
+function openActivityModal(idx = -1) {
+  document.getElementById('activityModalTitle').textContent = idx === -1 ? '新增活動' : '編輯活動';
+  document.getElementById('activity-edit-idx').value = idx;
+  const a = idx === -1 ? {} : state.activities[idx];
+  document.getElementById('activity-name').value     = a.name     || '';
+  document.getElementById('activity-location').value = a.location || '';
+  document.getElementById('activity-url').value      = a.url      || '#';
+  document.getElementById('activity-tbd').value      = a.tbd ? 'true' : 'false';
+  document.getElementById('activity-date').value     = a.sortDate || '';
+  document.getElementById('activity-year').value     = a.year     || '2026';
+  toggleDateFields();
+  openModal('activityModal');
+}
+function toggleDateFields() {
+  const tbd = document.getElementById('activity-tbd').value === 'true';
+  document.getElementById('date-fields').style.display = tbd ? 'none' : '';
+  document.getElementById('tbd-fields').style.display  = tbd ? '' : 'none';
+}
+function saveActivityItem() {
+  const idx = parseInt(document.getElementById('activity-edit-idx').value);
+  const tbd = document.getElementById('activity-tbd').value === 'true';
+  const dateVal = document.getElementById('activity-date').value;
+  let item;
+  if (tbd) {
+    item = { tbd: true, day: '', month: '', year: document.getElementById('activity-year').value, sortDate: null, name: document.getElementById('activity-name').value.trim(), location: document.getElementById('activity-location').value.trim(), url: document.getElementById('activity-url').value.trim() || '#' };
+  } else {
+    if (!dateVal) { toast('請選擇日期', 'error'); return; }
+    const d = new Date(dateVal);
+    const months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    item = { tbd: false, day: String(d.getDate()), month: months[d.getMonth()], year: String(d.getFullYear()), sortDate: dateVal, name: document.getElementById('activity-name').value.trim(), location: document.getElementById('activity-location').value.trim(), url: document.getElementById('activity-url').value.trim() || '#' };
+  }
+  if (!item.name) { toast('請填寫活動名稱', 'error'); return; }
+  if (idx === -1) state.activities.push(item); else state.activities[idx] = item;
+  closeModal('activityModal'); renderActivities(); markDirty();
+}
+
+// VIDEOS
+function renderVideos() {
+  const tbody = document.getElementById('videoTbody');
+  tbody.innerHTML = '';
+  if (!state.videos.length) { tbody.innerHTML = '<tr class="empty-row"><td colspan="4">尚無資料</td></tr>'; return; }
+  state.videos.forEach((v, i) => {
+    const thumb = v.image || `https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg`;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><img class="td-img" src="${thumb}" alt=""></td><td><strong>${v.title}</strong></td>
+      <td><span class="badge badge-blue">${v.youtubeId}</span></td>
+      <td><div class="td-actions"><button class="btn btn-ghost btn-sm" onclick="openVideoModal(${i})">編輯</button><button class="btn btn-danger btn-sm" onclick="deleteItem('videos',${i})">刪除</button></div></td>`;
+    tbody.appendChild(tr);
+  });
+}
+function openVideoModal(idx = -1) {
+  document.getElementById('videoModalTitle').textContent = idx === -1 ? '新增影片' : '編輯影片';
+  document.getElementById('video-edit-idx').value = idx;
+  const v = idx === -1 ? {} : state.videos[idx];
+  document.getElementById('video-title').value = v.title     || '';
+  document.getElementById('video-ytid').value  = v.youtubeId || '';
+  document.getElementById('video-image').value = v.image     || '';
+  openModal('videoModal');
+}
+function saveVideoItem() {
+  const idx  = parseInt(document.getElementById('video-edit-idx').value);
+  const item = { title: document.getElementById('video-title').value.trim(), youtubeId: document.getElementById('video-ytid').value.trim(), image: document.getElementById('video-image').value.trim() };
+  if (!item.title || !item.youtubeId) { toast('請填寫標題與 YouTube ID', 'error'); return; }
+  if (!item.image) item.image = `https://img.youtube.com/vi/${item.youtubeId}/mqdefault.jpg`;
+  if (idx === -1) state.videos.push(item); else state.videos[idx] = item;
+  closeModal('videoModal'); renderVideos(); markDirty();
+}
+
+// SPONSORS
+function renderSponsors() {
+  const tbody = document.getElementById('sponsorTbody');
+  tbody.innerHTML = '';
+  if (!state.sponsors.length) { tbody.innerHTML = '<tr class="empty-row"><td colspan="5">尚無資料</td></tr>'; return; }
+  state.sponsors.forEach((s, i) => {
+    const linkCell = s.link
+      ? `<a href="${s.link}" target="_blank" style="font-size:11px;color:#2563eb;word-break:break-all;">${s.link}</a>`
+      : `<span style="color:#d1d5db;font-size:11px;">—</span>`;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><img class="td-img" src="${s.src}" onerror="this.style.opacity=0.2" alt=""></td>
+      <td><strong>${s.title}</strong></td>
+      <td style="font-size:11px;color:#9ca3af;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.src}</td>
+      <td>${linkCell}</td>
+      <td><div class="td-actions"><button class="btn btn-ghost btn-sm" onclick="openSponsorModal(${i})">編輯</button><button class="btn btn-danger btn-sm" onclick="deleteItem('sponsors',${i})">刪除</button></div></td>`;
+    tbody.appendChild(tr);
+  });
+}
+function openSponsorModal(idx = -1) {
+  document.getElementById('sponsorModalTitle').textContent = idx === -1 ? '新增贊助單位' : '編輯贊助單位';
+  document.getElementById('sponsor-edit-idx').value = idx;
+  const s = idx === -1 ? {} : state.sponsors[idx];
+  document.getElementById('sponsor-title').value = s.title || '';
+  document.getElementById('sponsor-src').value   = s.src   || '';
+  document.getElementById('sponsor-link').value  = s.link  || '';
+  document.getElementById('sponsor-file-hint').style.display = 'none';
+  document.getElementById('magic-sponsor-status').style.display = 'none';
+  updateSponsorPreview(s.src || '');
+  openModal('sponsorModal');
+}
+
+function updateSponsorPreview(src) {
+  const wrap = document.getElementById('sponsor-preview-wrap');
+  const img  = document.getElementById('sponsor-preview-img');
+  const zoom = document.getElementById('sponsor-zoom-img');
+  if (src) {
+    img.src = src;
+    if (zoom) zoom.src = src;
+    wrap.style.display = '';
+  } else {
+    wrap.style.display = 'none';
+    const panel = document.getElementById('sponsor-zoom-panel');
+    if (panel) panel.style.display = 'none';
+  }
+}
+
+function toggleSponsorZoom() {
+  const panel = document.getElementById('sponsor-zoom-panel');
+  if (!panel) return;
+  panel.style.display = panel.style.display === 'none' ? '' : 'none';
+}
+
+function handleSponsorFile(input) {
+  if (!input.files[0]) return;
+  const file = input.files[0];
+  const ext  = file.name.split('.').pop().toLowerCase();
+  const suggested = `images/sponsor/${file.name}`;
+  document.getElementById('sponsor-src').value = suggested;
+  // 本地預覽
+  const reader = new FileReader();
+  reader.onload = e => {
+    const src  = e.target.result;
+    const wrap = document.getElementById('sponsor-preview-wrap');
+    const img  = document.getElementById('sponsor-preview-img');
+    const zoom = document.getElementById('sponsor-zoom-img');
+    img.src = src;
+    if (zoom) zoom.src = src;
+    wrap.style.display = '';
+  };
+  reader.readAsDataURL(file);
+  const hint = document.getElementById('sponsor-file-hint');
+  hint.style.display = '';
+  hint.textContent = `請將「${file.name}」複製到 images/sponsor/ 資料夾`;
+}
+
+async function magicSponsor(input) {
+  if (!input.files[0]) return;
+  const file = input.files[0];
+  input.value = '';
+  const apiKey = localStorage.getItem('r3461_claude_key');
+  if (!apiKey) { toast('請先到「網站設定」底部設定 Claude API Key', 'error'); return; }
+
+  const statusEl = document.getElementById('magic-sponsor-status');
+  const msgEl    = document.getElementById('magic-sponsor-msg');
+  statusEl.style.display = 'flex';
+  msgEl.textContent = '魔術棒分析中…';
+
+  try {
+    const base64 = await new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.onload = e => res(e.target.result.split(',')[1]);
+      reader.onerror = rej;
+      reader.readAsDataURL(file);
+    });
+
+    // 同時顯示預覽
+    const src  = 'data:' + file.type + ';base64,' + base64;
+    const wrap = document.getElementById('sponsor-preview-wrap');
+    const img  = document.getElementById('sponsor-preview-img');
+    const zoom = document.getElementById('sponsor-zoom-img');
+    img.src = src;
+    if (zoom) zoom.src = src;
+    wrap.style.display = '';
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-5',
+        max_tokens: 512,
+        messages: [{ role: 'user', content: [
+          { type: 'image', source: { type: 'base64', media_type: file.type, data: base64 } },
+          { type: 'text',  text: '請仔細辨識這張圖片中所有可見的文字，包含商標文字、品牌名稱、標語、標題等。以 JSON 格式回傳：{"title":"圖片中最主要的文字或品牌名稱（完整保留中英文，若有多行文字則以空格連接）"}。只回傳 JSON，不要說明。' },
+        ]}],
+      }),
+    });
+
+    if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error?.message || `HTTP ${res.status}`); }
+    const data  = await res.json();
+    const raw   = data.content?.[0]?.text || '';
+    const match = raw.match(/\{[\s\S]*\}/);
+    if (match) {
+      const json = JSON.parse(match[0]);
+      if (json.title) document.getElementById('sponsor-title').value = json.title;
+    }
+    // 設定建議路徑
+    const suggested = `images/sponsor/${file.name}`;
+    document.getElementById('sponsor-src').value = suggested;
+    const hint = document.getElementById('sponsor-file-hint');
+    hint.style.display = '';
+    hint.textContent = `請將「${file.name}」複製到 images/sponsor/ 資料夾`;
+
+    msgEl.textContent = '✅ 分析完成，請確認名稱後儲存';
+    msgEl.style.color = '#059669';
+    setTimeout(() => { statusEl.style.display = 'none'; msgEl.style.color = ''; }, 3000);
+    toast('🪄 魔術棒完成！');
+  } catch(e) {
+    msgEl.textContent = '❌ ' + e.message;
+    msgEl.style.color = '#ef4444';
+    setTimeout(() => { statusEl.style.display = 'none'; msgEl.style.color = ''; }, 4000);
+    toast('分析失敗：' + e.message, 'error');
+  }
+}
+function saveSponsorItem() {
+  const idx  = parseInt(document.getElementById('sponsor-edit-idx').value);
+  const item = {
+    title: document.getElementById('sponsor-title').value.trim(),
+    src:   document.getElementById('sponsor-src').value.trim(),
+    link:  document.getElementById('sponsor-link').value.trim(),
+  };
+  if (!item.src) { toast('請填寫圖片路徑', 'error'); return; }
+  if (!item.title) item.title = item.src.split('/').pop().split('.')[0];
+  if (idx === -1) state.sponsors.push(item); else state.sponsors[idx] = item;
+  closeModal('sponsorModal'); renderSponsors(); markDirty();
+}
+
+// CONTACT (fields are now in siteinfo sub-panel)
+function fillContactForm() { fillSiteinfo(); }
+function readContactForm()  { readSiteinfo(); }
+
+// DELETE
+function deleteItem(key, idx) {
+  if (!confirm('確定刪除？')) return;
+  state[key].splice(idx, 1);
+  ({ news: renderNews, activities: renderActivities, videos: renderVideos, sponsors: renderSponsors })[key]();
+  markDirty();
+  toast('已刪除', 'success');
+}
+
+// ── PAGE SETUP DEFAULT DATA ──
+const PS_DEFAULTS = {
+  menu: [
+    { level: 1, label: '扶輪人', url: '#' },
+    { level: 2, label: 'RI社長',         url: 'ri-president.html' },
+    { level: 2, label: 'RI現況',         url: 'ri-current.html' },
+    { level: 2, label: '地區總監',       url: 'governor.html' },
+    { level: 2, label: '3461各社資訊',   url: 'clubs.html' },
+    { level: 2, label: '地區組織名錄',   url: 'directory.html' },
+    { level: 2, label: '年度重要工作目標', url: 'annual-goals.html' },
+    { level: 2, label: '總監當選人',     url: 'governor-elect.html' },
+    { level: 2, label: '總監提名人',     url: '#' },
+    { level: 2, label: '歷屆社長、總監', url: '#' },
+    { level: 1, label: '進行事', url: '#' },
+    { level: 2, label: '地區行事曆', url: 'calendar.html' },
+    { level: 2, label: '扶輪日',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },
+    { level: 2, label: '地區年會',   url: 'conference.html' },
+    { level: 2, label: '國際年會',   url: 'international-convention.html' },
+    { level: 2, label: '服務計劃',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' },
+    { level: 1, label: '秀成果', url: '#' },
+    { level: 2, label: 'RYLA',     url: '#' },
+    { level: 2, label: 'RYE',      url: '#' },
+    { level: 2, label: 'NGSE',     url: '#' },
+    { level: 2, label: 'Rotaract', url: '#' },
+    { level: 2, label: 'Interact', url: 'interact.html' },
+    { level: 2, label: '生命橋樑', url: '#' },
+    { level: 1, label: '回顧庫', url: '#' },
+    { level: 2, label: '總監月刊',     url: 'governor-monthly.html?nocache=1' },
+    { level: 2, label: '公共形象新聞', url: 'news.html' },
+    { level: 2, label: 'RI 成果展示',  url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },
+    { level: 2, label: '扶輪之子',     url: '#' },
+    { level: 2, label: '扶輪 Shorts',  url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5323/2112-0' },
+    { level: 2, label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' },
+    { level: 1, label: '學知識', url: '#' },
+    { level: 2, label: '扶輪簡介',   url: 'rotary-intro.html' },
+    { level: 2, label: '七大焦點領域', url: 'focus-areas.html' },
+    { level: 2, label: '扶輪標誌', url: 'rotary-logo.html' },
+    { level: 2, label: '扶輪基金',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },
+    { level: 2, label: '扶輪現況',   url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' },
+    { level: 1, label: '連結', url: '#' },
+    { level: 2, label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },
+    { level: 2, label: '地區扶輪社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },
+    { level: 2, label: '地區扶青社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },
+    { level: 2, label: '地區扶少圍',   url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },
+    { level: 2, label: '扶輪公益網',   url: 'https://17rcn.org/' },
+    { level: 2, label: '扶輪領導學院', url: 'https://www.rlitw.org/' },
+    { level: 2, label: '職業服務',     url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },
+    { level: 2, label: '地區人才庫',   url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },
+    { level: 2, label: '相關連結',     url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' },
+    { level: 1, label: '更多資源', url: '#' },
+    { level: 2, label: '年度主題',   url: '#' },
+    { level: 2, label: '下載專區',   url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },
+    { level: 2, label: '品牌中心',   url: 'https://brandcenter.rotary.org/' },
+    { level: 2, label: '台灣扶輪下載', url: 'https://taiwan-rotary.org/download/' },
+  ],
+  hero: [
+    { type: 'video', url: 'https://pshop.myqr.com.tw/videos/RWD_M7_1/906/90620260305104930.mp4?407' },
+  ],
+  siteinfo: {
+    address: '404台中市北區三民路三段291巷30號2樓',
+    mapurl: 'https://maps.google.com/maps?q=404%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%8C%97%E5%8D%80%E4%B8%89%E6%B0%91%E8%B7%AF%E4%B8%89%E6%AE%B5291%E5%B7%B730%E8%99%9F2%E6%A8%93&output=embed',
+    socials: {
+      map: 'https://maps.app.goo.gl/8MN4cMGrRwbLwc65A',
+      fbgroup: 'https://www.facebook.com/groups/193573858743057/about',
+      fbpage: 'https://www.facebook.com/RID3461',
+      line: 'https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI',
+      tiktok: 'https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1',
+      youtube: 'https://www.youtube.com/@Rotary3461/featured',
+      shorts: 'https://www.youtube.com/@Rotary3461/shorts',
+    }
+  },
+  seo: {
+    title: '國際扶輪第3461地區 | Rotary District 3461 官方網站',
+    desc: '國際扶輪第3461地區（Rotary District 3461）官方網站。涵蓋台中、彰化、南投地區扶輪社，致力於七大焦點領域服務、青少年領袖培訓RYLA、全球獎學金及地區年度活動資訊。',
+    kw: '國際扶輪,扶輪社,Rotary,Rotary 3461,D3461,扶輪3461,台中扶輪,RYLA,扶輪基金,全球獎學金',
+    canonical: 'https://www.rotary3461.org/',
+    ogTitle: '國際扶輪第3461地區 | Rotary District 3461',
+    ogDesc: '台中、彰化、南投地區扶輪社官方網站。',
+    ogImage: 'https://www.rotary3461.org/images/Headline_background.jpg',
+    geoOrg: '國際扶輪第3461地區',
+    geoAlt: 'Rotary District 3461, D3461, 扶輪3461',
+    geoDesc: '致力於和平促進、疾病防治、水資源衛生、母嬰健康、教育就業、環境保護、社區發展七大焦點領域。',
+    geoUrl: 'https://www.rotary3461.org/',
+  },
+  tracking: {
+    gtmId: '', gtmEnabled: 'true',
+    ga4Id: '', ga4Enabled: 'true',
+    fbPixelId: '', fbPixelEnabled: 'false',
+    lineTagId: '', lineTagEnabled: 'false',
+    tiktokPixelId: '', tiktokPixelEnabled: 'false',
+    gadsId: '', gadsEnabled: 'false', gadsLabel: '',
+    clarityId: '', clarityEnabled: 'false',
+    customHead: '', customBody: '',
+  },
+  site: {
+    lang: 'zh-TW', themeColor: '#1a3a5c', robots: 'index,follow',
+    sitemap: '', favicon: '', appleIcon: '', manifest: '',
+    verifyGoogle: '', verifyBing: '', verifyPinterest: '',
+    preconnect: 'https://fonts.googleapis.com\nhttps://fonts.gstatic.com',
+  },
+};
+
+function loadPS() {
+  ['menu','hero','siteinfo','seo','tracking','site'].forEach(k => {
+    const s = localStorage.getItem('r3461_ps_' + k)
+           || (k === 'tracking' ? localStorage.getItem('r3461_ps_gtm') : null);
+    state['ps_' + k] = s ? JSON.parse(s) : JSON.parse(JSON.stringify(PS_DEFAULTS[k]));
+  });
+  // 偵測舊標籤自動重置
+  const OLD = ['【首頁】','總監DG Sunny','70扶輪社10委員','更多&下載','Brand Center(LOGO)','秘笈夾','典藏庫','首頁','扶輪社員','各社資訊'];
+  if (OLD.some(l => (state.ps_menu||[]).some(m => m.label === l))) {
+    state.ps_menu = JSON.parse(JSON.stringify(PS_DEFAULTS.menu));
+    localStorage.removeItem('r3461_ps_menu');
+  }
+}
+function persistPS() {
+  ['menu','hero','siteinfo','seo','tracking','site'].forEach(k => {
+    localStorage.setItem('r3461_ps_' + k, JSON.stringify(state['ps_' + k]));
+  });
+}
+
+// SUB-TABS
+function switchSubTab(id) {
+  document.querySelectorAll('.sub-tab').forEach((t, i) => {
+    const ids = ['menu','hero','siteinfo','seo','tracking','site'];
+    t.classList.toggle('active', ids[i] === id);
+  });
+  document.querySelectorAll('.sub-panel').forEach(p => p.classList.toggle('active', p.id === 'subpanel-' + id));
+  if (id === 'menu')     renderMenu();
+  if (id === 'hero')     renderHero();
+  if (id === 'siteinfo') fillSiteinfo();
+  if (id === 'seo')      { fillSeo(); renderFaq(); }
+  if (id === 'tracking') fillTracking();
+  if (id === 'site')     fillSite();
+}
+
+// MENU
+function renderMenu() {
+  const list = document.getElementById('menuList');
+  list.innerHTML = '';
+  const data = state.ps_menu || [];
+  if (!data.length) { list.innerHTML = '<div style="padding:24px;text-align:center;color:#9ca3af">尚無選單項目</div>'; return; }
+
+  // 依第一層分組
+  const groups = [];
+  let cur = null;
+  data.forEach((item, i) => {
+    if (item.level === 1) { cur = { item, idx: i, children: [] }; groups.push(cur); }
+    else if (cur) cur.children.push({ item, idx: i });
+  });
+
+  groups.forEach(group => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'margin-bottom:8px;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;';
+
+    // 第一層標頭
+    const hdr = document.createElement('div');
+    hdr.style.cssText = 'display:flex;align-items:center;gap:8px;padding:10px 14px;background:#f1f5f9;cursor:pointer;user-select:none;';
+    let open = false;
+    const arrow = document.createElement('span');
+    arrow.textContent = '▶';
+    arrow.style.cssText = 'font-size:11px;color:#64748b;transition:transform .2s;flex-shrink:0;';
+    const badge1 = document.createElement('span');
+    badge1.className = 'badge badge-blue'; badge1.style.marginRight = '4px'; badge1.textContent = '第一層';
+    const lbl1 = document.createElement('input');
+    lbl1.type = 'text'; lbl1.value = group.item.label;
+    lbl1.style.cssText = 'width:110px;padding:4px 8px;font-size:13px;font-weight:600;border-radius:7px;border:1px solid #cbd5e1;';
+    lbl1.onclick = e => e.stopPropagation();
+    const gi = group.idx;
+    lbl1.onchange = () => { state.ps_menu[gi].label = lbl1.value; };
+    const cnt = document.createElement('span');
+    cnt.style.cssText = 'font-size:12px;color:#94a3b8;flex:1;';
+    cnt.textContent = `${group.children.length} 個子項目`;
+    const del1 = document.createElement('button');
+    del1.className = 'btn btn-danger btn-sm'; del1.textContent = '刪除';
+    del1.onclick = e => { e.stopPropagation(); state.ps_menu.splice(gi, 1); renderMenu(); };
+    hdr.append(arrow, badge1, lbl1, cnt, del1);
+
+    // 子項目容器（預設收合）
+    const body = document.createElement('div');
+    body.style.cssText = 'display:none;background:#fff;border-top:1px solid #f1f5f9;';
+
+    group.children.forEach(({ item: ci, idx: cIdx }) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 14px 8px 32px;border-bottom:1px solid #f8fafc;';
+      const badge2 = document.createElement('span');
+      badge2.className = 'badge badge-gray'; badge2.style.marginRight = '4px'; badge2.textContent = '第二層';
+      const lbl2 = document.createElement('input');
+      lbl2.type = 'text'; lbl2.value = ci.label;
+      lbl2.style.cssText = 'width:130px;padding:4px 8px;font-size:13px;border-radius:7px;border:1px solid #e5e7eb;';
+      lbl2.onchange = () => { state.ps_menu[cIdx].label = lbl2.value; };
+      const url2 = document.createElement('input');
+      url2.type = 'text'; url2.value = ci.url; url2.placeholder = '連結 URL';
+      url2.style.cssText = 'flex:1;padding:4px 8px;font-size:12px;border-radius:7px;border:1px solid #e5e7eb;color:#6b7280;';
+      url2.onchange = () => { state.ps_menu[cIdx].url = url2.value; };
+      const del2 = document.createElement('button');
+      del2.className = 'btn btn-danger btn-sm'; del2.textContent = '刪除';
+      del2.onclick = () => { state.ps_menu.splice(cIdx, 1); renderMenu(); };
+      row.append(badge2, lbl2, url2, del2);
+      body.appendChild(row);
+    });
+
+    hdr.addEventListener('click', () => {
+      open = !open;
+      body.style.display = open ? 'block' : 'none';
+      arrow.style.transform = open ? 'rotate(90deg)' : '';
+      cnt.textContent = open ? '' : `${group.children.length} 個子項目`;
+    });
+
+    wrap.append(hdr, body);
+    list.appendChild(wrap);
+  });
+}
+function addMenuItem(level) {
+  if (!state.ps_menu) state.ps_menu = [];
+  state.ps_menu.push({ level, label: level === 1 ? '新項目' : '子項目', url: '#' });
+  renderMenu(); markDirty();
+}
+
+// HERO
+function renderHero() {
+  const list = document.getElementById('heroMediaList');
+  list.innerHTML = '';
+  const data = state.ps_hero || [];
+  if (!data.length) { list.innerHTML = '<div style="padding:16px;text-align:center;color:#9ca3af">尚無媒體，請新增</div>'; }
+  data.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f3f4f6;';
+    row.innerHTML = `
+      <select style="padding:7px;border-radius:8px;border:1px solid #e5e7eb;font-size:13px;" onchange="state.ps_hero[${i}].type=this.value">
+        <option value="video" ${item.type==='video'?'selected':''}>影片</option>
+        <option value="image" ${item.type==='image'?'selected':''}>圖片</option>
+      </select>
+      <input type="text" value="${item.url}" style="flex:1;padding:8px 10px;font-size:12px;border-radius:8px;border:1px solid #e5e7eb;font-family:monospace;" placeholder="影片或圖片網址" onchange="state.ps_hero[${i}].url=this.value">
+      <button class="btn btn-danger btn-sm" onclick="state.ps_hero.splice(${i},1);renderHero()">刪除</button>`;
+    list.appendChild(row);
+  });
+}
+function addHeroItem() {
+  if (!state.ps_hero) state.ps_hero = [];
+  state.ps_hero.push({ type: 'video', url: '' });
+  renderHero(); markDirty();
+}
+
+// SITEINFO (includes contact fields)
+function fillSiteinfo() {
+  const s = state.ps_siteinfo || PS_DEFAULTS.siteinfo;
+  document.getElementById('si-address').value  = s.address || '';
+  document.getElementById('si-mapurl').value   = s.mapurl  || '';
+  const soc = s.socials || {};
+  ['map','fbgroup','fbpage','line','tiktok','youtube','shorts'].forEach(k => {
+    const el = document.getElementById('soc-' + k);
+    if (el) el.value = soc[k] || '';
+  });
+  // Contact fields (merged here)
+  const c = state.contact || DEFAULTS.contact;
+  document.getElementById('c-address').value   = c.address   || '';
+  document.getElementById('c-phone').value     = c.phone     || '';
+  document.getElementById('c-email').value     = c.email     || '';
+  document.getElementById('c-copyright').value = c.copyright || '';
+  document.getElementById('c-designer').value  = c.designer  || '';
+}
+function readSiteinfo() {
+  const soc = {};
+  ['map','fbgroup','fbpage','line','tiktok','youtube','shorts'].forEach(k => {
+    const el = document.getElementById('soc-' + k);
+    if (el) soc[k] = el.value.trim();
+  });
+  state.ps_siteinfo = {
+    address: document.getElementById('si-address').value.trim(),
+    mapurl:  document.getElementById('si-mapurl').value.trim(),
+    socials: soc,
+  };
+  // Also read contact fields
+  state.contact = {
+    address:   document.getElementById('c-address').value.trim(),
+    phone:     document.getElementById('c-phone').value.trim(),
+    email:     document.getElementById('c-email').value.trim(),
+    copyright: document.getElementById('c-copyright').value.trim(),
+    designer:  document.getElementById('c-designer').value.trim(),
+  };
+}
+
+// SEO
+function fillSeo() {
+  const s = state.ps_seo || PS_DEFAULTS.seo;
+  document.getElementById('seo-title').value     = s.title     || '';
+  document.getElementById('seo-desc').value      = s.desc      || '';
+  document.getElementById('seo-kw').value        = s.kw        || '';
+  document.getElementById('seo-canonical').value = s.canonical || '';
+  document.getElementById('og-title').value      = s.ogTitle   || '';
+  document.getElementById('og-desc').value       = s.ogDesc    || '';
+  document.getElementById('og-image').value      = s.ogImage   || '';
+  document.getElementById('og-type').value       = s.ogType    || 'website';
+  document.getElementById('og-sitename').value   = s.ogSiteName|| '';
+  document.getElementById('tw-card').value       = s.twCard    || 'summary_large_image';
+  document.getElementById('tw-site').value       = s.twSite    || '';
+  document.getElementById('tw-title').value      = s.twTitle   || '';
+  document.getElementById('tw-image').value      = s.twImage   || '';
+  document.getElementById('geo-orgname').value   = s.geoOrg    || '';
+  document.getElementById('geo-altnames').value  = s.geoAlt    || '';
+  document.getElementById('geo-desc').value      = s.geoDesc   || '';
+  document.getElementById('geo-url').value       = s.geoUrl    || '';
+  document.getElementById('geo-founded').value   = s.geoFounded|| '';
+  document.getElementById('geo-area').value      = s.geoArea   || '';
+  document.getElementById('geo-members').value   = s.geoMembers|| '';
+  document.getElementById('geo-phone').value     = s.geoPhone  || '';
+}
+function readSeo() {
+  const existing = state.ps_seo || {};
+  state.ps_seo = {
+    ...existing,
+    title:      document.getElementById('seo-title').value.trim(),
+    desc:       document.getElementById('seo-desc').value.trim(),
+    kw:         document.getElementById('seo-kw').value.trim(),
+    canonical:  document.getElementById('seo-canonical').value.trim(),
+    ogTitle:    document.getElementById('og-title').value.trim(),
+    ogDesc:     document.getElementById('og-desc').value.trim(),
+    ogImage:    document.getElementById('og-image').value.trim(),
+    ogType:     document.getElementById('og-type').value,
+    ogSiteName: document.getElementById('og-sitename').value.trim(),
+    twCard:     document.getElementById('tw-card').value,
+    twSite:     document.getElementById('tw-site').value.trim(),
+    twTitle:    document.getElementById('tw-title').value.trim(),
+    twImage:    document.getElementById('tw-image').value.trim(),
+    geoOrg:     document.getElementById('geo-orgname').value.trim(),
+    geoAlt:     document.getElementById('geo-altnames').value.trim(),
+    geoDesc:    document.getElementById('geo-desc').value.trim(),
+    geoUrl:     document.getElementById('geo-url').value.trim(),
+    geoFounded: document.getElementById('geo-founded').value.trim(),
+    geoArea:    document.getElementById('geo-area').value.trim(),
+    geoMembers: document.getElementById('geo-members').value.trim(),
+    geoPhone:   document.getElementById('geo-phone').value.trim(),
+    faq:        existing.faq || [],
+  };
+}
+
+// FAQ
+function renderFaq() {
+  const list = document.getElementById('faqList');
+  if (!list) return;
+  const data = (state.ps_seo && state.ps_seo.faq) || [];
+  if (!data.length) { list.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:20px;font-size:13px;">尚無問答，點右上角新增</div>'; return; }
+  list.innerHTML = '';
+  data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-bottom:10px;background:#fafbff;';
+    div.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <span style="font-size:12px;font-weight:700;color:#6b7280;">問答 ${i+1}</span>
+        <button class="btn btn-danger btn-sm" onclick="deleteFaqItem(${i})">刪除</button>
+      </div>
+      <div class="form-group" style="margin-bottom:8px;"><label>問題</label>
+        <input type="text" value="${(item.q||'').replace(/"/g,'&quot;')}" oninput="state.ps_seo.faq[${i}].q=this.value;markDirty()" placeholder="例：什麼是扶輪社？">
+      </div>
+      <div class="form-group"><label>答案</label>
+        <textarea rows="2" oninput="state.ps_seo.faq[${i}].a=this.value;markDirty()" placeholder="詳細答案…">${item.a||''}</textarea>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+function addFaqItem() {
+  if (!state.ps_seo) state.ps_seo = {};
+  if (!state.ps_seo.faq) state.ps_seo.faq = [];
+  state.ps_seo.faq.push({ q: '', a: '' });
+  renderFaq(); markDirty();
+}
+function deleteFaqItem(i) {
+  state.ps_seo.faq.splice(i, 1);
+  renderFaq(); markDirty();
+}
+
+// TRACKING
+function fillTracking() {
+  const t = state.ps_tracking || PS_DEFAULTS.tracking;
+  const _v = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+  _v('gtm-id', t.gtmId); _v('gtm-enabled', t.gtmEnabled || 'true');
+  _v('ga4-id', t.ga4Id); _v('ga4-enabled', t.ga4Enabled || 'true');
+  _v('fb-pixel-id', t.fbPixelId); _v('fb-pixel-enabled', t.fbPixelEnabled || 'false');
+  _v('line-tag-id', t.lineTagId); _v('line-tag-enabled', t.lineTagEnabled || 'false');
+  _v('tiktok-pixel-id', t.tiktokPixelId); _v('tiktok-pixel-enabled', t.tiktokPixelEnabled || 'false');
+  _v('gads-id', t.gadsId); _v('gads-enabled', t.gadsEnabled || 'false'); _v('gads-label', t.gadsLabel);
+  _v('clarity-id', t.clarityId); _v('clarity-enabled', t.clarityEnabled || 'false');
+  _v('gtm-custom', t.customHead); _v('tracking-body', t.customBody);
+  const status = document.getElementById('gtm-status');
+  if (status) status.textContent = t.gtmId ? `✅ GTM ID：${t.gtmId}（${t.gtmEnabled==='true'?'啟用中':'已停用'}）` : '尚未設定 GTM ID';
+}
+function readTracking() {
+  const _g = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  const _gs = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+  state.ps_tracking = {
+    gtmId: _g('gtm-id'), gtmEnabled: _gs('gtm-enabled'),
+    ga4Id: _g('ga4-id'), ga4Enabled: _gs('ga4-enabled'),
+    fbPixelId: _g('fb-pixel-id'), fbPixelEnabled: _gs('fb-pixel-enabled'),
+    lineTagId: _g('line-tag-id'), lineTagEnabled: _gs('line-tag-enabled'),
+    tiktokPixelId: _g('tiktok-pixel-id'), tiktokPixelEnabled: _gs('tiktok-pixel-enabled'),
+    gadsId: _g('gads-id'), gadsEnabled: _gs('gads-enabled'), gadsLabel: _g('gads-label'),
+    clarityId: _g('clarity-id'), clarityEnabled: _gs('clarity-enabled'),
+    customHead: document.getElementById('gtm-custom')?.value || '',
+    customBody: document.getElementById('tracking-body')?.value || '',
+  };
+}
+
+// SITE
+function fillSite() {
+  const s = state.ps_site || PS_DEFAULTS.site;
+  const _v = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+  _v('site-lang', s.lang || 'zh-TW');
+  _v('site-theme-color', s.themeColor || '#1a3a5c');
+  _v('site-theme-color-hex', s.themeColor || '#1a3a5c');
+  _v('site-robots', s.robots || 'index,follow');
+  _v('site-sitemap', s.sitemap); _v('site-favicon', s.favicon);
+  _v('site-apple-icon', s.appleIcon); _v('site-manifest', s.manifest);
+  _v('verify-google', s.verifyGoogle); _v('verify-bing', s.verifyBing); _v('verify-pinterest', s.verifyPinterest);
+  _v('site-preconnect', s.preconnect);
+  const tc = document.getElementById('site-theme-color');
+  if (tc) tc.addEventListener('input', () => { const hex = document.getElementById('site-theme-color-hex'); if(hex) hex.value = tc.value; });
+}
+function readSite() {
+  const _g = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  const _gs = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+  state.ps_site = {
+    lang: _gs('site-lang'), themeColor: _g('site-theme-color-hex') || _g('site-theme-color'),
+    robots: _gs('site-robots'), sitemap: _g('site-sitemap'),
+    favicon: _g('site-favicon'), appleIcon: _g('site-apple-icon'), manifest: _g('site-manifest'),
+    verifyGoogle: _g('verify-google'), verifyBing: _g('verify-bing'), verifyPinterest: _g('verify-pinterest'),
+    preconnect: document.getElementById('site-preconnect')?.value || '',
+  };
+}
+
+// SAVE
+function saveSection(section) {
+  if (section === 'siteinfo') { readSiteinfo(); persistState(); }
+  if (section === 'seo')      readSeo();
+  if (section === 'tracking') { readTracking(); fillTracking(); }
+  if (section === 'site')     readSite();
+  if (section === 'monthly')  persistState();
+  if (['menu','hero','siteinfo','seo','tracking','site'].includes(section)) persistPS();
+  else persistState();
+  updateStats();
+  toast('✓ 已儲存，前台重新整理後生效', 'success');
+}
+function saveAll() {
+  readContactForm(); readSiteinfo(); readSeo(); readTracking(); readSite();
+  persistState(); persistPS(); updateStats();
+  clearDirty();
+  toast('✓ 全部儲存完成', 'success');
+}
+
+// EXPORT
+function exportData() {
+  const all = { ...state, ps_defaults_ref: PS_DEFAULTS };
+  const blob = new Blob([JSON.stringify(all, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'rotary3461_backup_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+
+async function exportIndexHtml() {
+  try {
+    const resp = await fetch('index.html?' + Date.now(), { cache: 'no-store' });
+    if (!resp.ok) throw new Error('無法讀取 index.html');
+    let html = await resp.text();
+
+    function replaceSection(src, key, data) {
+      const re = new RegExp('/\\*__DATASTART:' + key + '__\\*/[\\s\\S]*?/\\*__DATAEND:' + key + '__\\*/');
+      const replacement = '/*__DATASTART:' + key + '__*/' + JSON.stringify(data, null, 2) + '/*__DATAEND:' + key + '__*/';
+      return src.replace(re, replacement);
+    }
+
+    html = replaceSection(html, 'news',       state.news);
+    html = replaceSection(html, 'videos',     state.videos);
+    html = replaceSection(html, 'activities', state.activities);
+    html = replaceSection(html, 'sponsors',   state.sponsors);
+    if (state.monthly && Object.keys(state.monthly).length) {
+      html = replaceSection(html, 'monthly', state.monthly);
+    }
+
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'index.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast('✓ index.html 已下載！請上傳至伺服器取代舊檔', 'success');
+  } catch(e) {
+    toast('匯出失敗：' + e.message, 'error');
+  }
+}
+
+// ── MONTHLY ──
+let _monthlyYear = null;
+
+function getMonthlyYearKeys() {
+  return Object.keys(state.monthly || {}).sort((a, b) => b.localeCompare(a));
+}
+
+function renderYearTabs() {
+  const tabs = document.getElementById('yearTabs');
+  if (!tabs) return;
+  const keys = getMonthlyYearKeys();
+  tabs.innerHTML = '';
+  if (!keys.length) {
+    tabs.innerHTML = '<span style="color:#9ca3af;font-size:13px;">尚無年度資料，請點右上角「＋ 新增年度」</span>';
+    document.getElementById('monthlyTbody').innerHTML = '<tr class="empty-row"><td colspan="5">請先新增年度</td></tr>';
+    return;
+  }
+  if (!_monthlyYear || !state.monthly[_monthlyYear]) _monthlyYear = keys[0];
+  keys.forEach(k => {
+    const btn = document.createElement('button');
+    btn.className = 'sub-tab' + (k === _monthlyYear ? ' active' : '');
+    btn.textContent = state.monthly[k].heading || k;
+    btn.onclick = () => selectYear(k);
+    tabs.appendChild(btn);
+  });
+  renderYearIssues();
+  document.getElementById('monthlyYearTitle').textContent = state.monthly[_monthlyYear]?.heading || _monthlyYear;
+  ['btnEditYear','btnDeleteYear','btnAddIssue'].forEach(id => document.getElementById(id).style.display = '');
+}
+
+function selectYear(key) {
+  _monthlyYear = key;
+  renderYearTabs();
+}
+
+function renderYearIssues() {
+  const tbody = document.getElementById('monthlyTbody');
+  if (!_monthlyYear || !state.monthly[_monthlyYear]) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="5">請選擇年度</td></tr>'; return;
+  }
+  const issues = state.monthly[_monthlyYear].issues || [];
+  if (!issues.length) { tbody.innerHTML = '<tr class="empty-row"><td colspan="5">尚無期刊，請新增</td></tr>'; return; }
+  tbody.innerHTML = '';
+  issues.forEach((issue, i) => {
+    const hasLocal = !!issue.local;
+    const pageCount = (issue.pages || []).filter(p => p.link || p.video).length;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><strong>${issue.no}</strong></td>
+      <td style="font-size:12px;">${issue.month}</td>
+      <td style="font-size:11px;color:#6b7280;">
+        ${issue.id ? `<span style="font-family:monospace;">${issue.id.slice(0,18)}…</span>` : ''}
+        ${hasLocal ? `<div style="color:#059669;margin-top:2px;font-size:10px;">📄 ${issue.local.split('/').pop()}</div>` : ''}
+      </td>
+      <td style="text-align:center;">
+        <button class="btn btn-ghost btn-sm" style="padding:3px 8px;font-size:11px;" onclick="openPageEditor(${i})" ${!hasLocal ? 'disabled title="需先設定本地PDF路徑"' : ''}>
+          ${pageCount > 0 ? `<span style="color:#2563eb;">${pageCount}頁</span>` : '編輯'}
+        </button>
+      </td>
+      <td><div class="td-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openIssueModal(${i})">編輯</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteIssue(${i})">刪除</button>
+      </div></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function openYearModal(editMode) {
+  document.getElementById('yearModalTitle').textContent = editMode ? '編輯年度' : '新增年度';
+  document.getElementById('year-edit-mode').value = editMode ? '1' : '';
+  const keyEl = document.getElementById('year-key');
+  keyEl.value = editMode && _monthlyYear ? _monthlyYear : '';
+  keyEl.readOnly = !!editMode;
+  keyEl.style.opacity = editMode ? '0.5' : '1';
+  document.getElementById('year-heading').value = editMode && _monthlyYear ? (state.monthly[_monthlyYear].heading || '') : '';
+  openModal('yearModal');
+}
+function saveYearModal() {
+  const key     = document.getElementById('year-key').value.trim();
+  const heading = document.getElementById('year-heading').value.trim();
+  const editMode = document.getElementById('year-edit-mode').value === '1';
+  if (!key || !heading) { toast('請填寫年度代號和標題', 'error'); return; }
+  if (!state.monthly) state.monthly = {};
+  if (editMode && _monthlyYear) {
+    state.monthly[_monthlyYear].heading = heading;
+  } else {
+    if (state.monthly[key]) { toast('此年度代號已存在', 'error'); return; }
+    state.monthly[key] = { heading, issues: [] };
+    _monthlyYear = key;
+  }
+  closeModal('yearModal'); renderYearTabs(); markDirty();
+}
+function deleteYear() {
+  if (!_monthlyYear) return;
+  if (!confirm(`確定刪除「${state.monthly[_monthlyYear].heading}」年度及其所有期刊？`)) return;
+  delete state.monthly[_monthlyYear];
+  _monthlyYear = null;
+  renderYearTabs(); markDirty();
+}
+
+function openIssueModal(idx = -1) {
+  document.getElementById('issueModalTitle').textContent = idx === -1 ? '新增期刊' : '編輯期刊';
+  document.getElementById('issue-edit-idx').value = idx;
+  const issue = idx === -1 ? {} : ((state.monthly[_monthlyYear]?.issues || [])[idx] || {});
+  document.getElementById('issue-no').value    = issue.no    || '';
+  document.getElementById('issue-month').value = issue.month || '';
+  document.getElementById('issue-id').value    = issue.id    || '';
+  document.getElementById('issue-local').value = issue.local || '';
+  openModal('issueModal');
+}
+function saveIssueModal() {
+  if (!_monthlyYear) return;
+  const idx = parseInt(document.getElementById('issue-edit-idx').value);
+  const item = {
+    no:    document.getElementById('issue-no').value.trim(),
+    month: document.getElementById('issue-month').value.trim(),
+    id:    document.getElementById('issue-id').value.trim() || null,
+    local: document.getElementById('issue-local').value.trim(),
+  };
+  if (!item.no || !item.month) { toast('請填寫期號和月份', 'error'); return; }
+  if (!state.monthly[_monthlyYear].issues) state.monthly[_monthlyYear].issues = [];
+  if (idx === -1) state.monthly[_monthlyYear].issues.push(item);
+  else state.monthly[_monthlyYear].issues[idx] = item;
+  closeModal('issueModal'); renderYearIssues(); markDirty();
+}
+function deleteIssue(idx) {
+  if (!confirm('確定刪除此期刊？')) return;
+  state.monthly[_monthlyYear].issues.splice(idx, 1);
+  renderYearIssues(); markDirty();
+}
+
+/* ── PDF 檔案選擇 ── */
+function handlePdfFile(input) {
+  if (!input.files[0]) return;
+  const file = input.files[0];
+  const year = _monthlyYear || '25-26';
+  const suggested = `pdfs/總監月刊-電子檔/${year}年度/${file.name}`;
+  document.getElementById('issue-local').value = suggested;
+  const hint = document.getElementById('issue-file-hint');
+  hint.style.display = '';
+  hint.textContent = `請將「${file.name}」複製到 pdfs/總監月刊-電子檔/${year}年度/ 資料夾`;
+}
+
+/* ── 頁面編輯器 ── */
+let _peYear = null, _peIssueIdx = -1, _pePage = null, _pePdf = null;
+
+async function openPageEditor(issueIdx) {
+  _peYear = _monthlyYear;
+  _peIssueIdx = issueIdx;
+  _pePage = null;
+  _pePdf = null;
+  const issue = state.monthly[_peYear].issues[issueIdx];
+  document.getElementById('pageEditorTitle').textContent =
+    `${issue.no} ${issue.month} — 頁面連結／影音`;
+  document.getElementById('pageThumbList').innerHTML =
+    '<div style="color:#9ca3af;font-size:12px;padding:8px;">載入中…</div>';
+  document.getElementById('pageEditorForm').style.display = 'none';
+  document.getElementById('pageEditorEmpty').style.display = '';
+  openModal('pageEditorModal');
+
+  if (!issue.local) return;
+  try {
+    if (!window.pdfjsLib) {
+      await new Promise((res,rej) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+        s.onload = () => { pdfjsLib.GlobalWorkerOptions.workerSrc =
+          'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; res(); };
+        s.onerror = rej; document.head.appendChild(s);
+      });
+    }
+    _pePdf = await pdfjsLib.getDocument({ url: issue.local, withCredentials: false }).promise;
+    renderPageThumbs(issue);
+  } catch(e) {
+    document.getElementById('pageThumbList').innerHTML =
+      '<div style="color:#ef4444;font-size:12px;padding:8px;">PDF 載入失敗</div>';
+  }
+}
+
+async function renderPageThumbs(issue) {
+  const list = document.getElementById('pageThumbList');
+  list.innerHTML = '';
+  const pages = issue.pages || [];
+  for (let p = 1; p <= _pePdf.numPages; p++) {
+    const page = await _pePdf.getPage(p);
+    const vp = page.getViewport({ scale: 0.3 });
+    const cv = document.createElement('canvas');
+    cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+    await page.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise;
+    const pData = pages.find(x => x.page === p) || {};
+    const hasData = pData.link || pData.video;
+    const wrap = document.createElement('div');
+    wrap.style.cssText = `cursor:pointer;border:2px solid ${hasData?'#2563eb':'#e5e7eb'};border-radius:6px;overflow:hidden;position:relative;`;
+    wrap.title = `第 ${p} 頁${hasData?' (已設定)':''}`;
+    cv.style.cssText = 'width:100%;display:block;';
+    const lbl = document.createElement('div');
+    lbl.style.cssText = `font-size:10px;text-align:center;padding:2px;background:${hasData?'#dbeafe':'#f9fafb'};color:${hasData?'#1d4ed8':'#6b7280'};`;
+    lbl.textContent = hasData ? `P${p} ✓` : `P${p}`;
+    wrap.appendChild(cv); wrap.appendChild(lbl);
+    wrap.addEventListener('click', () => selectPage(p, issue));
+    list.appendChild(wrap);
+  }
+}
+
+function selectPage(pageNum, issue) {
+  _pePage = pageNum;
+  const pData = (issue.pages || []).find(x => x.page === pageNum) || {};
+  document.getElementById('pageEditorPageLabel').textContent = `第 ${pageNum} 頁`;
+  document.getElementById('pe-link').value = pData.link || '';
+  document.getElementById('pe-video').value = pData.video || '';
+  updateVideoPreview();
+  document.getElementById('pageEditorEmpty').style.display = 'none';
+  document.getElementById('pageEditorForm').style.display = '';
+}
+
+function updateVideoPreview() {
+  const url = document.getElementById('pe-video').value.trim();
+  const preview = document.getElementById('pe-video-preview');
+  if (!url) { preview.innerHTML = ''; return; }
+  const embedUrl = toEmbedUrl(url);
+  if (embedUrl) {
+    preview.innerHTML = `<iframe src="${embedUrl}" width="100%" height="200" frameborder="0" allowfullscreen style="border-radius:8px;"></iframe>`;
+  } else {
+    preview.innerHTML = '<div style="color:#ef4444;font-size:12px;">無法辨識影音網址</div>';
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const vi = document.getElementById('pe-video');
+  if (vi) vi.addEventListener('input', updateVideoPreview);
+});
+
+function toEmbedUrl(url) {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('youtube.com') || u.hostname.includes('youtu.be')) {
+      const v = u.searchParams.get('v') || u.pathname.replace('/', '');
+      return `https://www.youtube.com/embed/${v}`;
+    }
+    if (u.hostname.includes('vimeo.com')) {
+      return `https://player.vimeo.com/video${u.pathname}`;
+    }
+  } catch(e) {}
+  return null;
+}
+
+function savePageEdit() {
+  if (!_pePage || _peIssueIdx < 0) return;
+  const issue = state.monthly[_peYear].issues[_peIssueIdx];
+  if (!issue.pages) issue.pages = [];
+  const link  = document.getElementById('pe-link').value.trim();
+  const video = document.getElementById('pe-video').value.trim();
+  const idx = issue.pages.findIndex(x => x.page === _pePage);
+  if (link || video) {
+    const entry = { page: _pePage, link, video };
+    if (idx >= 0) issue.pages[idx] = entry; else issue.pages.push(entry);
+  } else {
+    if (idx >= 0) issue.pages.splice(idx, 1);
+  }
+  toast('已儲存第 ' + _pePage + ' 頁設定');
+  renderPageThumbs(issue);
+}
+
+function clearPageEdit() {
+  document.getElementById('pe-link').value = '';
+  document.getElementById('pe-video').value = '';
+  document.getElementById('pe-video-preview').innerHTML = '';
+}
+
+function savePageEditorAll() {
+  persistState(); markDirty();
+  toast('頁面設定已儲存');
+  closeModal('pageEditorModal');
+  renderYearIssues();
+}
+
+/* ══════════════════════════════════════
+   🪄 魔術幫 — Claude AI 圖片分析
+══════════════════════════════════════ */
+function saveClaudeKey() {
+  const key = document.getElementById('claude-api-key').value.trim();
+  if (!key) { toast('請輸入 API Key', 'error'); return; }
+  localStorage.setItem('r3461_claude_key', key);
+  const st = document.getElementById('claude-key-status');
+  st.textContent = '✅ Key 已儲存（' + key.slice(0,12) + '…）';
+  st.style.color = '#059669';
+  toast('Claude API Key 已儲存');
+}
+function toggleKeyVisibility() {
+  const el = document.getElementById('claude-api-key');
+  el.type = el.type === 'password' ? 'text' : 'password';
+}
+// 頁面載入時顯示已存的 Key 狀態
+(function initClaudeKey() {
+  const k = localStorage.getItem('r3461_claude_key');
+  if (k) {
+    const st = document.getElementById('claude-key-status');
+    if (st) { st.textContent = '✅ 已設定（' + k.slice(0,12) + '…）'; st.style.color = '#059669'; }
+  }
+})();
+
+async function magicAnalyze(fileInput, modal) {
+  const file = fileInput.files[0];
+  if (!file) return;
+  fileInput.value = '';
+
+  const apiKey = localStorage.getItem('r3461_claude_key');
+  if (!apiKey) {
+    toast('請先到「網站設定」底部設定 Claude API Key', 'error'); return;
+  }
+
+  // 顯示 loading
+  const statusEl = document.getElementById('magic-' + modal + '-status');
+  const msgEl    = document.getElementById('magic-' + modal + '-msg');
+  statusEl.style.display = 'flex';
+  msgEl.textContent = 'AI 分析中，請稍候…';
+
+  try {
+    // 讀圖片為 base64
+    const base64 = await new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.onload = e => res(e.target.result.split(',')[1]);
+      reader.onerror = rej;
+      reader.readAsDataURL(file);
+    });
+    const mime = file.type || 'image/jpeg';
+
+    // 組 prompt
+    const fieldMap = {
+      news: {
+        date:        '日期（格式 2026.04.21）',
+        title:       '標題',
+        content:     '完整內文（保留換行）',
+        activityUrl: '活動連結網址（若有）',
+      },
+      activity: {
+        name:     '活動名稱',
+        location: '地點',
+        date:     '日期（YYYY-MM-DD，若無法確定留空）',
+        url:      '活動連結網址（若有）',
+      },
+    };
+    const prompt = `請仔細閱讀這張圖片中的所有文字，以 JSON 格式回傳下列欄位（無法辨識或圖片中沒有的欄位請填空字串）：
+${JSON.stringify(fieldMap[modal], null, 2)}
+
+只輸出 JSON，不要任何說明文字。`;
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-5',
+        max_tokens: 2048,
+        messages: [{ role: 'user', content: [
+          { type: 'image', source: { type: 'base64', media_type: mime, data: base64 } },
+          { type: 'text',  text: prompt },
+        ]}],
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    const raw  = data.content?.[0]?.text || '';
+    const match = raw.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('AI 未回傳有效 JSON');
+    const json = JSON.parse(match[0]);
+
+    // 填入欄位
+    if (modal === 'news') {
+      if (json.date)        document.getElementById('news-date').value = json.date;
+      if (json.title)       document.getElementById('news-title').value = json.title;
+      if (json.content)     document.getElementById('news-content').value = json.content;
+      if (json.activityUrl) document.getElementById('news-activityUrl').value = json.activityUrl;
+    } else if (modal === 'activity') {
+      if (json.name)     document.getElementById('activity-name').value = json.name;
+      if (json.location) document.getElementById('activity-location').value = json.location;
+      if (json.url)      document.getElementById('activity-url').value = json.url;
+      if (json.date) {
+        document.getElementById('activity-tbd').value = 'false';
+        toggleDateFields();
+        document.getElementById('activity-date').value = json.date;
+      }
+    }
+
+    msgEl.textContent = '✅ 分析完成，請確認欄位內容後儲存';
+    msgEl.style.color = '#059669';
+    setTimeout(() => { statusEl.style.display = 'none'; msgEl.style.color = ''; }, 4000);
+    toast('🪄 魔術分析完成！');
+
+  } catch(e) {
+    msgEl.textContent = '❌ ' + e.message;
+    msgEl.style.color = '#ef4444';
+    setTimeout(() => { statusEl.style.display = 'none'; msgEl.style.color = ''; }, 5000);
+    toast('分析失敗：' + e.message, 'error');
+  }
+}
+
+// NAV GROUP toggle
+function toggleNavGroup() {
+  const toggle = document.getElementById('navGroupToggle');
+  const items  = document.getElementById('navGroupItems');
+  const isOpen = toggle.classList.toggle('open');
+  items.classList.toggle('open', isOpen);
+}
+
+// Open pagesetup panel + specific sub-tab from sidebar
+function openPageSetup(subtab) {
+  // Expand group if not already open
+  const toggle = document.getElementById('navGroupToggle');
+  const items  = document.getElementById('navGroupItems');
+  toggle.classList.add('open');
+  items.classList.add('open');
+  // Highlight sub-item
+  document.querySelectorAll('.nav-sub-item').forEach(el => el.classList.toggle('active', el.dataset.subtab === subtab));
+  // Switch main panel + sub-tab
+  switchPanel('pagesetup');
+  switchSubTab(subtab);
+}
+
+// Panel switch
+function switchPanel(id) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.panel === id));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+  document.getElementById('panelTitle').textContent = { dashboard:'總覽', news:'最新消息', activities:'近期活動', videos:'影音專區', monthly:'總監月刊', sponsors:'贊助單位', pagesetup:'頁首設定' }[id] || id;
+  if (id === 'dashboard') updateStats();
+  if (id === 'monthly')   renderYearTabs();
+  if (id === 'pagesetup') { renderMenu(); }
+}
+
+// INIT
+loadState(); loadPS();
+// ensure new seo fields exist on migration
+if (state.ps_seo && !state.ps_seo.faq) state.ps_seo.faq = [];
+renderNews(); renderActivities(); renderVideos(); renderSponsors(); fillContactForm(); updateStats();
+
+// 動態更新 badge 顯示目前 port
+document.getElementById('topbarHost').textContent = location.host;
+
+// 讓「預覽前台」和「開啟前台」都用正確的 host
+document.querySelectorAll('a[href="index.html"]').forEach(a => {
+  a.href = location.origin + location.pathname.replace('admin.html','') + 'index.html';
+});
+</script>
+</body>
+</html>

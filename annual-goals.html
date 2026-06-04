@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>年度地區重要工作目標 | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark:    #0d1e3d;
+      --gold:    #f0c040;
+      --gold2:   #d4940a;
+      --overlay: rgba(13,30,61,0.92);
+      --row-odd: #fff;
+      --row-even: #f5f8ff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans TC', sans-serif; color: #222; background: #f4f6fb; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1 !important; transform: none !important; }
+
+    /* ════════ HEADER ════════ */
+    .site-header { position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,.15); background: url('images/nav-bg.jpg') left center/cover no-repeat; background-color: #dce8f0; }
+    .header-logo-row { height: 100px; display: flex; align-items: center; padding: 0 24px; transition: height .3s; }
+    .header-logo-inner { max-width: 1440px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; }
+    .header-slogan img { height: 72px; width: auto; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+    .nav-link { display: flex; align-items: center; justify-content: center; gap: 4px; color: #222; font-size: 16.5px; font-weight: 600; height: 52px; width: 100%; white-space: nowrap; transition: background .18s; cursor: pointer; letter-spacing: .5px; }
+    .nav-link:hover, .nav-item:hover .nav-link { background: rgba(0,0,0,.12); }
+    .sub-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; min-width: 170px; box-shadow: 0 6px 24px rgba(0,0,0,.15); border-top: 3px solid var(--gold); z-index: 200; }
+    .nav-item:hover .sub-menu { display: block; }
+    .sub-menu a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background .15s; }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+    .sub-menu--cols { display: none; position: absolute; top: 100%; left: 0; background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,.15); border-top: 3px solid var(--gold); z-index: 200; flex-direction: row; min-width: 480px; }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    .nav-item:last-child .sub-menu, .nav-item:last-child .sub-menu--cols,
+    .nav-item:nth-last-child(2) .sub-menu, .nav-item:nth-last-child(2) .sub-menu--cols { left: auto; right: 0; }
+    .sub-menu-col { min-width: 160px; border-right: 1px solid #f0f0f0; flex: 1; }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background .15s; white-space: nowrap; }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .site-header.scrolled .header-logo-row { height: 76px; }
+    .site-header.scrolled .site-logo img { width: auto; height: 48px; }
+    .site-header.scrolled .header-slogan { display: none; }
+    .site-header.scrolled .header-nav-row { display: none; }
+    .site-header.scrolled .compact-nav { display: flex; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform .25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan, .desktop-nav { display: none; }
+      .compact-nav { display: none !important; }
+      .mobile-nav-row { display: flex; }
+      .hamburger { display: flex; }
+      .mobile-menu { top: 128px; }
+    }
+
+    /* ════════ PAGE HERO ════════ */
+    .page-hero {
+      background: linear-gradient(110deg, #071530 0%, #1a458b 60%, #0d3070 100%);
+      padding: 52px 24px 48px; text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url('images/Headline_background.jpg') center/cover no-repeat;
+      opacity: 0.07;
+    }
+    .page-hero-inner { position: relative; max-width: 800px; margin: 0 auto; }
+    .page-hero-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(240,192,64,.18); border: 1px solid rgba(240,192,64,.4);
+      color: var(--gold); font-size: 12.8px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 4px 14px; border-radius: 16px; margin-bottom: 16px;
+    }
+    .page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; color: #fff; margin-bottom: 10px; }
+    .page-hero h1 span { color: var(--gold); }
+    .page-hero p { font-size: 16.2px; color: rgba(255,255,255,.72); line-height: 1.8; }
+
+    /* ════════ CONTENT ════════ */
+    .content-wrap { max-width: 1100px; margin: 0 auto; padding: 48px 20px 72px; }
+
+    /* ════════ TABLE ════════ */
+    .goals-table-wrap {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,.09);
+      border: 1px solid #e5e9f2;
+    }
+
+    .goals-table {
+      width: 100%; border-collapse: collapse;
+    }
+
+    /* Header row */
+    .goals-table thead tr {
+      background: var(--primary);
+    }
+    .goals-table thead th {
+      color: #fff; font-size: 16.2px; font-weight: 700;
+      padding: 14px 18px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,.15);
+      letter-spacing: .5px;
+    }
+    .goals-table thead th:last-child { border-right: none; }
+    .goals-table thead th.col-no { width: 52px; }
+    .goals-table thead th.col-content { width: 28%; }
+    .goals-table thead th.col-goal { width: 35%; }
+    .goals-table thead th.col-method { width: 35%; }
+
+    /* Body rows */
+    .goals-table tbody tr:nth-child(odd)  { background: #fff; }
+    .goals-table tbody tr:nth-child(even) { background: #f5f8ff; }
+    .goals-table tbody tr { transition: background .15s; border-bottom: 1px solid #e8eef8; }
+    .goals-table tbody tr:last-child { border-bottom: none; }
+    .goals-table tbody tr:hover { background: #eaf0ff; }
+
+    .goals-table td {
+      padding: 16px 18px; font-size: 16.2px; color: #333;
+      vertical-align: top; line-height: 1.75;
+      border-right: 1px solid #e8eef8;
+    }
+    .goals-table td:last-child { border-right: none; }
+
+    .goals-table td.no-cell {
+      text-align: center; font-weight: 900;
+      font-size: 18.6px; color: var(--primary);
+      vertical-align: middle;
+    }
+    .goals-table td.content-cell { font-weight: 600; color: var(--dark); }
+    .goals-table td.goal-cell { color: #444; }
+    .goals-table td.method-cell { color: #555; }
+
+    /* Category badge */
+    .cat-badge {
+      display: inline-block;
+      font-size: 11.6px; font-weight: 800;
+      padding: 2px 8px; border-radius: 8px;
+      margin-bottom: 6px; letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .cat-badge.foundation { background: #fff3cd; color: #856404; }
+    .cat-badge.membership { background: #d1e7dd; color: #0a3622; }
+    .cat-badge.service    { background: #cfe2ff; color: #084298; }
+    .cat-badge.priority   { background: #f8d7da; color: #842029; }
+    .cat-badge.training   { background: #e2d9f3; color: #432874; }
+
+    /* Highlight row (odd vs even can be overridden) */
+    .goals-table tbody tr.highlight-row { background: #fffbe6 !important; }
+    .goals-table tbody tr.highlight-row:hover { background: #fff3cc !important; }
+
+    /* ════════ FOOTER ════════ */
+    .inner-footer { background: #fff; border-top: 1px solid #e5e7eb; padding: 24px 32px; }
+    .inner-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .inner-footer-logo img { height: 60px; width: auto; display: block; }
+    .inner-footer-contact { color: #555; font-size: 15.1px; line-height: 2; flex: 1; min-width: 220px; text-align: center; }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; transition: opacity .18s; }
+    .footer-icon-btn:hover img { opacity: .75; }
+    .footer-bar { background: #f3f4f6; color: #999; font-size: 12.8px; text-align: center; padding: 10px; }
+
+    @media (max-width: 768px) {
+      .goals-table thead th.col-goal,
+      .goals-table td.goal-cell { display: none; }
+      .goals-table thead th, .goals-table td { padding: 12px 12px; font-size: 15.1px; }
+    }
+    @media (max-width: 480px) {
+      .goals-table thead th.col-no,
+      .goals-table td.no-cell { display: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo.png" alt="Rotary 國際扶輪3461地區"
+             onerror="this.src='https://pshop.myqr.com.tw/images/RWD_Home/0/201_m.jpg?407'" />
+      </a>
+      <nav class="compact-nav" id="compactNav"></nav>
+      <div class="header-slogan"><img src="images/2526slogan.png" alt="2025-26 年度主題" />
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="header-nav-row"><nav class="desktop-nav" id="desktopNav"></nav></div>
+  <div class="mobile-nav-row">
+    
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+<!-- ══ HERO ══ -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">2025–2026 Annual Goals</div>
+    <h1>年度地區<span>重要工作目標</span></h1>
+    <p>國際扶輪第3461地區 · 2025-2026年度總監工作目標與推動計畫</p>
+  </div>
+</section>
+
+<!-- ══ TABLE ══ -->
+<div class="content-wrap">
+  <div class="goals-table-wrap reveal">
+    <table class="goals-table">
+      <thead>
+        <tr>
+          <th class="col-no">項目</th>
+          <th class="col-content">內容</th>
+          <th class="col-goal">地區目標</th>
+          <th class="col-method">預定做法</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr class="highlight-row">
+          <td class="no-cell">1</td>
+          <td class="content-cell">
+            <span class="cat-badge priority">優先事項</span><br>
+            優先事項目標：<br>
+            1. 增加我們的影響力<br>
+            2. 擴展我們的觸及<br>
+            3. 促使參與者的投入<br>
+            4. 增強我們的適應能力
+          </td>
+          <td class="goal-cell">RI 社長目標</td>
+          <td class="method-cell">各委員會去推廣</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">2</td>
+          <td class="content-cell">
+            <span class="cat-badge foundation">扶輪基金</span><br>
+            扶輪基金捐獻目標90萬美金
+          </td>
+          <td class="goal-cell">
+            90萬美金<br>
+            推廣冠名基金 2.5 萬美金
+          </td>
+          <td class="method-cell">推 EREY 社 ／ 總監獎勵措施</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">3</td>
+          <td class="content-cell">
+            <span class="cat-badge foundation">扶輪基金</span><br>
+            EREY 社 / AKS 捐獻 / 鉅額捐獻
+          </td>
+          <td class="goal-cell">
+            個人捐 5 千美金、1 萬美金以及 2.5 萬美金以上，均致贈不同尺寸之人物雕塑一座
+          </td>
+          <td class="method-cell">
+            個人捐 5 千美金、1 萬美金以及 2.5 萬美金以上，均致贈不同尺寸之人物雕塑一座
+          </td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">4</td>
+          <td class="content-cell">
+            <span class="cat-badge membership">社員成長</span><br>
+            社員成長（質優先再提升量）<br>
+            新社要 25 人以上，要有輔導社
+          </td>
+          <td class="goal-cell">
+            目標 160 人以上成長<br>
+            創立 2 個新社
+          </td>
+          <td class="method-cell">
+            新社總監每社贊助 5 萬元創社基金<br>
+            秘書長每社贊助 1 萬元創社基金<br>
+            RC &amp; ARC 均有提供創社基金
+          </td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">5</td>
+          <td class="content-cell">
+            <span class="cat-badge membership">新世代</span><br>
+            鼓勵發展扶少圍
+          </td>
+          <td class="goal-cell">成立 2 個扶少圍</td>
+          <td class="method-cell">鼓勵各社成立扶少圍，特別是國中型學校扶少圍</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">6</td>
+          <td class="content-cell">
+            <span class="cat-badge membership">新世代</span><br>
+            鼓勵發展扶青社
+          </td>
+          <td class="goal-cell">成立 1 個大學型扶青社</td>
+          <td class="method-cell">鼓勵各社成立大學型扶青社</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">7</td>
+          <td class="content-cell">
+            <span class="cat-badge service">服務計畫</span><br>
+            生命橋樑助學計劃
+          </td>
+          <td class="goal-cell">預定各社贊助共 50 位學生</td>
+          <td class="method-cell">
+            1. 鼓勵各社推薦學生<br>
+            2. 學生至各社領取獎學金<br>
+            3. 委員會提供職涯課程<br>
+            4. 強化學生與贊助社連結
+          </td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">8</td>
+          <td class="content-cell">
+            <span class="cat-badge service">服務計畫</span><br>
+            扶輪之子助學計畫
+          </td>
+          <td class="goal-cell">扶輪之子十週年紀念活動</td>
+          <td class="method-cell">與上屆相同</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">9</td>
+          <td class="content-cell">
+            <span class="cat-badge foundation">獎助金</span><br>
+            3461 地區肺癌篩全球獎助金服務計劃
+          </td>
+          <td class="goal-cell">鼓勵各社以 PHF 指定捐贈，總經費預估 30 萬美元</td>
+          <td class="method-cell">鼓勵各社以 PHF 指定捐贈，總經費預估 30 萬美元</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">10</td>
+          <td class="content-cell">
+            <span class="cat-badge service">服務計畫</span><br>
+            全臺灣 12 地區矯正機關消除 C 肝治療補助計劃
+          </td>
+          <td class="goal-cell">鼓勵各社參與，參與者贊助新臺幣 2 萬元</td>
+          <td class="method-cell">鼓勵各社參與，參與者贊助新臺幣 2 萬元</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">11</td>
+          <td class="content-cell">
+            <span class="cat-badge service">國際服務</span><br>
+            菲律賓 3800 地區國際醫療關懷服務計劃
+          </td>
+          <td class="goal-cell">由每社贊助新臺幣 1 萬元，並鼓勵各社社友參與服務</td>
+          <td class="method-cell">由每社贊助新臺幣 1 萬元，並鼓勵各社社友參與服務</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">12</td>
+          <td class="content-cell">
+            <span class="cat-badge service">國際服務</span><br>
+            帛琉 VTT 醫療職業訓練計劃
+          </td>
+          <td class="goal-cell">鼓勵各社參與</td>
+          <td class="method-cell">鼓勵各社參與</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">13</td>
+          <td class="content-cell">
+            <span class="cat-badge service">環境服務</span><br>
+            國際扶輪與聯合國環境署<br>「保護淡水社區行動計劃」
+          </td>
+          <td class="goal-cell">鼓勵各社舉辦保護淡水服務計劃並上網登記專案</td>
+          <td class="method-cell">鼓勵各社舉辦保護淡水服務計劃並上網登記專案</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">14</td>
+          <td class="content-cell">
+            <span class="cat-badge service">服務計畫</span><br>
+            賦權女孩服務計劃
+          </td>
+          <td class="goal-cell">鼓勵各社舉辦或贊助賦權女孩服務計劃</td>
+          <td class="method-cell">鼓勵各社舉辦或贊助賦權女孩服務計劃</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">15</td>
+          <td class="content-cell">
+            <span class="cat-badge service">公益服務</span><br>
+            扶輪公益網
+          </td>
+          <td class="goal-cell">
+            鼓勵各社成立公益網委員會<br>
+            鼓勵各社媒合物資 50 次<br>
+            利用扶輪之子捐贈物資給學校
+          </td>
+          <td class="method-cell">
+            鼓勵各社成立公益網委員會<br>
+            鼓勵各社媒合物資 50 次<br>
+            利用扶輪之子捐贈物資給學校
+          </td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">16</td>
+          <td class="content-cell">
+            <span class="cat-badge service">公共形象</span><br>
+            反毒宣導
+          </td>
+          <td class="goal-cell">函請各社至扶輪之子各學校播放教育部反毒得獎微電影影片</td>
+          <td class="method-cell">鼓勵向各學校宣傳反毒影片並記錄活動</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">17</td>
+          <td class="content-cell">
+            <span class="cat-badge training">職業服務</span><br>
+            地區職業服務
+          </td>
+          <td class="goal-cell">
+            建立扶輪百工百業影音平台，製作地區社友訪影片宣傳社友職業並與 3461 地區網站聯網
+          </td>
+          <td class="method-cell">職業服務委員會承辦</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">18</td>
+          <td class="content-cell">
+            <span class="cat-badge training">人才發展</span><br>
+            加強地區人才庫資訊
+          </td>
+          <td class="goal-cell">與 3461 網站聯網</td>
+          <td class="method-cell">人才庫委員會承辦</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">19</td>
+          <td class="content-cell">
+            <span class="cat-badge foundation">扶輪基金</span><br>
+            消除小兒麻痺經費
+          </td>
+          <td class="goal-cell">每社 US$1,500 / 年</td>
+          <td class="method-cell">從每社捐款內指定用途</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">20</td>
+          <td class="content-cell">
+            <span class="cat-badge foundation">教育基金</span><br>
+            中華扶輪教育基金
+          </td>
+          <td class="goal-cell">每人 NT$600 / 年</td>
+          <td class="method-cell">鼓勵各社認捐 / 累積在各社帳戶內</td>
+        </tr>
+
+        <tr>
+          <td class="no-cell">21</td>
+          <td class="content-cell">
+            <span class="cat-badge training">推廣訂閱</span><br>
+            台灣扶輪雜誌訂購
+          </td>
+          <td class="goal-cell">每人 NT$700 / 年</td>
+          <td class="method-cell">鼓勵各社社友必踴躍訂購</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="inner-footer">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo"><a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a></div>
+    <div class="inner-footer-contact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<script>
+/* ── Scroll Reveal ── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.05 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ── Nav ── */
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [
+      { label: 'RI社長',          url: 'ri-president.html' },
+      { label: 'RI現況',          url: 'ri-current.html' },
+    ],[
+      { label: '地區總監',    url: 'governor.html', hi: true },
+      { label: '3461各社資訊',    url: 'clubs.html', hi: true },
+      { label: '地區組織名錄',    url: 'directory.html', hi: true },
+      { label: '年度重要工作目標', url: 'annual-goals.html', hi: true },
+    ],[
+      { label: '總監當選人',      url: '#' },
+      { label: '總監提名人',      url: '#' },
+      { label: '歷屆社長、總監',  url: '#' },
+    ],
+  ]},
+  { title: '進行事', items: [
+    { label: '地區行事曆', url: 'calendar.html', hi: true },
+    { label: '扶輪日',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },
+    { label: '地區年會',   url: 'conference.html', hi: true },
+    { label: '國際年會',   url: 'international-convention.html', hi: true },
+    { label: '服務計劃',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' },
+  ]},
+  { title: '秀成果', items: [
+    { label: 'RYLA', url: 'ryla.html' }, { label: 'RYE', url: 'rye.html' },
+    { label: 'NGSE', url: 'ngse.html' }, { label: 'Rotaract', url: 'rotaract.html' },
+    { label: 'Interact', url: 'interact.html', hi: true }, { label: '生命橋樑', url: '#' },
+  ]},
+  { title: '回顧庫', items: [
+    { label: '總監月刊',      url: 'governor-monthly.html?nocache=1', hi: true },
+    { label: '公共形象新聞', url: 'news.html' },
+    { label: 'RI 成果展示',  url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },
+    { label: '扶輪之子',      url: '#' },
+    { label: '扶輪 Shorts',    url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5323/2112-0' },
+    { label: '扶輪百工百業',  url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' },
+  ]},
+  { title: '學知識', items: [
+    { label: '扶輪簡介',     url: 'rotary-intro.html' },
+    { label: '七大焦點領域', url: 'focus-areas.html' },
+    { label: '扶輪標誌', url: 'rotary-logo.html', hi: true },
+    { label: '扶輪基金',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },
+    { label: '扶輪現況',     url: 'ri-current.html' },
+  ]},
+  { title: '連結', columns: [
+    [
+      { label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },
+      { label: '地區扶輪社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },
+      { label: '地區扶青社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },
+      { label: '地區扶少圍',   url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },
+      { label: '扶輪公益網',     url: 'https://17rcn.org/' },
+      { label: '扶輪領導學院',   url: 'https://www.rlitw.org/' },
+    ],[
+      { label: '職業服務',   url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },
+      { label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },
+      { label: '相關連結',   url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' },
+    ],
+  ]},
+  { title: '更多資源', items: [
+    { label: '年度主題',           url: '#' },
+    { label: '下載專區',           url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },
+    { label: '品牌中心', url: 'https://brandcenter.rotary.org/' },
+    { label: '台灣扶輪下載',       url: 'https://taiwan-rotary.org/download/' },
+  ]},
+];
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(c) {
+  menuData.forEach(g => {
+    const item = document.createElement('div');
+    item.className = 'nav-item';
+    const mk = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`;
+    const sub = g.columns
+      ? `<div class="sub-menu sub-menu--cols">${g.columns.map(col=>`<div class="sub-menu-col">${col.map(mk).join('')}</div>`).join('')}</div>`
+      : `<div class="sub-menu">${(g.items||[]).map(mk).join('')}</div>`;
+    item.innerHTML = `<div class="nav-link">${g.title}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>${sub}`;
+    c.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+const mm = document.getElementById('mobileMenu');
+menuData.forEach(g => {
+  const item = document.createElement('div');
+  item.className = 'mobile-nav-item';
+  const all = g.columns ? g.columns.flat() : (g.items||[]);
+  item.innerHTML = `<div class="mobile-nav-top"><span>${g.title}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="mobile-sub">${all.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`).join('')}</div>`;
+  item.querySelector('.mobile-nav-top').addEventListener('click', () => item.classList.toggle('expanded'));
+  mm.appendChild(item);
+});
+document.getElementById('hamburger').addEventListener('click', () => {
+  const _hdr = document.getElementById('siteHeader');
+  const open = mm.classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open && _hdr) mm.style.top = _hdr.offsetHeight + 'px';
+});
+window.addEventListener('scroll', () => {
+  const _hdr = document.getElementById('siteHeader');
+  if (mm.classList.contains('open') && _hdr) mm.style.top = _hdr.offsetHeight + 'px';
+}, { passive: true });
+window.addEventListener('resize', () => {
+  const _hdr = document.getElementById('siteHeader');
+  if (mm.classList.contains('open') && _hdr) mm.style.top = _hdr.offsetHeight + 'px';
+}, { passive: true });
+</script>
+<script src="search.js"></script>
+</body>
+</html>

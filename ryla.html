@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RYLA 青年領袖營 | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark: #1a2d5c;
+      --gold: #f0c040;
+      --ryla-blue: #1d4ed8;
+      --ryla-light: #eff6ff;
+      --overlay: rgba(26,45,92,0.92);
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; background: #f4f6fb; color: #222; min-height: 100vh; }
+
+    /* ── Site Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background: url('images/nav-bg.jpg') left center / cover no-repeat;
+      background-color: #dce8f0;
+      transition: height 0.3s;
+    }
+    .header-logo-row { background: transparent; height: 100px; display: flex; align-items: center; padding: 0 24px; transition: height 0.3s; }
+    .header-logo-inner { max-width: 1440px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .site-logo { display: flex; align-items: center; flex-shrink: 0; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; transition: width 0.3s, height 0.3s; }
+    .header-slogan { display: flex; align-items: center; flex-shrink: 0; }
+    .header-slogan img { height: 72px; width: auto; object-fit: contain; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; transition: height 0.3s, opacity 0.3s; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+    .nav-link { display: flex; align-items: center; justify-content: center; gap: 4px; color: #222; font-size: 16.5px; font-weight: 600; text-decoration: none; height: 52px; width: 100%; white-space: nowrap; transition: background 0.18s, color 0.18s; cursor: pointer; letter-spacing: 0.5px; }
+    .nav-link:hover, .nav-item:hover .nav-link { background: rgba(0,0,0,0.12); color: #000; }
+    .nav-link svg { flex-shrink: 0; }
+    .sub-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; min-width: 170px; box-shadow: 0 6px 24px rgba(0,0,0,0.15); border-top: 3px solid var(--gold); z-index: 200; }
+    .nav-item:hover .sub-menu { display: block; }
+    .sub-menu a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background 0.15s, color 0.15s; text-decoration: none; }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+    .sub-menu--cols { display: none; position: absolute; top: 100%; left: 0; background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,0.15); border-top: 3px solid var(--gold); z-index: 200; flex-direction: row; min-width: 480px; }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    .nav-item:last-child .sub-menu, .nav-item:last-child .sub-menu--cols, .nav-item:nth-last-child(2) .sub-menu, .nav-item:nth-last-child(2) .sub-menu--cols { left: auto; right: 0; }
+    .sub-menu-col { min-width: 160px; border-right: 1px solid #f0f0f0; flex: 1; }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background 0.15s, color 0.15s; white-space: nowrap; text-decoration: none; }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .site-header.scrolled .header-logo-row { height: 76px; }
+    .site-header.scrolled .site-logo img { width: auto; height: 48px; }
+    .site-header.scrolled .header-slogan { display: none; }
+    .site-header.scrolled .header-nav-row { display: none; }
+    .site-header.scrolled .compact-nav { display: flex; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; background: transparent; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform 0.25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,0.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,0.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.15s; text-decoration: none; }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media screen and (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan { display: none; }
+      .desktop-nav { display: none; }
+      .compact-nav { display: none !important; }
+      .mobile-nav-row { display: flex; }
+      .hamburger { display: flex; }
+      .mobile-menu { top: 128px; }
+      .site-header.scrolled .header-logo-row { height: 60px; }
+      .site-header.scrolled .site-logo img { height: 38px; }
+      .site-header.scrolled .header-nav-row { display: none; }
+      .site-header.scrolled .mobile-menu { top: 108px; }
+    }
+
+    /* ── Footer ── */
+    .inner-footer { background: #ffffff; border-top: 1px solid #e8eaf0; padding: 36px 24px; }
+    .inner-footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .inner-footer-logo img { height: 60px; width: auto; object-fit: contain; display: block; }
+    .inner-footer-contact { font-size: 13.5px; color: #555; line-height: 1.9; }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; }
+    .footer-bar { background: var(--dark); color: rgba(255,255,255,0.55); font-size: 12px; text-align: center; padding: 10px; }
+
+    /* ══ RYLA PAGE STYLES ══ */
+
+    /* Hero Video */
+    .ryla-hero {
+      position: relative;
+      width: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    .ryla-hero .video-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+    }
+    .ryla-hero iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+    /* FB 橫幅 */
+    .ryla-fb-bar {
+      background: linear-gradient(135deg, #1877f2 0%, #0c5dc7 100%);
+      padding: 29px 24px;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      text-decoration: none;
+      transition: filter 0.2s;
+    }
+    .ryla-fb-bar:hover { filter: brightness(1.1); }
+    .ryla-fb-bar .fb-icon { width: 28px; height: 28px; flex-shrink: 0; }
+    .ryla-fb-bar span { color: #fff; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; }
+    .ryla-fb-bar .arrow { color: rgba(255,255,255,0.7); font-size: 18px; }
+
+    /* Page wrap */
+    .ryla-page { max-width: 900px; margin: 0 auto; padding: 56px 24px 80px; }
+
+    /* 大標題區 */
+    .ryla-title-block {
+      text-align: center;
+      margin-bottom: 52px;
+      padding: 48px 24px;
+      background: transparent;
+      border-radius: 16px;
+      color: var(--dark);
+    }
+    .ryla-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 2px;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .ryla-title-block h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+      color: var(--dark);
+    }
+    .ryla-title-block .en-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: clamp(13px, 2vw, 18px);
+      color: #555;
+      letter-spacing: 3px;
+      font-weight: 400;
+    }
+    .ryla-title-block .full-en {
+      font-family: 'Roboto', sans-serif;
+      font-size: clamp(12px, 1.5vw, 15px);
+      color: #888;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+
+    /* 各區塊 */
+    .ryla-section {
+      margin-bottom: 40px;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    .ryla-section-header {
+      background: var(--dark);
+      color: #fff;
+      padding: 18px 28px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .ryla-section-header .icon {
+      width: 36px; height: 36px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .ryla-section-header h2 {
+      font-size: 20px; font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .ryla-section-body {
+      padding: 28px;
+      font-size: 15.5px;
+      line-height: 2;
+      color: #333;
+    }
+    .ryla-section-body p + p { margin-top: 12px; }
+
+    /* 活動資訊 grid */
+    .ryla-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      padding: 28px;
+    }
+    .ryla-info-card {
+      background: var(--ryla-light);
+      border-radius: 10px;
+      padding: 20px;
+      border-left: 4px solid var(--ryla-blue);
+    }
+    .ryla-info-card .label {
+      font-size: 12px; font-weight: 700;
+      color: var(--ryla-blue);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .ryla-info-card .value {
+      font-size: 17px; font-weight: 600;
+      color: var(--dark);
+    }
+    .ryla-info-card .value.tbd {
+      color: #9ca3af;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    /* 資格 list */
+    .ryla-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .ryla-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 18px;
+      background: #f8faff;
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .ryla-list li .num {
+      width: 28px; height: 28px;
+      background: var(--ryla-blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* 報名按鈕 */
+    .ryla-apply-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 28px;
+    }
+    @media (max-width: 600px) { .ryla-apply-grid { grid-template-columns: 1fr; } }
+    .ryla-apply-btn {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 10px;
+      padding: 28px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+    }
+    .ryla-apply-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+    .ryla-apply-btn.internal {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--ryla-blue) 100%);
+      color: #fff;
+    }
+    .ryla-apply-btn.open {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: #fff;
+    }
+    .ryla-apply-btn .btn-icon { font-size: 32px; }
+    .ryla-apply-btn .btn-title { font-size: 17px; font-weight: 700; }
+    .ryla-apply-btn .btn-sub { font-size: 13px; opacity: 0.8; }
+
+    /* 報名時間 */
+    .ryla-deadline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 28px;
+    }
+    @media (max-width: 600px) { .ryla-deadline-grid { grid-template-columns: 1fr; } }
+    .ryla-deadline-card {
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 20px;
+      background: #fff;
+    }
+    .ryla-deadline-card .dl-title {
+      font-size: 13px; font-weight: 700;
+      color: var(--ryla-blue);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .ryla-deadline-card .dl-date {
+      font-size: 16px; font-weight: 600;
+      color: var(--dark);
+    }
+    .ryla-deadline-card .dl-date.tbd {
+      color: #9ca3af; font-style: italic; font-weight: 400;
+    }
+
+    @media (max-width: 900px) {
+      .ryla-page { padding: 32px 16px 60px; }
+      .ryla-section-body { padding: 20px; }
+      .ryla-apply-grid, .ryla-deadline-grid { padding: 20px; }
+      .ryla-info-grid { padding: 20px; }
+    }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <div class="site-logo">
+        <a href="index.html"><img src="images/logo_02.png" alt="Rotary District 3461"></a>
+      </div>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題">
+      </div>
+      <nav class="compact-nav" id="compactNav"></nav>
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+  </div>
+  <div class="header-nav-row">
+    <nav class="desktop-nav" id="desktopNav"></nav>
+  </div>
+  <div class="mobile-nav-row">
+    
+  </div>
+  <div class="mobile-menu" id="mobileMenu"></div>
+</header>
+
+<!-- ══ HERO VIDEO ══ -->
+<div class="ryla-hero">
+  <div class="video-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/X2yXqADjI0o?rel=0&modestbranding=1&autoplay=1&mute=1"
+      title="RYLA 營精華"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+<!-- FB 社群連結 -->
+<a class="ryla-fb-bar" href="https://www.facebook.com/groups/772352209541120/" target="_blank" rel="noopener">
+  <svg class="fb-icon" viewBox="0 0 24 24" fill="#fff">
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+  </svg>
+  <span>加入 RYLA 扶輪青年領袖獎 Facebook 社群</span>
+  <span class="arrow">›</span>
+</a>
+
+<!-- ══ CONTENT ══ -->
+<div class="ryla-page">
+
+  <!-- 標題區 -->
+  <div class="ryla-title-block">
+    <div class="ryla-badge">Rotary International</div>
+    <h1>青年領袖營 RYLA</h1>
+    <div class="en-title">Rotary Youth Leadership Awards</div>
+    <div class="full-en">國際扶輪青年領袖獎研習營</div>
+  </div>
+
+  <!-- 何謂 RYLA -->
+  <div class="ryla-section">
+    <div class="ryla-section-header">
+      <div class="icon">❓</div>
+      <h2>何謂 RYLA？</h2>
+    </div>
+    <div class="ryla-section-body">
+      <p>扶輪青年領袖獎（RYLA）是扶輪為青年所成立的建構性計畫。國際扶輪理事會鼓勵各扶輪社及地區按不同年齡層的需求及成熟的程度，邀請具有領導潛力，包括但不限於經濟條件不佳的青年，參加扶輪青年領袖獎（RYLA）計畫。</p>
+    </div>
+  </div>
+
+  <!-- 為何舉辦 -->
+  <div class="ryla-section">
+    <div class="ryla-section-header">
+      <div class="icon">💡</div>
+      <h2>為何要舉辦 RYLA？</h2>
+    </div>
+    <div class="ryla-section-body">
+      <p>扶輪基於「激發與培養社區青年領導潛能、優秀的公民素質、以及個人能力」而舉辦 RYLA，安排 3 天具有激勵性與挑戰性的培訓課程，提供機會給年輕人學習領導的技巧，培養及提高自信，進而與同儕或前輩共同探討問題或交換意見、分享經驗，藉以提升其人格的發展，為優良的世界公民奠立良好的基礎，而且藉由 RYLA 的活動可表彰扶輪的公眾形象並增進扶輪與青年互動。</p>
+    </div>
+  </div>
+
+  <!-- RYLA 功能 -->
+  <div class="ryla-section">
+    <div class="ryla-section-header">
+      <div class="icon">🚀</div>
+      <h2>RYLA 的功能</h2>
+    </div>
+    <div class="ryla-section-body">
+      <p>增進領導技巧、培養及加強自信，於同儕中強化競爭力、結交新朋友並獲得職場資訊與相關專業技能，做為將來的社區領導人。</p>
+    </div>
+  </div>
+
+  <!-- 參加資格 -->
+  <div class="ryla-section">
+    <div class="ryla-section-header">
+      <div class="icon">✅</div>
+      <h2>參加資格</h2>
+    </div>
+    <div class="ryla-section-body">
+      <ul class="ryla-list">
+        <li><span class="num">1</span><span>無不良嗜好。</span></li>
+        <li><span class="num">2</span><span>年滿 18 至 26 歲。</span></li>
+        <li><span class="num">3</span><span>對發展領袖精神及能力有興趣者。</span></li>
+        <li><span class="num">4</span><span>精通中文聽說讀寫。</span></li>
+      </ul>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="inner-footer" id="innerFooter">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo">
+      <a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a>
+    </div>
+    <div class="inner-footer-contact" id="footerContact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<script>
+function _load(key, fallback) {
+  try { const v = localStorage.getItem('r3461_' + key); return v ? JSON.parse(v) : fallback; } catch(e) { return fallback; }
+}
+function _flatToNested(flat) {
+  const result = []; let group = null;
+  flat.forEach(item => {
+    if (item.level === 1) { group = { title: item.label, items: [] }; result.push(group); }
+    else if (item.level === 2 && group) { group.items.push({ label: item.label, url: item.url }); }
+  });
+  return result.filter(g => g.items.length > 0);
+}
+
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [{ label: 'RI社長', url: 'ri-president.html' },{ label: 'RI現況', url: 'ri-current.html' }],
+    [{ label: '地區總監', url: 'governor.html', hi: true },{ label: '3461各社資訊', url: 'clubs.html', hi: true },{ label: '地區組織名錄', url: 'directory.html', hi: true },{ label: '年度重要工作目標', url: 'annual-goals.html', hi: true }],
+    [{ label: '總監當選人', url: '#' },{ label: '總監提名人', url: '#' },{ label: '歷屆社長、總監', url: '#' }],
+  ]},
+  { title: '進行事', items: [{ label: '地區行事曆', url: 'calendar.html', hi: true },{ label: '扶輪日', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },{ label: '地區年會', url: 'conference.html', hi: true },{ label: '國際年會', url: 'international-convention.html', hi: true },{ label: '服務計劃', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' }]},
+  { title: '秀成果', items: [{ label: 'RYLA', url: 'ryla.html', hi: true },{ label: 'RYE', url: 'rye.html' },{ label: 'NGSE', url: 'ngse.html' },{ label: 'Rotaract', url: 'rotaract.html' },{ label: 'Interact', url: 'interact.html', hi: true },{ label: '生命橋樑', url: '#' }]},
+  { title: '回顧庫', items: [{ label: '總監月刊', url: 'governor-monthly.html?nocache=1', hi: true },{ label: '公共形象新聞', url: 'news.html' },{ label: 'RI 成果展示', url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },{ label: '扶輪之子', url: '#' },{ label: '扶輪 Shorts', url: 'https://www.youtube.com/@Rotary3461/shorts' },{ label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' }]},
+  { title: '學知識', items: [{ label: '扶輪簡介', url: 'rotary-intro.html' },{ label: '七大焦點領域', url: 'focus-areas.html' },{ label: '扶輪標誌', url: 'rotary-logo.html', hi: true },{ label: '扶輪基金', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },{ label: '扶輪現況', url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' }]},
+  { title: '連結', columns: [
+    [{ label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },{ label: '地區扶輪社', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },{ label: '地區扶青社', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },{ label: '地區扶少圍', url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },{ label: '扶輪公益網', url: 'https://17rcn.org/' },{ label: '扶輪領導學院', url: 'https://www.rlitw.org/' }],
+    [{ label: '職業服務', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },{ label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },{ label: '相關連結', url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' }],
+  ]},
+  { title: '更多資源', items: [{ label: '年度主題', url: '#' },{ label: '下載專區', url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },{ label: '品牌中心', url: 'https://brandcenter.rotary.org/' },{ label: '台灣扶輪下載', url: 'https://taiwan-rotary.org/download/' }]},
+];
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(container) {
+  menuData.forEach(group => {
+    const item = document.createElement('div'); item.className = 'nav-item';
+    const mkLink = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener"${i.hi?' class="nav-hi"':''}>${i.label}</a>`;
+    let subHtml = '';
+    if (group.columns) {
+      subHtml = `<div class="sub-menu sub-menu--cols">${group.columns.map(col=>`<div class="sub-menu-col">${col.map(mkLink).join('')}</div>`).join('')}</div>`;
+    } else {
+      subHtml = `<div class="sub-menu">${(group.items||[]).map(mkLink).join('')}</div>`;
+    }
+    item.innerHTML = `<div class="nav-link">${group.title}<svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>${subHtml}`;
+    container.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+
+// Mobile menu
+function buildMobileMenu() {
+  const mm = document.getElementById('mobileMenu');
+  menuData.forEach(group => {
+    const ni = document.createElement('div'); ni.className = 'mobile-nav-item';
+    const allItems = group.columns ? group.columns.flat() : (group.items||[]);
+    ni.innerHTML = `<div class="mobile-nav-top">${group.title}<svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4l3 4 3-4" fill="none" stroke="#fff" stroke-width="1.5"/></svg></div><div class="mobile-sub">${allItems.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}">${i.label}</a>`).join('')}</div>`;
+    ni.querySelector('.mobile-nav-top').addEventListener('click', () => ni.classList.toggle('expanded'));
+    mm.appendChild(ni);
+  });
+}
+buildMobileMenu();
+function toggleMobileMenu() {
+  const mm2 = document.getElementById('mobileMenu');
+  const hbg = document.getElementById('hamburger');
+  const hdr = document.getElementById('siteHeader');
+  const open = mm2.classList.toggle('open');
+  hbg.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}
+window.addEventListener('scroll', () => {
+  const mm2 = document.getElementById('mobileMenu');
+  const hdr = document.getElementById('siteHeader');
+  if (mm2 && mm2.classList.contains('open') && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}, { passive: true });
+window.addEventListener('resize', () => {
+  const mm2 = document.getElementById('mobileMenu');
+  const hdr = document.getElementById('siteHeader');
+  if (mm2 && mm2.classList.contains('open') && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}, { passive: true });
+
+// Header scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Footer contact from localStorage
+(function() {
+  const c = _load('contact', null) || _load('ps_siteinfo', null);
+  if (!c) return;
+  const el = document.getElementById('footerContact');
+  if (el && c.address) el.innerHTML = `總監辦公室：${c.address}<br>辦公室電話：${c.phone||''}<br>Email：${c.email||''}`;
+})();
+</script>
+<script src="search.js"></script>
+</body>
+</html>

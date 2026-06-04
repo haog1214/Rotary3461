@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>總監 DG Sunny | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark: #1a2d5c;
+      --gold: #f0c040;
+      --overlay: rgba(26,45,92,0.92);
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; background: #f4f6fb; color: #222; min-height: 100vh; }
+
+    /* ── Site Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background: url('images/nav-bg.jpg') left center / cover no-repeat;
+      background-color: #dce8f0;
+      transition: height 0.3s;
+    }
+    .header-logo-row {
+      background: transparent; height: 100px;
+      display: flex; align-items: center; padding: 0 24px;
+      transition: height 0.3s;
+    }
+    .header-logo-inner {
+      max-width: 1440px; margin: 0 auto; width: 100%;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .site-logo { display: flex; align-items: center; flex-shrink: 0; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; transition: width 0.3s, height 0.3s; }
+    .header-slogan { display: flex; align-items: center; flex-shrink: 0; }
+    .header-slogan img { height: 72px; width: auto; object-fit: contain; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; transition: height 0.3s, opacity 0.3s; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+        .nav-link {
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      color: #222; font-size: 16.5px; font-weight: 600; text-decoration: none;
+      height: 52px; width: 100%;
+      white-space: nowrap;
+      transition: background 0.18s, color 0.18s;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+    }
+    .nav-link:hover,
+    .nav-item:hover .nav-link { background: rgba(0,0,0,0.12); color: #000; }
+
+    .nav-link svg { flex-shrink: 0; }
+
+    .sub-menu {
+      display: none;
+      position: absolute; top: 100%; left: 0;
+      background: #fff;
+      min-width: 170px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      border-top: 3px solid var(--gold);
+      z-index: 200;
+    }
+    .nav-item:hover .sub-menu { display: block; }
+
+    .sub-menu a {
+      display: block; padding: 16px 17px;
+      font-size: 15.5px; color: var(--dark);
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+
+    /* Multi-column dropdown */
+    .sub-menu--cols {
+      display: none;
+      position: absolute; top: 100%; left: 0;
+      background: #fff;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      border-top: 3px solid var(--gold);
+      z-index: 200;
+      flex-direction: row;
+      min-width: 480px;
+    }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    /* Right-edge dropdowns open to the left */
+    .nav-item:last-child .sub-menu,
+    .nav-item:last-child .sub-menu--cols,
+    .nav-item:nth-last-child(2) .sub-menu,
+    .nav-item:nth-last-child(2) .sub-menu--cols {
+      left: auto;
+      right: 0;
+    }
+    .sub-menu-col {
+      min-width: 160px;
+      border-right: 1px solid #f0f0f0;
+      flex: 1;
+    }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a {
+      display: block; padding: 16px 17px;
+      font-size: 15.5px; color: var(--dark);
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .sub-menu-col a.nav-hi:hover { color: #fff; }
+
+    .site-header.scrolled .header-logo-row { height: 76px; }
+    .site-header.scrolled .site-logo img   { width: auto; height: 48px; }
+    .site-header.scrolled .header-slogan   { display: none; }
+    .site-header.scrolled .header-nav-row  { display: none; }
+    .site-header.scrolled .compact-nav     { display: flex; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; background: transparent; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform 0.25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,0.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,0.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.15s; }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media screen and (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img   { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan   { display: none; }
+      .desktop-nav     { display: none; }
+      .compact-nav     { display: none !important; }
+      .mobile-nav-row  { display: flex; }
+      .hamburger       { display: flex; }
+      .mobile-menu { top: 128px; }
+      .site-header.scrolled .header-logo-row { height: 60px; }
+      .site-header.scrolled .site-logo img   { height: 38px; }
+      .site-header.scrolled .mobile-menu     { top: 108px; }
+    }
+
+    /* ── Inner Footer ── */
+    .inner-footer { background: #fff; border-top: 1px solid #e5e7eb; padding: 24px 32px; }
+    .inner-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .inner-footer-logo img { height: 60px; width: auto; object-fit: contain; display: block; }
+    .inner-footer-contact { color: #555; font-size: 13px; line-height: 2; flex: 1; min-width: 220px; text-align: center; }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; transition: opacity 0.18s; }
+    .footer-icon-btn:hover img { opacity: 0.75; }
+    .footer-bar { background: #f3f4f6; color: #999; font-size: 11px; text-align: center; padding: 10px; }
+
+    /* ══════════════════════════════
+       HERO BANNER
+    ══════════════════════════════ */
+    .hero-banner {
+      background: #f2f2f2;
+      padding: 60px 24px 0;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: flex-end; gap: 48px;
+      position: relative; z-index: 1;
+    }
+    .hero-photo-wrap {
+      flex-shrink: 0;
+      width: 448px;
+      border-radius: 16px 16px 0 0;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      background: #f2f2f2;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .hero-photo-wrap img {
+      width: 100%; height: auto; object-fit: contain; display: block;
+    }
+    .hero-photo-placeholder {
+      color: #aaa; font-size: 64px; text-align: center;
+    }
+    .hero-text { flex: 1; padding-bottom: 40px; color: var(--dark); margin-left: 0; }
+    .hero-year-tag {
+      display: inline-block;
+      background: var(--gold); color: var(--dark);
+      font-size: 13px; font-weight: 800;
+      padding: 4px 14px; border-radius: 20px;
+      letter-spacing: 1px; margin-bottom: 16px;
+    }
+    .hero-title {
+      font-size: 42px; font-weight: 900; line-height: 1.15;
+      margin-bottom: 8px; color: var(--dark);
+    }
+    .hero-title span { color: var(--primary); }
+    .hero-subtitle { font-size: 14px; color: #555; margin-bottom: 20px; }
+    .hero-club-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #f0f4ff; border: 1px solid #c7d5f0;
+      border-radius: 8px; padding: 8px 16px;
+      font-size: 14px; color: #333;
+    }
+    .hero-theme {
+      margin-top: 24px;
+      background: #f0f4ff; border-left: 4px solid var(--primary);
+      padding: 12px 18px; border-radius: 0 8px 8px 0;
+    }
+    .hero-theme-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 4px; }
+    .hero-theme-en { font-size: 22px; font-weight: 800; color: var(--primary); }
+    .hero-theme-zh { font-size: 15px; color: #444; margin-top: 2px; }
+    .hero-slogan-wrap { flex-shrink: 0; align-self: flex-end; padding-bottom: 40px; transform: translate(-50px, -170px); }
+
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; align-items: center; gap: 24px; padding-bottom: 0; }
+      .hero-photo-wrap { width: 180px; border-radius: 16px; }
+      .hero-text { text-align: center; padding-bottom: 32px; margin-left: 0; }
+      .hero-title { font-size: 30px; }
+    }
+
+    /* ══════════════════════════════
+       MAIN CONTENT
+    ══════════════════════════════ */
+    .page-main { max-width: 1100px; margin: 0 auto; padding: 48px 24px 64px; }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+
+    /* ── Section Cards ── */
+    .sec-card {
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      border: 1px solid #e8ecf4;
+      padding: 28px 30px;
+      margin-bottom: 24px;
+    }
+    .sec-card:last-child { margin-bottom: 0; }
+
+    .sec-title {
+      font-size: 18px; font-weight: 800; color: var(--primary);
+      display: flex; align-items: center; gap: 10px;
+      padding-bottom: 14px; margin-bottom: 18px;
+      border-bottom: 2px solid #e8ecf4;
+    }
+    .sec-title-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--primary); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+
+    /* ── Bio ── */
+    .bio-text {
+      font-size: 15px; color: #444; line-height: 1.95;
+    }
+    .bio-text p { margin-bottom: 14px; }
+    .bio-text p:last-child { margin-bottom: 0; }
+
+    /* ── Info Rows ── */
+    .info-row {
+      display: flex; gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f3fa;
+      font-size: 14px;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #888; min-width: 90px; flex-shrink: 0; font-weight: 600; }
+    .info-val { color: #222; flex: 1; }
+
+    /* ── Timeline ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: flex; gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f3fa;
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-year {
+      flex-shrink: 0; width: 90px;
+      font-size: 13px; font-weight: 700; color: var(--primary);
+      padding-top: 2px;
+    }
+    .tl-content { flex: 1; font-size: 14px; color: #333; line-height: 1.6; }
+
+    /* ── Goals Grid ── */
+    .goals-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 600px) { .goals-grid { grid-template-columns: 1fr; } }
+    .goal-chip {
+      background: #f4f6fb; border-radius: 10px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--primary);
+    }
+    .goal-chip.gold { border-color: var(--gold); }
+    .goal-chip.green { border-color: #16a34a; }
+    .goal-chip.purple { border-color: #7c3aed; }
+    .goal-num { font-size: 22px; font-weight: 900; color: var(--primary); line-height: 1; }
+    .goal-chip.gold .goal-num { color: #b45309; }
+    .goal-chip.green .goal-num { color: #16a34a; }
+    .goal-chip.purple .goal-num { color: #7c3aed; }
+    .goal-desc { font-size: 13px; color: #555; margin-top: 4px; line-height: 1.4; }
+
+    /* ── Sidebar ── */
+    .sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+    .profile-card {
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      border: 1px solid #e8ecf4;
+      overflow: hidden;
+    }
+    .profile-card-header {
+      background: linear-gradient(135deg, var(--primary), #2563c0);
+      padding: 20px; text-align: center; color: #fff;
+    }
+    .profile-avatar {
+      width: 100px; height: 100px; border-radius: 50%;
+      overflow: hidden; margin: 0 auto 12px;
+      border: 3px solid rgba(255,255,255,0.4);
+      background: #1a3a5c;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-name { font-size: 20px; font-weight: 900; }
+    .profile-en { font-size: 15px; color: var(--gold); font-weight: 700; margin-top: 2px; }
+    .profile-role { font-size: 13px; opacity: 0.8; margin-top: 6px; }
+    .profile-card-body { padding: 18px; }
+    .profile-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 8px 0; border-bottom: 1px solid #f0f3fa;
+      font-size: 13px;
+    }
+    .profile-item:last-child { border-bottom: none; }
+    .profile-item-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .profile-item-label { color: #888; font-size: 11px; display: block; margin-bottom: 2px; }
+    .profile-item-val { color: #222; font-weight: 600; }
+
+    .fund-card {
+      background: linear-gradient(135deg, #1a458b, #0f2153);
+      border-radius: 14px; padding: 22px;
+      color: #fff;
+    }
+    .fund-title { font-size: 15px; font-weight: 800; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .fund-item { font-size: 13px; opacity: 0.88; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
+    .fund-item:last-child { border-bottom: none; }
+    .fund-item strong { color: var(--gold); display: block; font-size: 12px; opacity: 0.8; }
+
+    .contact-card {
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      border: 1px solid #e8ecf4; padding: 20px;
+    }
+    .contact-title { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 14px; }
+    .contact-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px; color: #444; border-bottom: 1px solid #f0f3fa; }
+    .contact-item:last-child { border-bottom: none; }
+    .contact-icon { font-size: 16px; flex-shrink: 0; }
+    .contact-card .tl-year { margin-left: 15px; }
+    .contact-card .tl-content { margin-left: -30px; }
+
+    /* ── Tabs ── */
+    .tab-bar {
+      display: flex; gap: 4px; flex-wrap: wrap;
+      background: #e8ecf4; border-radius: 12px; padding: 6px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      flex: 1; min-width: 120px;
+      padding: 10px 14px; border: none; border-radius: 8px;
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      color: #666; background: transparent; cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { background: rgba(26,69,139,0.08); color: var(--primary); }
+    .tab-btn.active { background: #fff; color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .tab-panel { display: none; zoom: 1.1; }
+    .tab-panel.active { display: block; }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo.png" alt="Rotary 國際扶輪3461地區"
+             onerror="this.src='https://pshop.myqr.com.tw/images/RWD_Home/0/201_m.jpg?407'" />
+      </a>
+      <nav class="compact-nav" id="compactNav"></nav>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題" />
+      
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="header-nav-row">
+    <nav class="desktop-nav" id="desktopNav"></nav>
+  </div>
+  <div class="mobile-nav-row">
+    
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+<!-- ── Hero Banner ── -->
+<section class="hero-banner">
+  <div class="hero-inner">
+    <div class="hero-photo-wrap">
+      <img src="https://pshop.myqr.com.tw/images/RWD_Member_Model_d1_d3_d1/0/5682.jpg?971"
+           alt="總監 蔡陽明 Sunny"
+           onerror="this.parentElement.innerHTML='<div class=\'hero-photo-placeholder\'>👤</div>'" />
+    </div>
+    <div class="hero-text">
+      <div class="hero-year-tag">2025 – 2026 年度總監</div>
+      <div class="hero-title">蔡陽明 <span>Sunny</span></div>
+      <div class="hero-subtitle">夫人&nbsp;&nbsp;李春月</div>
+      <div class="hero-theme">
+        <div class="hero-theme-label">2025–26 年度主題</div>
+        <div class="hero-theme-en">Unite for Good</div>
+        <div class="hero-theme-zh">讓我們一起 FUN 轉世界</div>
+      </div>
+    </div>
+    <div class="hero-slogan-wrap">
+      <img src="images/2526slogan.png" alt="2025-26年度主題" style="width:150px;height:auto;display:block;" />
+    </div>
+  </div>
+</section>
+
+<!-- ── Main Content ── -->
+<main class="page-main">
+  <div class="content-grid">
+
+    <!-- 左欄 -->
+    <div class="left-col">
+
+      <!-- 頁籤列 -->
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab(this,'tab-bio')">個人簡介</button>
+        <button class="tab-btn" onclick="switchTab(this,'tab-rotary')">扶輪資歷</button>
+        <button class="tab-btn" onclick="switchTab(this,'tab-district')">地區經歷</button>
+      </div>
+
+      <!-- 個人簡介 -->
+      <div id="tab-bio" class="tab-panel active sec-card">
+        <div class="sec-title"><div class="sec-title-icon">📖</div>個人簡介</div>
+        <div class="bio-text">
+          <p><strong>成長背景</strong></p>
+          <p>民國47年我出生於台中市沙鹿區西勢里的農家，西勢里位於大肚山台地上，屬於農業區旱地，童年記憶中，每天歡樂的在田埂間奔跑，池塘中嬉戲，家裡從事農業耕種，例如：番薯（地瓜）、甘蔗、高粱、荔枝的作物，當然也豢養了黃牛、母豬、小豬、雞、鴨、鵝、火雞等各種家禽，非常熱鬧；日出而作，日落而息的鄉村生活，也形塑了我腳踏實地，樂觀進取的個性；雖然物質不豐富，卻給了我珍貴的精神財富；深深瞭解做人要懂得感恩、珍惜當下，並培養了面對困難勇於面對，樂觀不放棄的處世態度。</p>
+          <p><strong>求學過程，公司經營</strong></p>
+          <p>小學就讀村裡的公館國小，然後沙鹿國中、清水高中，大學就讀淡水工商（三專）現改制的真理大學；在學期間成績表現穩定皆名列前茅。畢業後即投入職場上班，民國70年結婚後，即自行創業；期間經營不動產專業代理人、加油站、建設公司；並投資證券公司、游泳池、餐廳等；幾十年來，很幸運的營運投資項目尚可，家庭經濟小康。另外在50歲時，自覺學識不足，想再入學研讀經營管理的課程，因緣際會考上靜宜大學EMBA；在二年求學（研究）期間，認識很多師長，企業界好友，也順利取得碩士學位，也因此人脈的關係，在學校長官的支持，各方好友同學們協助下，創立靜宜大學EMBA校友會，擔任第1、2屆理事長；進而也榮任靜宜大學全球校友總會第11、12屆理事長。</p>
+          <p><strong>進入扶輪與服務歷程</strong></p>
+          <p>民國87年，我與青商會OB的好友(CP Lucky、PP Gas、PP Star)暨地方各界企業人士等30多人，在台中港東南社輔導下（輔導代表為PP Fruit）成立台中港東區社。自入社多年來擔任了社內各項職務與工作，受指派即勇於承擔，並使命必達；並榮幸於民國97年擔任本社第11屆社長，這些年來在地區扶輪前輩指導教誨下，個人參與了本社及地區各項服務計畫、募款工作、社友招收、國際服務與聯誼等工作皆全力以赴，成績受大家肯定，也榮幸進而被推選擔任2025-26年度3461地區總監。我深刻體會到，扶輪的服務並不是一次性的付出，而是持續性的陪伴、關心，以「愛」為出發點，讓別人願意和你一起走下去，共同朝向「超我服務」的目標。</p>
+          <p><strong>未來展望與年度主題「Unite for Good」</strong></p>
+          <p>2025-26年度，很榮幸能擔任國際扶輪3461地區總監，這是榮耀，更是責任。在這個變動快速、世代交錯的時代，我深信，唯有凝聚力量，才能放大影響。國際扶輪的年度主題「團結行善」(Unite for Good)，這不僅是一句口號，而是一種信念：透過扶輪，我們能跨越背景、性別與年齡，團結每一位社友、扶青、扶少等，甚至社區居民，一起為這個世界做出改變。</p>
+          <p>展望2025-26年度，我們秉持國際扶輪年度主題「Unite for Good」與3461地區口號「讓我們一起FUN轉世界」，未來一年，我們的地區團隊將聚焦規劃以下目標：</p>
+          <p><strong>社員成長目標：</strong><br>1. 成立兩個新社<br>2. 增加110位新社友<br>3. 成立兩個衛星社<br>4. 成立一個扶青社<br>5. 成立一個扶少團</p>
+          <p><strong>捐款目標：</strong><br>1. 保羅‧哈里斯基金捐款達100萬美金<br>2. 中華扶輪教育基金目標800萬元<br>3. 認養生命橋樑學生50位</p>
+          <p><strong>國際服務目標：</strong><br>・GG申請案達成20至22案<br>・每社配合地區獎助金至少45,000元</p>
+          <p><strong>家庭，是我最堅強的後盾</strong></p>
+          <p>我最愛的太太Moon（春月），是一位美麗、體貼、細心又低調的伴侶。家庭大小事多由她悉心照料，讓我能無後顧之憂，全心投入社團活動。感謝她的理解與支持，也帶領三位孩子一起參與扶輪、協助各項工作。親愛的家人，我愛你們！</p>
+          <p>感謝歷屆前總監、台中港東區社全體社友暨寶眷的提攜指導，尤其感謝2017-18年度提拔我擔任地區秘書長的總監Five。回想民國73年在沙鹿青年商會時，他是會長，我則擔任秘書長，數十年來革命情誼深厚，始終心存感激！</p>
+          <p>2025-26年度讓我們攜手營造一個充滿歡樂(Fun)與歸屬感的扶輪社。期望地區各社在規劃活動時，主軸就是「Fun」！讓每一位參與者在愉快、輕鬆的氛圍中，建立彼此之間的參與感與幸福感。</p>
+          <p>我誠摯期待地區幹部與各社社長們，在新的一年中密切合作、勇於創新、積極學習、提升領導與服務的能量，一起在歡樂中實現各項年度目標！</p>
+          <p><strong>2025-26，讓我們一起FUN轉世界，Unite for Good！</strong></p>
+        </div>
+      </div>
+
+      <!-- 扶輪資歷 -->
+      <div id="tab-rotary" class="tab-panel sec-card">
+        <div class="sec-title"><div class="sec-title-icon">🏅</div>扶輪社經歷</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-year">1998.06.26</div><div class="tl-content">台中港東區扶輪社創社社員</div></div>
+          <div class="tl-item"><div class="tl-year">1998-1999</div><div class="tl-content">理事、糾察主委</div></div>
+          <div class="tl-item"><div class="tl-year">1999-2000</div><div class="tl-content">公共關係主委、糾察委員</div></div>
+          <div class="tl-item"><div class="tl-year">2000-2001</div><div class="tl-content">理事、公共關係主委、體育委員</div></div>
+          <div class="tl-item"><div class="tl-year">2001-2002</div><div class="tl-content">體育主委、職業分類委員</div></div>
+          <div class="tl-item"><div class="tl-year">2002-2003</div><div class="tl-content">理事、節目主委</div></div>
+          <div class="tl-item"><div class="tl-year">2003-2004</div><div class="tl-content">理事、職業輔導主委</div></div>
+          <div class="tl-item"><div class="tl-year">2004-2005</div><div class="tl-content">理事、職業分類委員會主委、職業輔導委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2005-2006</div><div class="tl-content">理事、社員發展委員會主委、高爾夫球委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2006-2007</div><div class="tl-content">理事、副社長、服務計劃委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2007-2008</div><div class="tl-content">理事、社長當選人、社務行政委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2008-2009</div><div class="tl-content"><strong>理事、社長</strong></div></div>
+          <div class="tl-item"><div class="tl-year">2009-2010</div><div class="tl-content">理事、諮詢服務委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2010-2011</div><div class="tl-content">理事、團體交換委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2011-2012</div><div class="tl-content">扶輪青年服務團委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2012-2013</div><div class="tl-content">理事、配合獎助金委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2013-2014</div><div class="tl-content">高爾夫球委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2014-2015</div><div class="tl-content">制度研修委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2015-2016</div><div class="tl-content">理事、扶輪知識委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2016-2017</div><div class="tl-content">STAR 委員會主委、3460 地區副祕書長</div></div>
+          <div class="tl-item"><div class="tl-year">2017-2018</div><div class="tl-content">世界社區服務委員會主委、中華扶輪教育基金受獎學生照顧社友</div></div>
+          <div class="tl-item"><div class="tl-year">2018-2019</div><div class="tl-content">團體交換 GSE 主委、中華扶輪教育基金受獎學生照顧社友</div></div>
+          <div class="tl-item"><div class="tl-year">2019-2020</div><div class="tl-content">中華扶輪教育委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2020-2021</div><div class="tl-content">理事、公共關係形象委員會主委</div></div>
+          <div class="tl-item"><div class="tl-year">2021-2022</div><div class="tl-content">理事、扶輪基金委員會主委、中華扶輪教育基金受獎學生照顧社友</div></div>
+          <div class="tl-item"><div class="tl-year">2022-2023</div><div class="tl-content">扶輪資訊委員會主委</div></div>
+        </div>
+      </div>
+
+      <!-- 地區經歷 -->
+      <div id="tab-district" class="tab-panel sec-card">
+        <div class="sec-title"><div class="sec-title-icon">🌏</div>地區經歷</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-year">2012-2013</div><div class="tl-content">3460 地區扶輪社區服務團主委</div></div>
+          <div class="tl-item"><div class="tl-year">2013-2014</div><div class="tl-content">地區國際醫療義診委員會副主委<br>參加「柬埔寨吳哥窟地區捐贈及義診活動」</div></div>
+          <div class="tl-item"><div class="tl-year">2015-2016</div><div class="tl-content">擔任大肚扶輪社創社輔導委員</div></div>
+          <div class="tl-item"><div class="tl-year">2016-2017</div><div class="tl-content"><strong>3460 地區副祕書長</strong><br>地區訓練講習會 DTA 擔任講師<br>地區地帶研習會參加促進委員會 3461 地區副主委<br>參加社訓練師研習會暨地區引導人訓練研習會(CTTS &amp; DLTS)<br>RIPE 萊斯禮夫婦來台訪問，擔任接待籌備會副主委</div></div>
+          <div class="tl-item"><div class="tl-year">2017-2018</div><div class="tl-content"><strong>3461 地區秘書長</strong><br>地區社員發展暨公共形象／公共關係研習會講師(DM &amp; PI)<br>社長當選人訓練研習會講師(PETS)、地區訓練講習會講師(DTA)<br>參加地區獎助金管理研習會(GMS)<br>參加地區助理總監暨地區團隊研習會(AG &amp; DTTS)<br>參加地區扶輪基金研習會(DRFS)、參加社訓練師研習會(CTTS)<br>參加扶青團地區領導人研習會(RDLTM)<br>參加「金邊柬埔寨醫療義診活動」<br>扶輪領導學院 38 期結業<br>擔任港都社創社輔導顧問<br>擔任地區秘書長協助地區成立七個新社，並致贈創社基金</div></div>
+          <div class="tl-item"><div class="tl-year">2018-2019</div><div class="tl-content"><strong>地區助理總監</strong><br>地區訓練會秘書組主持人<br>地區訓練研習會(DTA)擔任講師<br>社長當選人訓練研習會(PETS)擔任講師<br>參加助理總監暨地區團隊訓練研習會(AG &amp; DTTS)</div></div>
+          <div class="tl-item"><div class="tl-year">2020-2021</div><div class="tl-content">地區服務計畫委員會副主委</div></div>
+          <div class="tl-item"><div class="tl-year">2021-2022</div><div class="tl-content">地區年會委員會副主委</div></div>
+          <div class="tl-item"><div class="tl-year">2022-2023</div><div class="tl-content"><strong>D 地區助理總監</strong></div></div>
+          <div class="tl-item"><div class="tl-year">2023-2024</div><div class="tl-content"><strong>地區總監提名人</strong></div></div>
+          <div class="tl-item"><div class="tl-year">2024-2025</div><div class="tl-content"><strong>地區總監當選人</strong></div></div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- 右欄 Sidebar -->
+    <aside class="sidebar">
+
+      <!-- 個人名片 -->
+      <div class="profile-card">
+        <div class="profile-card-body">
+          <div class="profile-item">
+            <div class="profile-item-icon">🎓</div>
+            <div>
+              <span class="profile-item-label">學歷</span>
+              <div class="profile-item-val">靜宜大學 EMBA 企業管理碩士</div>
+            </div>
+          </div>
+          <div class="profile-item">
+            <div class="profile-item-icon">🏢</div>
+            <div>
+              <span class="profile-item-label">現職</span>
+              <div class="profile-item-val">盟耕股份有限公司 總經理<br>迎潤投資股份有限公司 董事長<br>鉅源投資股份有限公司 董事長</div>
+            </div>
+          </div>
+          <div class="profile-item">
+            <div class="profile-item-icon">🌐</div>
+            <div>
+              <span class="profile-item-label">社區職務</span>
+              <div class="profile-item-val">台中市警察局志工大隊副大隊長<br>台中市消防局清泉分隊顧問團團長<br>靜宜大學校務顧問</div>
+            </div>
+          </div>
+          <div class="profile-item">
+            <div class="profile-item-icon">👪</div>
+            <div>
+              <span class="profile-item-label">夫人</span>
+              <div class="profile-item-val">李春月（Moon）</div>
+            </div>
+          </div>
+          <div class="profile-item">
+            <div class="profile-item-icon">🏠</div>
+            <div>
+              <span class="profile-item-label">所屬社</span>
+              <div class="profile-item-val">台中港東區扶輪社</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 國際扶輪會議經歷 -->
+      <div class="contact-card">
+        <div class="contact-title">✈️ 國際扶輪會議經歷</div>
+        <div style="margin-left:-20px;">
+        <div class="tl-item"><div class="tl-year">2016</div><div class="tl-content">參加曼谷地帶會議</div></div>
+        <div class="tl-item"><div class="tl-year">2018</div><div class="tl-content">參加加拿大多倫多世界大會</div></div>
+        <div class="tl-item"><div class="tl-year">2019</div><div class="tl-content">參加德國漢堡世界大會</div></div>
+        <div class="tl-item"><div class="tl-year">2020</div><div class="tl-content">參加 2020 夏威夷世界年會線上會議</div></div>
+        <div class="tl-item"><div class="tl-year">2021</div><div class="tl-content">參加 2021 台北世界年會線上會議</div></div>
+        <div class="tl-item"><div class="tl-year">2023</div><div class="tl-content">參加 2023 高雄地帶會議</div></div>
+        <div class="tl-item"><div class="tl-year">2024</div><div class="tl-content">參加 2024 新加坡世界年會</div></div>
+        </div>
+      </div>
+
+      <!-- 扶輪基金 -->
+      <div class="fund-card">
+        <div class="fund-title">🏆 扶輪基金捐獻紀錄</div>
+        <div class="fund-item"><strong>2008-2009</strong>捐保羅哈理斯之友、捐中華扶輪教育基金</div>
+        <div class="fund-item"><strong>2012-2013</strong>捐保羅哈理斯之友</div>
+        <div class="fund-item"><strong>2015-2016</strong>捐保羅哈理斯之友</div>
+        <div class="fund-item"><strong>2016-2017</strong>捐保羅哈理斯之友、捐中華扶輪教育基金</div>
+        <div class="fund-item"><strong>2017-2018</strong>捐 Major Donor Level 1 巨額捐獻、捐中華扶輪教育基金</div>
+        <div class="fund-item"><strong>2018-2019</strong>捐保羅哈理斯之友 2、捐中華扶輪教育基金</div>
+        <div class="fund-item"><strong>2019-2020</strong>捐保羅哈理斯之友 2</div>
+        <div class="fund-item"><strong>2020-2021</strong>捐保羅哈理斯會員、捐保羅哈里斯之友</div>
+        <div class="fund-item"><strong>2021-2022</strong>捐保羅哈理斯會員、捐保羅哈里斯之友、捐中華扶輪教育基金</div>
+        <div class="fund-item"><strong>2022-2023</strong>捐保羅哈理斯會員、捐保羅哈里斯之友、達 Major Donor Level 2、捐中華扶輪教育基金</div>
+        <div class="fund-item"><strong>2023-2024</strong>捐冠名基金 25,000 美金、捐中華扶輪教育基金</div>
+      </div>
+
+      <!-- 聯絡資訊 -->
+      <div class="contact-card">
+        <div class="contact-title">📍 總監辦公室</div>
+        <div class="contact-item">
+          <div class="contact-icon">🏠</div>
+          404台中市北區三民路三段291巷30號2樓
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          0987-220-088
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          3461dg2425@gmail.com
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</main>
+
+<footer class="inner-footer">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo">
+      <a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a>
+    </div>
+    <div class="inner-footer-contact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<script>
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+function _load(key, fallback) {
+  try { const v = localStorage.getItem('r3461_' + key); return v ? JSON.parse(v) : fallback; } catch(e) { return fallback; }
+}
+function _flatToNested(flat) {
+  const result = []; let group = null;
+  flat.forEach(item => {
+    if (item.level === 1) { group = { title: item.label, items: [] }; result.push(group); }
+    else if (item.level === 2 && group) { group.items.push({ label: item.label, url: item.url }); }
+  });
+  return result.filter(g => g.items.length > 0);
+}
+
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [
+      { label: 'RI社長',         url: 'ri-president.html' },
+      { label: 'RI現況',         url: 'ri-current.html' },
+    ],[
+      { label: '地區總監',   url: 'governor.html', hi: true },
+      { label: '3461各社資訊',   url: 'clubs.html', hi: true },
+      { label: '地區組織名錄',   url: 'directory.html', hi: true },
+      { label: '年度重要工作目標', url: 'annual-goals.html', hi: true },
+    ],[
+      { label: '總監當選人',     url: 'governor-elect.html' },
+      { label: '總監提名人',     url: '#' },
+      { label: '歷屆社長、總監', url: '#' },
+    ],
+  ]},
+  { title: '進行事', items: [
+    { label: '地區行事曆', url: 'calendar.html', hi: true },
+    { label: '扶輪日',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },
+    { label: '地區年會',   url: 'conference.html', hi: true },
+    { label: '國際年會',   url: 'international-convention.html', hi: true },
+    { label: '服務計劃',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' },
+  ]},
+  { title: '秀成果', items: [
+    { label: 'RYLA',   url: 'ryla.html' },
+    { label: 'RYE',    url: 'rye.html' },
+    { label: 'NGSE',   url: 'ngse.html' },
+    { label: 'Rotaract', url: 'rotaract.html' },
+    { label: 'Interact', url: 'interact.html', hi: true },
+    { label: '生命橋樑', url: '#' },
+  ]},
+  { title: '回顧庫', items: [
+    { label: '總監月刊',     url: 'governor-monthly.html?nocache=1', hi: true },
+    { label: '公共形象新聞', url: 'news.html' },
+    { label: 'RI 成果展示', url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },
+    { label: '扶輪之子',     url: '#' },
+    { label: '扶輪 Shorts',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5323/2112-0' },
+    { label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' },
+  ]},
+  { title: '學知識', items: [
+    { label: '扶輪簡介',   url: 'rotary-intro.html' },
+    { label: '七大焦點領域', url: 'focus-areas.html' },
+    { label: '扶輪標誌', url: 'rotary-logo.html', hi: true },
+    { label: '扶輪基金',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },
+    { label: '扶輪現況',   url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' },
+  ]},
+  { title: '連結', columns: [
+    [
+      { label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },
+      { label: '地區扶輪社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },
+      { label: '地區扶青社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },
+      { label: '地區扶少圍',   url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },
+      { label: '扶輪公益網',     url: 'https://17rcn.org/' },
+      { label: '扶輪領導學院',   url: 'https://www.rlitw.org/' },
+    ],[
+      { label: '職業服務', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },
+      { label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },
+      { label: '相關連結', url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' },
+    ],
+  ]},
+  { title: '更多資源', items: [
+    { label: '年度主題',         url: '#' },
+    { label: '下載專區',         url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },
+    { label: '品牌中心', url: 'https://brandcenter.rotary.org/' },
+    { label: '台灣扶輪下載',     url: 'https://taiwan-rotary.org/download/' },
+  ]},
+];
+
+// 前台固定使用 MENU_DEFAULTS（支援多欄），admin 另有獨立選單管理
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(container) {
+  menuData.forEach(group => {
+    const item = document.createElement('div');
+    item.className = 'nav-item';
+    let subHtml = '';
+    const mkLink = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener"${i.hi?' class="nav-hi"':''}>${i.label}</a>`;
+    if (group.columns) {
+      const colsHtml = group.columns.map(col =>
+        `<div class="sub-menu-col">${col.map(mkLink).join('')}</div>`
+      ).join('');
+      subHtml = `<div class="sub-menu sub-menu--cols">${colsHtml}</div>`;
+    } else {
+      subHtml = `<div class="sub-menu">${(group.items||[]).map(mkLink).join('')}</div>`;
+    }
+    item.innerHTML = `<div class="nav-link">${group.title}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>${subHtml}`;
+    container.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+const mobileMenu = document.getElementById('mobileMenu');
+menuData.forEach(group => {
+  const item = document.createElement('div');
+  item.className = 'mobile-nav-item';
+  const allItems = group.columns ? group.columns.flat() : (group.items||[]);
+  item.innerHTML = `<div class="mobile-nav-top"><span>${group.title}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="mobile-sub">${allItems.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`).join('')}</div>`;
+  item.querySelector('.mobile-nav-top').addEventListener('click', () => item.classList.toggle('expanded'));
+  mobileMenu.appendChild(item);
+});
+
+const hamburger = document.getElementById('hamburger');
+const siteHeaderEl = document.getElementById('siteHeader');
+
+function syncMobileMenuTop() {
+  if (window.innerWidth <= 900 && siteHeaderEl) {
+    mobileMenu.style.top = siteHeaderEl.offsetHeight + 'px';
+  }
+}
+
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) syncMobileMenuTop();
+});
+
+window.addEventListener('scroll', () => {
+  if (mobileMenu.classList.contains('open')) syncMobileMenuTop();
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+  if (mobileMenu.classList.contains('open')) syncMobileMenuTop();
+}, { passive: true });
+
+mobileMenu.addEventListener('click', e => {
+  if (e.target === mobileMenu) {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+</script>
+<script src="search.js"></script>
+</body>
+</html>

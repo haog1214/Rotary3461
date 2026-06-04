@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interact 扶少團 | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark: #1a2d5c;
+      --gold: #f0c040;
+      --interact: #0072bc;
+      --overlay: rgba(26,45,92,0.92);
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; background: #f4f6fb; color: #222; min-height: 100vh; }
+
+    /* ── Site Header ── */
+    .site-header { position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.15); background: url('images/nav-bg.jpg') left center / cover no-repeat; background-color: #dce8f0; }
+    .header-logo-row { background: transparent; height: 100px; display: flex; align-items: center; padding: 0 24px; }
+    .header-logo-inner { max-width: 1440px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .site-logo { display: flex; align-items: center; flex-shrink: 0; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; }
+    .header-slogan img { height: 72px; width: auto; object-fit: contain; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+    .nav-link { display: flex; align-items: center; justify-content: center; gap: 4px; color: #222; font-size: 16.5px; font-weight: 600; text-decoration: none; height: 52px; width: 100%; white-space: nowrap; transition: background 0.18s, color 0.18s; cursor: pointer; letter-spacing: 0.5px; }
+    .nav-link:hover, .nav-item:hover .nav-link { background: rgba(0,0,0,0.12); color: #000; }
+    .nav-link svg { flex-shrink: 0; }
+    .sub-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; min-width: 170px; box-shadow: 0 6px 24px rgba(0,0,0,0.15); border-top: 3px solid var(--gold); z-index: 200; }
+    .nav-item:hover .sub-menu { display: block; }
+    .sub-menu a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background 0.15s, color 0.15s; text-decoration: none; }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+    .sub-menu--cols { display: none; position: absolute; top: 100%; left: 0; background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,0.15); border-top: 3px solid var(--gold); z-index: 200; flex-direction: row; min-width: 480px; }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    .nav-item:last-child .sub-menu, .nav-item:last-child .sub-menu--cols, .nav-item:nth-last-child(2) .sub-menu, .nav-item:nth-last-child(2) .sub-menu--cols { left: auto; right: 0; }
+    .sub-menu-col { min-width: 160px; border-right: 1px solid #f0f0f0; flex: 1; }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background 0.15s, color 0.15s; white-space: nowrap; text-decoration: none; }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; background: transparent; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform 0.25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,0.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,0.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.15s; text-decoration: none; }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media screen and (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan, .desktop-nav { display: none; }
+      .compact-nav { display: none !important; }
+      .mobile-nav-row { display: flex; }
+      .hamburger { display: flex; }
+      .mobile-menu { top: 128px; }
+    }
+
+    /* ── Footer ── */
+    .inner-footer { background: #fff; border-top: 1px solid #e8eaf0; padding: 36px 24px; }
+    .inner-footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .inner-footer-logo img { height: 60px; width: auto; object-fit: contain; display: block; }
+    .inner-footer-contact { font-size: 13.5px; color: #555; line-height: 1.9; }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; }
+    .footer-bar { background: var(--dark); color: rgba(255,255,255,0.55); font-size: 12px; text-align: center; padding: 10px; }
+
+    /* ══ INTERACT PAGE ══ */
+
+    /* Hero */
+    .interact-hero {
+      background: #ffffff;
+      padding: 40px 24px 24px;
+      text-align: center;
+    }
+    .interact-hero img.logo {
+      height: 140px; width: auto; object-fit: contain;
+      display: block; margin: 0 auto;
+    }
+
+    /* 圖片展示區 */
+    .gallery-section {
+      background: #fff;
+      padding: 48px 24px;
+      border-bottom: 1px solid #e8eaf0;
+    }
+    .gallery-section h2 {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 32px;
+      letter-spacing: 1px;
+    }
+    .gallery-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      background: #e8eef8;
+      aspect-ratio: 4/3;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-caption {
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark);
+      background: #fff;
+      text-align: center;
+    }
+    @media (max-width: 700px) {
+      /* mobile.css 會覆蓋為 2 欄，這裡保持空規則避免衝突 */
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* 介紹區 */
+    .intro-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .intro-section { grid-template-columns: 1fr; gap: 28px; }
+    }
+    .intro-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    .intro-card-body {
+      padding: 28px;
+      font-size: 15px;
+      line-height: 2;
+      color: #333;
+    }
+    .intro-card-body h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--interact);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0eeff;
+    }
+    .intro-card-body p { line-height: 2; color: #444; }
+    .intro-card-body p + p { margin-top: 12px; }
+    .intro-card-body ol {
+      padding-left: 0;
+      list-style: none;
+      display: flex; flex-direction: column; gap: 10px;
+      counter-reset: step;
+    }
+    .intro-card-body ol li {
+      counter-increment: step;
+      padding-left: 32px;
+      position: relative;
+      line-height: 1.85;
+    }
+    .intro-card-body ol li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 22px; height: 22px;
+      background: var(--interact);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .intro-card-body ul {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .intro-card-body ul li {
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.85;
+    }
+    .intro-card-body ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--interact);
+      font-size: 12px;
+      top: 3px;
+    }
+    .note-box {
+      margin-top: 18px;
+      padding: 14px 16px;
+      background: #fff8e6;
+      border-left: 4px solid var(--gold);
+      border-radius: 6px;
+      font-size: 14px;
+      color: #666;
+      line-height: 1.8;
+      font-weight: 500;
+    }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo_02.png" alt="Rotary District 3461">
+      </a>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題">
+      </div>
+      <nav class="compact-nav" id="compactNav"></nav>
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+  </div>
+  <div class="header-nav-row">
+    <nav class="desktop-nav" id="desktopNav"></nav>
+  </div>
+  <div class="mobile-nav-row">
+    
+  </div>
+  <div class="mobile-menu" id="mobileMenu"></div>
+</header>
+
+<!-- ══ HERO ══ -->
+<div class="interact-hero">
+  <img class="logo"
+       src="https://pshop.myqr.com.tw/images/RWD_Member_Model_d1_d3_d1/0/5509.png?327"
+       alt="Interact Logo"
+       onerror="this.style.display='none'">
+</div>
+
+<!-- ══ 圖片展示 ══ -->
+<div class="gallery-section">
+  <h2>3461 地區扶少團</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="images/interact/台中一中扶少團.jpg" alt="台中一中扶少團">
+      <div class="gallery-caption">台中一中扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/台中二中扶少團.jpg" alt="台中二中扶少團">
+      <div class="gallery-caption">台中二中扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/台中高工扶少團.jpg" alt="台中高工扶少團">
+      <div class="gallery-caption">台中高工扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/台中東南扶少團(台中女中).jpg" alt="台中東南扶少團">
+      <div class="gallery-caption">台中東南扶少團（台中女中）</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/台中南門扶少團(台中家商).jpg" alt="台中南門扶少團">
+      <div class="gallery-caption">台中南門扶少團（台中家商）</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/台中台美扶少團(明道國際部).jpg" alt="台中台美扶少團">
+      <div class="gallery-caption">台中台美扶少團（明道國際部）</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/台中大光扶少團(興大附農).jpg" alt="台中大光扶少團">
+      <div class="gallery-caption">台中大光扶少團（興大附農）</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/新民高中扶少團.jpg" alt="新民高中扶少團">
+      <div class="gallery-caption">新民高中扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/文華扶少團.jpg" alt="文華扶少團">
+      <div class="gallery-caption">文華扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/曉明文心扶少團.jpg" alt="曉明文心扶少團">
+      <div class="gallery-caption">曉明文心扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/東大附中扶少團.jpg" alt="東大附中扶少團">
+      <div class="gallery-caption">東大附中扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/華盛頓高中扶少團.jpg" alt="華盛頓高中扶少團">
+      <div class="gallery-caption">華盛頓高中扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/中港高中扶少團(中港西濱).jpg" alt="中港高中扶少團">
+      <div class="gallery-caption">中港高中扶少團（中港西濱）</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/清水高中扶少團.jpg" alt="清水高中扶少團">
+      <div class="gallery-caption">清水高中扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/沙鹿高工扶少團.jpg" alt="沙鹿高工扶少團">
+      <div class="gallery-caption">沙鹿高工扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/大肚扶少團.jpg" alt="大肚扶少團">
+      <div class="gallery-caption">大肚扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/潭子扶少團(弘文高中).jpg" alt="潭子扶少團">
+      <div class="gallery-caption">潭子扶少團（弘文高中）</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/豐原高商扶少團.jpg" alt="豐原高商扶少團">
+      <div class="gallery-caption">豐原高商扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/豐原高中扶少團.jpg" alt="豐原高中扶少團">
+      <div class="gallery-caption">豐原高中扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/甲中扶少團.jpg" alt="甲中扶少團">
+      <div class="gallery-caption">甲中扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/立人扶少團.jpg" alt="立人扶少團">
+      <div class="gallery-caption">立人扶少團</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/interact/致用高中扶少團.jpg" alt="致用高中扶少團">
+      <div class="gallery-caption">致用高中扶少團</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 介紹區 ══ -->
+<div class="intro-section">
+
+  <!-- 左：扶少團介紹 -->
+  <div class="intro-card">
+    <div class="intro-card-body">
+      <h3>扶少團介紹</h3>
+      <p>全世界各地的扶輪少年服務團都是由當地的扶輪社支持成立，並遵循共同的準則運作。成員由12歲至18歲青少年組成，團員也被稱為「Interactor」。</p>
+      <p>通常每月至少聚會兩次，每年至少要在扶輪社的協助下完成兩項計畫，一項為社區的服務工作，另一項為促進國際了解。</p>
+      <p>扶輪少年服務團的成員，可以藉完成這些計畫的機會，學習辦理活動及領導的能力。由於成員年紀為中學階段之學生，因此扶輪社少年服務團常成立於各地的中等教育學校內，成為學校的一個服務社團。</p>
+    </div>
+  </div>
+
+  <!-- 右：如何成立 -->
+  <div class="intro-card">
+    <div class="intro-card-body">
+      <h3>如何成立扶少團</h3>
+      <ol>
+        <li>事先組織一個扶少團委員會，至少由五位社員組成</li>
+        <li>找一個學校（學生年齡介於12–18歲之間）</li>
+        <li>成立一個社團，創團團員至少15名</li>
+        <li>熱心的輔導老師及扶輪社輔導主委</li>
+        <li>填具申請表格 Interact Club Certification Form，向國際扶輪 RI 提出申請</li>
+        <li>大約4至6週後 RI 即會頒發成立證明書，就可以開始會議及參與活動</li>
+        <li>建立扶少團組織及運作方式</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 全寬：組織架構 -->
+  <div class="intro-card" style="grid-column: 1 / -1;">
+    <div class="intro-card-body">
+      <h3>扶少團組織架構</h3>
+      <p>扶少團團員在團長的領導下規劃募款活動、服務計畫以及社交活動，並交由理事會審查通過規劃。</p>
+      <p style="margin-top:16px;font-weight:700;color:var(--dark);">理監事會</p>
+      <p>團長、副團長、秘書、財務，及視需要增設職員。理事會為扶少團的管理機構，每月至少集會一次，資格完備的扶少團團員，可以以觀察員身份出席理事會會議。</p>
+      <p style="margin-top:16px;font-weight:700;color:var(--dark);">四大常設委員會</p>
+      <ul>
+        <li>國際展望委員會</li>
+        <li>服務委員會</li>
+        <li>財務委員會</li>
+        <li>團務委員會</li>
+      </ul>
+      <div class="note-box">
+        ★ 雖然輔導社給予支持與指導，扶少團仍是自立、獨立自制的團體。
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="inner-footer" id="innerFooter">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo">
+      <a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a>
+    </div>
+    <div class="inner-footer-contact" id="footerContact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<script>
+function _load(key, fallback) {
+  try { const v = localStorage.getItem('r3461_' + key); return v ? JSON.parse(v) : fallback; } catch(e) { return fallback; }
+}
+
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [{ label: 'RI社長', url: 'ri-president.html' },{ label: 'RI現況', url: 'ri-current.html' }],
+    [{ label: '地區總監', url: 'governor.html', hi: true },{ label: '3461各社資訊', url: 'clubs.html', hi: true },{ label: '地區組織名錄', url: 'directory.html', hi: true },{ label: '年度重要工作目標', url: 'annual-goals.html', hi: true }],
+    [{ label: '總監當選人', url: 'governor-elect.html' },{ label: '總監提名人', url: '#' },{ label: '歷屆社長、總監', url: '#' }],
+  ]},
+  { title: '進行事', items: [{ label: '地區行事曆', url: 'calendar.html', hi: true },{ label: '扶輪日', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },{ label: '地區年會', url: 'conference.html', hi: true },{ label: '國際年會', url: 'international-convention.html', hi: true },{ label: '服務計劃', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' }]},
+  { title: '秀成果', items: [{ label: 'RYLA', url: 'ryla.html' },{ label: 'RYE', url: 'rye.html' },{ label: 'NGSE', url: 'ngse.html' },{ label: 'Rotaract', url: 'rotaract.html', hi: true },{ label: 'Interact', url: 'interact.html', hi: true },{ label: '生命橋樑', url: '#' }]},
+  { title: '回顧庫', items: [{ label: '總監月刊', url: 'governor-monthly.html?nocache=1', hi: true },{ label: '公共形象新聞', url: 'news.html' },{ label: 'RI 成果展示', url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },{ label: '扶輪之子', url: '#' },{ label: '扶輪 Shorts', url: 'https://www.youtube.com/@Rotary3461/shorts' },{ label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' }]},
+  { title: '學知識', items: [{ label: '扶輪簡介', url: 'rotary-intro.html' },{ label: '七大焦點領域', url: 'focus-areas.html' },{ label: '扶輪標誌', url: 'rotary-logo.html', hi: true },{ label: '扶輪基金', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },{ label: '扶輪現況', url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' }]},
+  { title: '連結', columns: [
+    [{ label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },{ label: '地區扶輪社', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },{ label: '地區扶青社', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },{ label: '地區扶少圍', url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },{ label: '扶輪公益網', url: 'https://17rcn.org/' },{ label: '扶輪領導學院', url: 'https://www.rlitw.org/' }],
+    [{ label: '職業服務', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },{ label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },{ label: '相關連結', url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' }],
+  ]},
+  { title: '更多資源', items: [{ label: '年度主題', url: '#' },{ label: '下載專區', url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },{ label: '品牌中心', url: 'https://brandcenter.rotary.org/' },{ label: '台灣扶輪下載', url: 'https://taiwan-rotary.org/download/' }]},
+];
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(container) {
+  menuData.forEach(group => {
+    const item = document.createElement('div'); item.className = 'nav-item';
+    const mkLink = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener"${i.hi?' class="nav-hi"':''}>${i.label}</a>`;
+    let subHtml = '';
+    if (group.columns) {
+      subHtml = `<div class="sub-menu sub-menu--cols">${group.columns.map(col=>`<div class="sub-menu-col">${col.map(mkLink).join('')}</div>`).join('')}</div>`;
+    } else {
+      subHtml = `<div class="sub-menu">${(group.items||[]).map(mkLink).join('')}</div>`;
+    }
+    item.innerHTML = `<div class="nav-link">${group.title}<svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>${subHtml}`;
+    container.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+
+function buildMobileMenu() {
+  const mm = document.getElementById('mobileMenu');
+  menuData.forEach(group => {
+    const ni = document.createElement('div'); ni.className = 'mobile-nav-item';
+    const allItems = group.columns ? group.columns.flat() : (group.items||[]);
+    ni.innerHTML = `<div class="mobile-nav-top">${group.title}<svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4l3 4 3-4" fill="none" stroke="#fff" stroke-width="1.5"/></svg></div><div class="mobile-sub">${allItems.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}">${i.label}</a>`).join('')}</div>`;
+    ni.querySelector('.mobile-nav-top').addEventListener('click', () => ni.classList.toggle('expanded'));
+    mm.appendChild(ni);
+  });
+}
+buildMobileMenu();
+
+function toggleMobileMenu() {
+  const mm2 = document.getElementById('mobileMenu');
+  const hbg = document.getElementById('hamburger');
+  const hdr = document.getElementById('siteHeader');
+  const open = mm2.classList.toggle('open');
+  hbg.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}
+window.addEventListener('scroll', () => {
+  const mm2 = document.getElementById('mobileMenu');
+  const hdr = document.getElementById('siteHeader');
+  if (mm2 && mm2.classList.contains('open') && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}, { passive: true });
+window.addEventListener('resize', () => {
+  const mm2 = document.getElementById('mobileMenu');
+  const hdr = document.getElementById('siteHeader');
+  if (mm2 && mm2.classList.contains('open') && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+(function() {
+  const c = _load('contact', null) || _load('ps_siteinfo', null);
+  if (!c) return;
+  const el = document.getElementById('footerContact');
+  if (el && c.address) el.innerHTML = `總監辦公室：${c.address}<br>辦公室電話：${c.phone||''}<br>Email：${c.email||''}`;
+})();
+</script>
+<script src="search.js"></script>
+</body>
+</html>

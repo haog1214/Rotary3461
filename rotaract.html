@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rotaract 扶青社 | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark: #1a2d5c;
+      --gold: #f0c040;
+      --rotaract: #0072bc;
+      --overlay: rgba(26,45,92,0.92);
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; background: #f4f6fb; color: #222; min-height: 100vh; }
+
+    /* ── Site Header ── */
+    .site-header { position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.15); background: url('images/nav-bg.jpg') left center / cover no-repeat; background-color: #dce8f0; }
+    .header-logo-row { background: transparent; height: 100px; display: flex; align-items: center; padding: 0 24px; }
+    .header-logo-inner { max-width: 1440px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .site-logo { display: flex; align-items: center; flex-shrink: 0; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; }
+    .header-slogan img { height: 72px; width: auto; object-fit: contain; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+    .nav-link { display: flex; align-items: center; justify-content: center; gap: 4px; color: #222; font-size: 16.5px; font-weight: 600; text-decoration: none; height: 52px; width: 100%; white-space: nowrap; transition: background 0.18s, color 0.18s; cursor: pointer; letter-spacing: 0.5px; }
+    .nav-link:hover, .nav-item:hover .nav-link { background: rgba(0,0,0,0.12); color: #000; }
+    .nav-link svg { flex-shrink: 0; }
+    .sub-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; min-width: 170px; box-shadow: 0 6px 24px rgba(0,0,0,0.15); border-top: 3px solid var(--gold); z-index: 200; }
+    .nav-item:hover .sub-menu { display: block; }
+    .sub-menu a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background 0.15s, color 0.15s; text-decoration: none; }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+    .sub-menu--cols { display: none; position: absolute; top: 100%; left: 0; background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,0.15); border-top: 3px solid var(--gold); z-index: 200; flex-direction: row; min-width: 480px; }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    .nav-item:last-child .sub-menu, .nav-item:last-child .sub-menu--cols, .nav-item:nth-last-child(2) .sub-menu, .nav-item:nth-last-child(2) .sub-menu--cols { left: auto; right: 0; }
+    .sub-menu-col { min-width: 160px; border-right: 1px solid #f0f0f0; flex: 1; }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background 0.15s, color 0.15s; white-space: nowrap; text-decoration: none; }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; background: transparent; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform 0.25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,0.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,0.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.15s; text-decoration: none; }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media screen and (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan, .desktop-nav { display: none; }
+      .compact-nav { display: none !important; }
+      .mobile-nav-row { display: flex; }
+      .hamburger { display: flex; }
+      .mobile-menu { top: 128px; }
+    }
+
+    /* ── Footer ── */
+    .inner-footer { background: #fff; border-top: 1px solid #e8eaf0; padding: 36px 24px; }
+    .inner-footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .inner-footer-logo img { height: 60px; width: auto; object-fit: contain; display: block; }
+    .inner-footer-contact { font-size: 13.5px; color: #555; line-height: 1.9; }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; }
+    .footer-bar { background: var(--dark); color: rgba(255,255,255,0.55); font-size: 12px; text-align: center; padding: 10px; }
+
+    /* ══ ROTARACT PAGE ══ */
+
+    /* Hero */
+    .rotaract-hero {
+      background: #ffffff;
+      padding: 40px 24px 24px;
+      text-align: center;
+    }
+    .rotaract-hero img.logo {
+      height: 120px; width: auto; object-fit: contain;
+      display: block; margin: 0 auto;
+    }
+
+    /* 各社按鈕區 */
+    .clubs-section {
+      background: #fff;
+      padding: 40px 24px;
+      border-bottom: 1px solid #e8eaf0;
+    }
+    .clubs-section h2 {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+    }
+    .clubs-grid {
+      max-width: 1224px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    .club-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 11px;
+      padding: 30px 16px;
+      background: #f0f7ff;
+      border: 2px solid #cce0ff;
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--rotaract);
+      font-size: 20px;
+      font-weight: 600;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .club-btn:hover {
+      background: var(--rotaract);
+      border-color: var(--rotaract);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,114,188,0.3);
+    }
+    .club-btn .club-avatar {
+      width: 98px; height: 98px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #cce0ff;
+      background: #e8f0ff;
+      flex-shrink: 0;
+      display: block;
+      transition: border-color 0.2s;
+    }
+    .club-btn:hover .club-avatar { border-color: rgba(255,255,255,0.7); }
+    @media (max-width: 640px) {
+      .clubs-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* 左右介紹區 */
+    .intro-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .intro-section { grid-template-columns: 1fr; gap: 28px; }
+    }
+    .intro-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    .intro-card-header {
+      background: linear-gradient(135deg, #003f88 0%, #0072bc 100%);
+      color: #fff;
+      padding: 20px 28px;
+    }
+    .intro-card-header .lang { font-size: 11px; letter-spacing: 2px; opacity: 0.7; margin-bottom: 4px; }
+    .intro-card-header h2 { font-size: 20px; font-weight: 700; }
+    .intro-card-header .en { font-family: 'Roboto', sans-serif; font-size: 13px; opacity: 0.75; margin-top: 2px; letter-spacing: 1px; }
+    .intro-card-body {
+      padding: 28px;
+      font-size: 15px;
+      line-height: 1.95;
+      color: #333;
+    }
+    .intro-section .intro-card:last-child .intro-card-body {
+      font-size: 14px;
+    }
+    .intro-card-body h3 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--rotaract);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0eeff;
+    }
+    .intro-card-body ul {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .intro-card-body ul li {
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.8;
+    }
+    .intro-card-body ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--rotaract);
+      font-size: 12px;
+      top: 3px;
+    }
+    .intro-card-body p { line-height: 1.9; color: #444; }
+    .intro-card-body p + p { margin-top: 12px; }
+    .note {
+      margin-top: 18px;
+      padding: 12px 16px;
+      background: #f0f7ff;
+      border-radius: 8px;
+      font-size: 12.5px;
+      color: #666;
+      line-height: 1.7;
+    }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo_02.png" alt="Rotary District 3461">
+      </a>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題">
+      </div>
+      <nav class="compact-nav" id="compactNav"></nav>
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+  </div>
+  <div class="header-nav-row">
+    <nav class="desktop-nav" id="desktopNav"></nav>
+  </div>
+  <div class="mobile-nav-row">
+    
+  </div>
+  <div class="mobile-menu" id="mobileMenu"></div>
+</header>
+
+<!-- ══ HERO ══ -->
+<div class="rotaract-hero">
+  <img class="logo"
+       src="https://www.rcsongren.org/wp-content/uploads/2021/06/rotaract-logo.png"
+       alt="Rotaract Logo"
+       onerror="this.style.display='none'">
+</div>
+
+<!-- ══ 各社連結 ══ -->
+<div class="clubs-section">
+  <!-- 主粉絲專頁 -->
+  <div style="display:flex;justify-content:center;margin-bottom:28px;">
+    <a href="https://www.facebook.com/rotaract3461?locale=zh_TW" target="_blank" rel="noopener"
+       style="display:inline-flex;align-items:center;gap:14px;padding:16px 36px;background:#1877f2;color:#fff;border-radius:14px;text-decoration:none;font-size:17px;font-weight:700;box-shadow:0 4px 16px rgba(24,119,242,0.35);transition:all 0.2s;"
+       onmouseover="this.style.background='#1558c0';this.style.transform='translateY(-2px)'"
+       onmouseout="this.style.background='#1877f2';this.style.transform=''">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Rotaract D3461 粉絲專頁
+    </a>
+  </div>
+
+  <h2>3461 地區扶青社</h2>
+  <div class="clubs-grid">
+    <a class="club-btn" href="https://www.facebook.com/taichung3461/?locale=zh_TW" target="_blank" rel="noopener">
+      <img class="club-avatar" src="https://graph.facebook.com/taichung3461/picture?width=100&height=100" alt="台中扶青社" onerror="this.style.opacity='0.3'">
+      台中扶青社
+    </a>
+    <a class="club-btn" href="https://www.facebook.com/rotaract.tcse?locale=zh_TW" target="_blank" rel="noopener">
+      <img class="club-avatar" src="https://graph.facebook.com/rotaract.tcse/picture?width=100&height=100" alt="台中東南扶青社" onerror="this.style.opacity='0.3'">
+      東南扶青社
+    </a>
+    <a class="club-btn" href="https://www.facebook.com/ra3461tcs/?locale=zh_TW" target="_blank" rel="noopener">
+      <img class="club-avatar" src="https://graph.facebook.com/ra3461tcs/picture?width=100&height=100" alt="中山線扶青社" onerror="this.style.opacity='0.3'">
+      中山線扶青社
+    </a>
+    <a class="club-btn" href="https://www.facebook.com/3461TATUN/?locale=zh_TW" target="_blank" rel="noopener">
+      <img class="club-avatar" src="https://graph.facebook.com/3461TATUN/picture?width=100&height=100" alt="大屯扶青社" onerror="this.style.opacity='0.3'">
+      大屯扶青社
+    </a>
+    <a class="club-btn" href="https://www.facebook.com/3461rtc/?locale=zh_TW" target="_blank" rel="noopener">
+      <img class="club-avatar" src="https://graph.facebook.com/3461rtc/picture?width=100&height=100" alt="中區扶青社" onerror="this.style.opacity='0.3'">
+      中區扶青社
+    </a>
+    <a class="club-btn" href="https://www.facebook.com/tccs.rac/" target="_blank" rel="noopener">
+      <img class="club-avatar" src="https://graph.facebook.com/tccs.rac/picture?width=100&height=100" alt="中興扶青社" onerror="this.style.opacity='0.3'">
+      中興扶青社
+    </a>
+    <a class="club-btn" href="https://www.facebook.com/shihjeng3461/?locale=zh_TW" target="_blank" rel="noopener">
+      <img class="club-avatar" src="https://graph.facebook.com/shihjeng3461/picture?width=100&height=100" alt="市政扶青社" onerror="this.style.opacity='0.3'">
+      市政扶青社
+    </a>
+    <a class="club-btn" href="https://www.instagram.com/shengdourotaract/" target="_blank" rel="noopener">
+      <img class="club-avatar"
+           src="images/shengdou-avatar.jpg"
+           alt="省都扶青社"
+           onerror="this.style.opacity='0.3'">
+      省都扶青社
+    </a>
+    <a class="club-btn" href="https://www.facebook.com/HuilaiRotaract/" target="_blank" rel="noopener">
+      <img class="club-avatar" src="https://graph.facebook.com/HuilaiRotaract/picture?width=100&height=100" alt="惠來扶青社" onerror="this.style.opacity='0.3'">
+      惠來扶青社
+    </a>
+    <a class="club-btn" href="https://www.facebook.com/tian.yuan.rotaract/" target="_blank" rel="noopener">
+      <img class="club-avatar" src="https://graph.facebook.com/tian.yuan.rotaract/picture?width=100&height=100" alt="天元扶青社" onerror="this.style.opacity='0.3'">
+      天元扶青社
+    </a>
+  </div>
+</div>
+
+<!-- ══ 介紹左右區 ══ -->
+<div class="intro-section">
+
+  <!-- 中文介紹 -->
+  <div class="intro-card">
+    <div class="intro-card-body">
+      <h3>宗旨</h3>
+      <ul>
+        <li>讓青年透過積極參與社區及國際服務，引發正向改變。</li>
+        <li>透過專業培養領導技巧，並在服務中培養國際觀與理解不同文化，以促進世界和平。</li>
+        <li>讓學生及青年透過社區及國際服務，對各種問題開創永續方法。</li>
+        <li>藉由全球扶輪社群擴展專業人脈，與領導者交流，培養成為領導者的能力。</li>
+        <li>在各地建立終身友誼，最後在超我服務中獲得樂趣。</li>
+      </ul>
+      <div class="note">
+        註：MDIO RIT 會議 2020 年 06 月 18 日（四）決議更新扶青章程、細則、宗旨。並且「紙本與呈現都用列點表示，或以分點分項排版方式」，本決議經 2019–2020、2020–2021 年度臺灣 12 地區代表逐條討論審議，經 MDIO RIT 公告後共同施行之。
+      </div>
+    </div>
+  </div>
+
+  <!-- 英文介紹 -->
+  <div class="intro-card">
+    <div class="intro-card-body">
+      <h3>Purpose</h3>
+      <p>The purposes of this club are for:</p>
+      <p>Rotary members to recognize the positive change implemented by young adults through an active and personal commitment to empower young adults and young professionals to take action through community and international service, develop leadership skills through professional, and gain a global perspective that fosters world peace and cultural understanding as partners in service; and for</p>
+      <p>Students and young professionals to take action through community and international service that creates sustainable solutions to local and global challenges, connect with the global community of Rotary to expand professional networks, exchange ideas with leaders, and cultivate lifelong friendship around the world, develop skills to become community and global leaders, make friends locally and globally, and have fun while recognizing the importance of Service Above Self.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="inner-footer" id="innerFooter">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo">
+      <a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a>
+    </div>
+    <div class="inner-footer-contact" id="footerContact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<script>
+function _load(key, fallback) {
+  try { const v = localStorage.getItem('r3461_' + key); return v ? JSON.parse(v) : fallback; } catch(e) { return fallback; }
+}
+function _flatToNested(flat) {
+  const result = []; let group = null;
+  flat.forEach(item => {
+    if (item.level === 1) { group = { title: item.label, items: [] }; result.push(group); }
+    else if (item.level === 2 && group) { group.items.push({ label: item.label, url: item.url }); }
+  });
+  return result.filter(g => g.items.length > 0);
+}
+
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [{ label: 'RI社長', url: 'ri-president.html' },{ label: 'RI現況', url: 'ri-current.html' }],
+    [{ label: '地區總監', url: 'governor.html', hi: true },{ label: '3461各社資訊', url: 'clubs.html', hi: true },{ label: '地區組織名錄', url: 'directory.html', hi: true },{ label: '年度重要工作目標', url: 'annual-goals.html', hi: true }],
+    [{ label: '總監當選人', url: 'governor-elect.html' },{ label: '總監提名人', url: '#' },{ label: '歷屆社長、總監', url: '#' }],
+  ]},
+  { title: '進行事', items: [{ label: '地區行事曆', url: 'calendar.html', hi: true },{ label: '扶輪日', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },{ label: '地區年會', url: 'conference.html', hi: true },{ label: '國際年會', url: 'international-convention.html', hi: true },{ label: '服務計劃', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' }]},
+  { title: '秀成果', items: [{ label: 'RYLA', url: 'ryla.html' },{ label: 'RYE', url: 'rye.html' },{ label: 'NGSE', url: 'ngse.html' },{ label: 'Rotaract', url: 'rotaract.html', hi: true },{ label: 'Interact', url: 'interact.html', hi: true },{ label: '生命橋樑', url: '#' }]},
+  { title: '回顧庫', items: [{ label: '總監月刊', url: 'governor-monthly.html?nocache=1', hi: true },{ label: '公共形象新聞', url: 'news.html' },{ label: 'RI 成果展示', url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },{ label: '扶輪之子', url: '#' },{ label: '扶輪 Shorts', url: 'https://www.youtube.com/@Rotary3461/shorts' },{ label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' }]},
+  { title: '學知識', items: [{ label: '扶輪簡介', url: 'rotary-intro.html' },{ label: '七大焦點領域', url: 'focus-areas.html' },{ label: '扶輪標誌', url: 'rotary-logo.html', hi: true },{ label: '扶輪基金', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },{ label: '扶輪現況', url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' }]},
+  { title: '連結', columns: [
+    [{ label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },{ label: '地區扶輪社', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },{ label: '地區扶青社', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },{ label: '地區扶少圍', url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },{ label: '扶輪公益網', url: 'https://17rcn.org/' },{ label: '扶輪領導學院', url: 'https://www.rlitw.org/' }],
+    [{ label: '職業服務', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },{ label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },{ label: '相關連結', url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' }],
+  ]},
+  { title: '更多資源', items: [{ label: '年度主題', url: '#' },{ label: '下載專區', url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },{ label: '品牌中心', url: 'https://brandcenter.rotary.org/' },{ label: '台灣扶輪下載', url: 'https://taiwan-rotary.org/download/' }]},
+];
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(container) {
+  menuData.forEach(group => {
+    const item = document.createElement('div'); item.className = 'nav-item';
+    const mkLink = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener"${i.hi?' class="nav-hi"':''}>${i.label}</a>`;
+    let subHtml = '';
+    if (group.columns) {
+      subHtml = `<div class="sub-menu sub-menu--cols">${group.columns.map(col=>`<div class="sub-menu-col">${col.map(mkLink).join('')}</div>`).join('')}</div>`;
+    } else {
+      subHtml = `<div class="sub-menu">${(group.items||[]).map(mkLink).join('')}</div>`;
+    }
+    item.innerHTML = `<div class="nav-link">${group.title}<svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>${subHtml}`;
+    container.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+
+function buildMobileMenu() {
+  const mm = document.getElementById('mobileMenu');
+  menuData.forEach(group => {
+    const ni = document.createElement('div'); ni.className = 'mobile-nav-item';
+    const allItems = group.columns ? group.columns.flat() : (group.items||[]);
+    ni.innerHTML = `<div class="mobile-nav-top">${group.title}<svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4l3 4 3-4" fill="none" stroke="#fff" stroke-width="1.5"/></svg></div><div class="mobile-sub">${allItems.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}">${i.label}</a>`).join('')}</div>`;
+    ni.querySelector('.mobile-nav-top').addEventListener('click', () => ni.classList.toggle('expanded'));
+    mm.appendChild(ni);
+  });
+}
+buildMobileMenu();
+
+function toggleMobileMenu() {
+  const mm2 = document.getElementById('mobileMenu');
+  const hbg = document.getElementById('hamburger');
+  const hdr = document.getElementById('siteHeader');
+  const open = mm2.classList.toggle('open');
+  hbg.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}
+window.addEventListener('scroll', () => {
+  const mm2 = document.getElementById('mobileMenu');
+  const hdr = document.getElementById('siteHeader');
+  if (mm2 && mm2.classList.contains('open') && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}, { passive: true });
+window.addEventListener('resize', () => {
+  const mm2 = document.getElementById('mobileMenu');
+  const hdr = document.getElementById('siteHeader');
+  if (mm2 && mm2.classList.contains('open') && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+(function() {
+  const c = _load('contact', null) || _load('ps_siteinfo', null);
+  if (!c) return;
+  const el = document.getElementById('footerContact');
+  if (el && c.address) el.innerHTML = `總監辦公室：${c.address}<br>辦公室電話：${c.phone||''}<br>Email：${c.email||''}`;
+})();
+</script>
+<script src="search.js"></script>
+</body>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>總監當選人 廖勝揮 Lighting | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark: #1a2d5c;
+      --gold: #f0c040;
+      --overlay: rgba(26,45,92,0.92);
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; background: #f4f6fb; color: #222; min-height: 100vh; }
+
+    /* ── Site Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background: url('images/nav-bg.jpg') left center / cover no-repeat;
+      background-color: #dce8f0;
+      transition: height 0.3s;
+    }
+    .header-logo-row {
+      background: transparent; height: 100px;
+      display: flex; align-items: center; padding: 0 24px;
+      transition: height 0.3s;
+    }
+    .header-logo-inner {
+      max-width: 1440px; margin: 0 auto; width: 100%;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .site-logo { display: flex; align-items: center; flex-shrink: 0; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; transition: width 0.3s, height 0.3s; }
+    .header-slogan { display: flex; align-items: center; flex-shrink: 0; }
+    .header-slogan img { height: 72px; width: auto; object-fit: contain; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; transition: height 0.3s, opacity 0.3s; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+    .nav-link {
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      color: #222; font-size: 16.5px; font-weight: 600; text-decoration: none;
+      height: 52px; width: 100%;
+      white-space: nowrap;
+      transition: background 0.18s, color 0.18s;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+    }
+    .nav-link:hover,
+    .nav-item:hover .nav-link { background: rgba(0,0,0,0.12); color: #000; }
+    .nav-link svg { flex-shrink: 0; }
+    .sub-menu {
+      display: none;
+      position: absolute; top: 100%; left: 0;
+      background: #fff;
+      min-width: 170px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      border-top: 3px solid var(--gold);
+      z-index: 200;
+    }
+    .nav-item:hover .sub-menu { display: block; }
+    .sub-menu a {
+      display: block; padding: 16px 17px;
+      font-size: 15.5px; color: var(--dark);
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+    .sub-menu--cols {
+      display: none;
+      position: absolute; top: 100%; left: 0;
+      background: #fff;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      border-top: 3px solid var(--gold);
+      z-index: 200;
+      flex-direction: row;
+      min-width: 480px;
+    }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    .nav-item:last-child .sub-menu,
+    .nav-item:last-child .sub-menu--cols,
+    .nav-item:nth-last-child(2) .sub-menu,
+    .nav-item:nth-last-child(2) .sub-menu--cols {
+      left: auto; right: 0;
+    }
+    .sub-menu-col { min-width: 160px; border-right: 1px solid #f0f0f0; flex: 1; }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a {
+      display: block; padding: 16px 17px;
+      font-size: 15.5px; color: var(--dark);
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap; text-decoration: none;
+    }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .sub-menu-col a.nav-hi:hover { color: #fff; }
+    .site-header.scrolled .header-logo-row { height: 76px; }
+    .site-header.scrolled .site-logo img   { width: auto; height: 48px; }
+    .site-header.scrolled .header-slogan   { display: none; }
+    .site-header.scrolled .header-nav-row  { display: none; }
+    .site-header.scrolled .compact-nav     { display: flex; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; background: transparent; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform 0.25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,0.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,0.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.15s; }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media screen and (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img   { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan   { display: none; }
+      .desktop-nav     { display: none; }
+      .compact-nav     { display: none !important; }
+      .mobile-nav-row  { display: flex; }
+      .hamburger       { display: flex; }
+      .mobile-menu { top: 128px; }
+      .site-header.scrolled .header-logo-row { height: 60px; }
+      .site-header.scrolled .site-logo img   { height: 38px; }
+      .site-header.scrolled .mobile-menu     { top: 108px; }
+    }
+
+    /* ── Inner Footer ── */
+    .inner-footer { background: #fff; border-top: 1px solid #e5e7eb; padding: 24px 32px; }
+    .inner-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .inner-footer-logo img { height: 60px; width: auto; object-fit: contain; display: block; }
+    .inner-footer-contact { color: #555; font-size: 13px; line-height: 2; flex: 1; min-width: 220px; text-align: center; }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; transition: opacity 0.18s; }
+    .footer-icon-btn:hover img { opacity: 0.75; }
+    .footer-bar { background: #f3f4f6; color: #999; font-size: 11px; text-align: center; padding: 10px; }
+
+    /* ══════════════════════════════
+       HERO BANNER
+    ══════════════════════════════ */
+    .hero-banner {
+      background: #f2f2f2;
+      padding: 60px 24px 0;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: flex-end; gap: 48px;
+      position: relative; z-index: 1;
+    }
+    .hero-photo-wrap {
+      flex-shrink: 0;
+      width: 448px;
+      border-radius: 16px 16px 0 0;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      background: #f2f2f2;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .hero-photo-wrap img {
+      width: 100%; height: auto; object-fit: contain; display: block;
+    }
+    .hero-text { flex: 1; padding-bottom: 40px; color: var(--dark); }
+    .hero-year-tag {
+      display: inline-block;
+      background: var(--gold); color: var(--dark);
+      font-size: 13px; font-weight: 800;
+      padding: 4px 14px; border-radius: 20px;
+      letter-spacing: 1px; margin-bottom: 16px;
+    }
+    .hero-title {
+      font-size: 42px; font-weight: 900; line-height: 1.15;
+      margin-bottom: 8px; color: var(--dark);
+    }
+    .hero-title span { color: var(--primary); }
+    .hero-subtitle { font-size: 14px; color: #555; margin-bottom: 12px; }
+    .hero-club-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #f0f4ff; border: 1px solid #c7d5f0;
+      border-radius: 8px; padding: 8px 16px;
+      font-size: 14px; color: #333;
+    }
+    .hero-theme {
+      margin-top: 24px;
+      background: #f0f4ff; border-left: 4px solid var(--primary);
+      padding: 12px 18px; border-radius: 0 8px 8px 0;
+    }
+    .hero-theme-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 4px; }
+    .hero-theme-en { font-size: 22px; font-weight: 800; color: var(--primary); }
+    .hero-theme-zh { font-size: 15px; color: #444; margin-top: 2px; }
+
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; align-items: center; gap: 24px; padding-bottom: 0; }
+      .hero-photo-wrap { width: 180px; border-radius: 16px; }
+      .hero-text { text-align: center; padding-bottom: 32px; }
+      .hero-title { font-size: 30px; }
+    }
+
+    /* ══════════════════════════════
+       MAIN CONTENT
+    ══════════════════════════════ */
+    .page-main { max-width: 1100px; margin: 0 auto; padding: 48px 24px 64px; }
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+
+    /* ── Section Cards ── */
+    .sec-card {
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      border: 1px solid #e8ecf4;
+      padding: 28px 30px;
+      margin-bottom: 24px;
+    }
+    .sec-card:last-child { margin-bottom: 0; }
+    .sec-title {
+      font-size: 18px; font-weight: 800; color: var(--primary);
+      display: flex; align-items: center; gap: 10px;
+      padding-bottom: 14px; margin-bottom: 18px;
+      border-bottom: 2px solid #e8ecf4;
+    }
+    .sec-title-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--primary); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+
+    /* ── Info Rows ── */
+    .info-section { margin-bottom: 24px; }
+    .info-section:last-child { margin-bottom: 0; }
+    .info-section-title {
+      font-size: 15px; font-weight: 800; color: var(--dark);
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 1px solid #e8ecf4;
+    }
+    .info-list { list-style: none; }
+    .info-list li {
+      font-size: 14px; color: #333; line-height: 1.8;
+      padding: 4px 0;
+      border-bottom: 1px solid #f5f6fa;
+      display: flex; align-items: baseline; gap: 8px;
+    }
+    .info-list li:last-child { border-bottom: none; }
+    .info-list li::before { content: '▸'; color: var(--primary); flex-shrink: 0; font-size: 11px; }
+
+    /* ── Timeline ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: flex; gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f3fa;
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-year {
+      flex-shrink: 0; width: 100px;
+      font-size: 13px; font-weight: 700; color: var(--primary);
+      padding-top: 2px;
+    }
+    .tl-content { flex: 1; font-size: 14px; color: #333; line-height: 1.6; }
+
+    /* ── Tabs ── */
+    .tab-bar {
+      display: flex; gap: 4px; flex-wrap: wrap;
+      background: #e8ecf4; border-radius: 12px; padding: 6px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      flex: 1; min-width: 120px;
+      padding: 10px 14px; border: none; border-radius: 8px;
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      color: #666; background: transparent; cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { background: rgba(26,69,139,0.08); color: var(--primary); }
+    .tab-btn.active { background: #fff; color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .tab-panel { display: none; zoom: 1.1; }
+    .tab-panel.active { display: block; }
+
+    /* ── Sidebar ── */
+    .sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+    .profile-card {
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      border: 1px solid #e8ecf4;
+      overflow: hidden;
+    }
+    .profile-card-header {
+      background: linear-gradient(135deg, var(--primary), #2563c0);
+      padding: 20px; text-align: center; color: #fff;
+    }
+    .profile-name { font-size: 20px; font-weight: 900; }
+    .profile-en { font-size: 15px; color: var(--gold); font-weight: 700; margin-top: 2px; }
+    .profile-role { font-size: 13px; opacity: 0.8; margin-top: 6px; }
+    .profile-card-body { padding: 18px; }
+    .profile-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 8px 0; border-bottom: 1px solid #f0f3fa;
+      font-size: 13px;
+    }
+    .profile-item:last-child { border-bottom: none; }
+    .profile-item-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .profile-item-label { color: #888; font-size: 11px; display: block; margin-bottom: 2px; }
+    .profile-item-val { color: #222; font-weight: 600; line-height: 1.7; }
+
+    .fund-card {
+      background: linear-gradient(135deg, #1a458b, #0f2153);
+      border-radius: 14px; padding: 22px;
+      color: #fff;
+    }
+    .fund-title { font-size: 15px; font-weight: 800; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .fund-item { font-size: 13px; opacity: 0.88; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.6; }
+    .fund-item:last-child { border-bottom: none; }
+    .fund-item strong { color: var(--gold); display: block; font-size: 12px; opacity: 0.9; margin-bottom: 2px; }
+
+    .contact-card {
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      border: 1px solid #e8ecf4; padding: 20px;
+    }
+    .contact-title { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 14px; }
+    .contact-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px; color: #444; border-bottom: 1px solid #f0f3fa; }
+    .contact-item:last-child { border-bottom: none; }
+    .contact-icon { font-size: 16px; flex-shrink: 0; }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo.png" alt="Rotary 國際扶輪3461地區"
+             onerror="this.src='https://pshop.myqr.com.tw/images/RWD_Home/0/201_m.jpg?407'" />
+      </a>
+      <nav class="compact-nav" id="compactNav"></nav>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題" />
+      
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="header-nav-row">
+    <nav class="desktop-nav" id="desktopNav"></nav>
+  </div>
+  <div class="mobile-nav-row">
+    
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+<!-- ── Hero Banner ── -->
+<section class="hero-banner">
+  <div class="hero-inner">
+    <div class="hero-photo-wrap">
+      <img src="https://pshop.myqr.com.tw/images/RWD_Member_Model_d1_d3_d1/0/5479.jpg?401"
+           alt="總監當選人 廖勝揮 Lighting"
+           onerror="this.parentElement.innerHTML='<div style=\'color:#aaa;font-size:64px;text-align:center;padding:60px 0\'>👤</div>'" />
+    </div>
+    <div class="hero-text">
+      <div class="hero-year-tag">2025 – 2026 總監提名人</div>
+      <div class="hero-title">廖勝揮 <span>Lighting</span></div>
+      <div class="hero-subtitle">夫人&nbsp;&nbsp;蘇麗鈴&nbsp;（台中中央扶輪社 2025-26 社長）</div>
+      <div class="hero-theme">
+        <div class="hero-theme-label">2025–26 年度主題</div>
+        <div class="hero-theme-en">Unite for Good</div>
+        <div class="hero-theme-zh">讓我們一起 FUN 轉世界</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Main Content ── -->
+<main class="page-main">
+  <div class="content-grid">
+
+    <!-- 左欄 -->
+    <div class="left-col">
+
+      <!-- 頁籤列 -->
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab(this,'tab-bio')">個人簡介</button>
+        <button class="tab-btn" onclick="switchTab(this,'tab-rotary')">扶輪資歷</button>
+        <button class="tab-btn" onclick="switchTab(this,'tab-district')">地區經歷</button>
+      </div>
+
+      <!-- 個人簡介 -->
+      <div id="tab-bio" class="tab-panel active sec-card">
+        <div class="sec-title"><div class="sec-title-icon">📖</div>個人簡介</div>
+
+        <div class="info-section">
+          <div class="info-section-title">🎓 學歷</div>
+          <ul class="info-list">
+            <li>雲林縣私立正心中學</li>
+            <li>台北市市立建國中學</li>
+            <li>國立成功大學機械系</li>
+          </ul>
+        </div>
+
+        <div class="info-section">
+          <div class="info-section-title">📋 經歷</div>
+          <ul class="info-list">
+            <li>台中市仁愛國小家長會會長</li>
+            <li>大里仁愛醫院董事</li>
+            <li>法律風險協會理事</li>
+            <li>成大中部校友會理事</li>
+            <li>成大機械系傑出系友</li>
+          </ul>
+        </div>
+
+        <div class="info-section">
+          <div class="info-section-title">🏢 現職</div>
+          <ul class="info-list">
+            <li>愛瑪瑞公司董事長</li>
+            <li>博士韋爾公司董事長</li>
+            <li>良盛廈門公司董事長</li>
+            <li>私立弘文中學董事長</li>
+            <li>雲林縣同鄉會副理事長</li>
+            <li>張廖簡宗親會常務理事</li>
+            <li>榮譽關護顧問團副團長</li>
+            <li>台中市民防總隊義勇警察大隊副大隊長</li>
+            <li>成大機械系系友會理事</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 扶輪資歷 -->
+      <div id="tab-rotary" class="tab-panel sec-card">
+        <div class="sec-title"><div class="sec-title-icon">🏅</div>扶輪社經歷</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-year">2005.03.04</div><div class="tl-content">台中扶輪社入社</div></div>
+          <div class="tl-item"><div class="tl-year">2007-2008</div><div class="tl-content">聯誼活動委員</div></div>
+          <div class="tl-item"><div class="tl-year">2008-2009</div><div class="tl-content">職業服務委員</div></div>
+          <div class="tl-item"><div class="tl-year">2009-2010</div><div class="tl-content">助理秘書、助理糾察</div></div>
+          <div class="tl-item"><div class="tl-year">2010-2011</div><div class="tl-content">秘書</div></div>
+          <div class="tl-item"><div class="tl-year">2011-2012</div><div class="tl-content">社團公共關係副召集人</div></div>
+          <div class="tl-item"><div class="tl-year">2012-2013</div><div class="tl-content">社團公關、助理糾察</div></div>
+          <div class="tl-item"><div class="tl-year">2013-2014</div><div class="tl-content">理事、國際基金主委</div></div>
+          <div class="tl-item"><div class="tl-year">2014-2015</div><div class="tl-content">理事、服務主委兼扶輪之子召集人</div></div>
+          <div class="tl-item"><div class="tl-year">2015-2016</div><div class="tl-content">扶青團委員、DDF委員</div></div>
+          <div class="tl-item"><div class="tl-year">2016-2017</div><div class="tl-content">理事、節目主委</div></div>
+          <div class="tl-item"><div class="tl-year">2017-2018</div><div class="tl-content">理事、社員主委</div></div>
+          <div class="tl-item"><div class="tl-year">2018-2019</div><div class="tl-content">理事、社務行政主委</div></div>
+          <div class="tl-item"><div class="tl-year">2019-2020</div><div class="tl-content"><strong>社長</strong></div></div>
+          <div class="tl-item"><div class="tl-year">2020-2021</div><div class="tl-content">理事、直前社長</div></div>
+          <div class="tl-item"><div class="tl-year">2021-2022</div><div class="tl-content">扶輪基金委員</div></div>
+          <div class="tl-item"><div class="tl-year">2022-2023</div><div class="tl-content">RYLA副主委</div></div>
+          <div class="tl-item"><div class="tl-year">2023-2024</div><div class="tl-content">DDF主委、聯誼副主委</div></div>
+          <div class="tl-item"><div class="tl-year">2024-2025</div><div class="tl-content">理事、聯誼主委</div></div>
+        </div>
+      </div>
+
+      <!-- 地區經歷 -->
+      <div id="tab-district" class="tab-panel sec-card">
+        <div class="sec-title"><div class="sec-title-icon">🌏</div>地區扶輪經歷</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-year">2017-2018</div><div class="tl-content">地區扶輪之子副主委</div></div>
+          <div class="tl-item"><div class="tl-year">2018-2019</div><div class="tl-content">地區扶輪之子主委</div></div>
+          <div class="tl-item"><div class="tl-year">2020-2021</div><div class="tl-content">地區年度計畫捐獻主委</div></div>
+          <div class="tl-item"><div class="tl-year">2021-2022</div><div class="tl-content"><strong>地區年會秘書長</strong></div></div>
+          <div class="tl-item"><div class="tl-year">2024-2025</div><div class="tl-content"><strong>A區助理總監</strong></div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 右欄 Sidebar -->
+    <aside class="sidebar">
+
+      <!-- 個人名片 -->
+      <div class="profile-card">
+        <div class="profile-card-body">
+          <div class="profile-item">
+            <div class="profile-item-icon">🎓</div>
+            <div>
+              <span class="profile-item-label">學歷</span>
+              <div class="profile-item-val">國立成功大學機械系</div>
+            </div>
+          </div>
+          <div class="profile-item">
+            <div class="profile-item-icon">🏢</div>
+            <div>
+              <span class="profile-item-label">現職</span>
+              <div class="profile-item-val">愛瑪瑞公司 董事長<br>博士韋爾公司 董事長<br>私立弘文中學 董事長</div>
+            </div>
+          </div>
+          <div class="profile-item">
+            <div class="profile-item-icon">👪</div>
+            <div>
+              <span class="profile-item-label">夫人</span>
+              <div class="profile-item-val">蘇麗鈴<br><span style="font-size:11px;color:#888;font-weight:400">台中中央扶輪社 2025-26 社長</span></div>
+            </div>
+          </div>
+          <div class="profile-item">
+            <div class="profile-item-icon">🏠</div>
+            <div>
+              <span class="profile-item-label">所屬社</span>
+              <div class="profile-item-val">台中扶輪社</div>
+            </div>
+          </div>
+          <div class="profile-item">
+            <div class="profile-item-icon">📅</div>
+            <div>
+              <span class="profile-item-label">入社日期</span>
+              <div class="profile-item-val">2005年03月04日</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 扶輪基金捐獻 -->
+      <div class="fund-card">
+        <div class="fund-title">🏆 扶輪基金捐獻紀錄</div>
+        <div class="fund-item">
+          <strong>保羅哈里斯之友</strong>
+          累計USD 10,000／2019-2020年度 巨額捐獻（Major Donor Level 1）／2024-2025年度捐USD 6,000
+        </div>
+        <div class="fund-item">
+          <strong>扶輪之子捐獻</strong>
+          累計贊助140人，共 $1,680,000 元<br>
+          2024-25年度贊助15位，共 $180,000 元
+        </div>
+        <div class="fund-item">
+          <strong>中華扶輪教育獎學金</strong>
+          累計 $50,000 元
+        </div>
+        <div class="fund-item">
+          <strong>生命橋樑獎學金</strong>
+          累計 $55,000 元
+        </div>
+      </div>
+
+      <!-- 聯絡資訊 -->
+      <div class="contact-card">
+        <div class="contact-title">📍 總監辦公室</div>
+        <div class="contact-item">
+          <div class="contact-icon">🏠</div>
+          404台中市北區三民路三段291巷30號2樓
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          0987-220-088
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          3461dg2425@gmail.com
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</main>
+
+<footer class="inner-footer">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo">
+      <a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a>
+    </div>
+    <div class="inner-footer-contact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<script>
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [
+      { label: 'RI社長',         url: 'ri-president.html' },
+      { label: 'RI現況',         url: 'ri-current.html' },
+    ],[
+      { label: '地區總監',   url: 'governor.html', hi: true },
+      { label: '3461各社資訊',   url: 'clubs.html', hi: true },
+      { label: '地區組織名錄',   url: 'directory.html', hi: true },
+      { label: '年度重要工作目標', url: 'annual-goals.html', hi: true },
+    ],[
+      { label: '總監當選人',     url: 'governor-elect.html', hi: true },
+      { label: '總監提名人',     url: '#' },
+      { label: '歷屆社長、總監', url: '#' },
+    ],
+  ]},
+  { title: '進行事', items: [
+    { label: '地區行事曆', url: 'calendar.html', hi: true },
+    { label: '扶輪日',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },
+    { label: '地區年會',   url: 'conference.html', hi: true },
+    { label: '國際年會',   url: 'international-convention.html', hi: true },
+    { label: '服務計劃',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' },
+  ]},
+  { title: '秀成果', items: [
+    { label: 'RYLA',   url: 'ryla.html' },
+    { label: 'RYE',    url: 'rye.html' },
+    { label: 'NGSE',   url: 'ngse.html' },
+    { label: 'Rotaract', url: 'rotaract.html' },
+    { label: 'Interact', url: 'interact.html', hi: true },
+    { label: '生命橋樑', url: '#' },
+  ]},
+  { title: '回顧庫', items: [
+    { label: '總監月刊',     url: 'governor-monthly.html?nocache=1', hi: true },
+    { label: '公共形象新聞', url: 'news.html' },
+    { label: 'RI 成果展示', url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },
+    { label: '扶輪之子',     url: '#' },
+    { label: '扶輪 Shorts',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5323/2112-0' },
+    { label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' },
+  ]},
+  { title: '學知識', items: [
+    { label: '扶輪簡介',   url: 'rotary-intro.html' },
+    { label: '七大焦點領域', url: 'focus-areas.html' },
+    { label: '扶輪標誌', url: 'rotary-logo.html', hi: true },
+    { label: '扶輪基金',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },
+    { label: '扶輪現況',   url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' },
+  ]},
+  { title: '連結', columns: [
+    [
+      { label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },
+      { label: '地區扶輪社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },
+      { label: '地區扶青社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },
+      { label: '地區扶少圍',   url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },
+      { label: '扶輪公益網',     url: 'https://17rcn.org/' },
+      { label: '扶輪領導學院',   url: 'https://www.rlitw.org/' },
+    ],[
+      { label: '職業服務', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },
+      { label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },
+      { label: '相關連結', url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' },
+    ],
+  ]},
+  { title: '更多資源', items: [
+    { label: '年度主題',         url: '#' },
+    { label: '下載專區',         url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },
+    { label: '品牌中心', url: 'https://brandcenter.rotary.org/' },
+    { label: '台灣扶輪下載',     url: 'https://taiwan-rotary.org/download/' },
+  ]},
+];
+
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(container) {
+  menuData.forEach(group => {
+    const item = document.createElement('div');
+    item.className = 'nav-item';
+    let subHtml = '';
+    const mkLink = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener"${i.hi?' class="nav-hi"':''}>${i.label}</a>`;
+    if (group.columns) {
+      const colsHtml = group.columns.map(col =>
+        `<div class="sub-menu-col">${col.map(mkLink).join('')}</div>`
+      ).join('');
+      subHtml = `<div class="sub-menu sub-menu--cols">${colsHtml}</div>`;
+    } else {
+      subHtml = `<div class="sub-menu">${(group.items||[]).map(mkLink).join('')}</div>`;
+    }
+    item.innerHTML = `<div class="nav-link">${group.title}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>${subHtml}`;
+    container.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+const mobileMenu = document.getElementById('mobileMenu');
+menuData.forEach(group => {
+  const item = document.createElement('div');
+  item.className = 'mobile-nav-item';
+  const allItems = group.columns ? group.columns.flat() : (group.items||[]);
+  item.innerHTML = `<div class="mobile-nav-top"><span>${group.title}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="mobile-sub">${allItems.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`).join('')}</div>`;
+  item.querySelector('.mobile-nav-top').addEventListener('click', () => item.classList.toggle('expanded'));
+  mobileMenu.appendChild(item);
+});
+
+const hamburger = document.getElementById('hamburger');
+const siteHeaderEl = document.getElementById('siteHeader');
+
+function syncMobileMenuTop() {
+  if (window.innerWidth <= 900 && siteHeaderEl) {
+    mobileMenu.style.top = siteHeaderEl.offsetHeight + 'px';
+  }
+}
+
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) syncMobileMenuTop();
+});
+
+window.addEventListener('scroll', () => {
+  if (mobileMenu.classList.contains('open')) syncMobileMenuTop();
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+  if (mobileMenu.classList.contains('open')) syncMobileMenuTop();
+}, { passive: true });
+
+mobileMenu.addEventListener('click', e => {
+  if (e.target === mobileMenu) {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+</script>
+<script src="search.js"></script>
+</body>
+</html>

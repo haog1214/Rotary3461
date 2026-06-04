@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>地區行事曆 | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark:    #0d1e3d;
+      --gold:    #f0c040;
+      --gold2:   #d4940a;
+      --overlay: rgba(13,30,61,0.92);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans TC', sans-serif; color: #222; background: #f4f6fb; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.from-left  { transform: translateX(-40px); }
+    .reveal.from-right { transform: translateX(40px); }
+    .reveal.from-scale { transform: scale(0.93); opacity: 0; }
+    .reveal.visible    { opacity: 1 !important; transform: none !important; }
+    .reveal.d1 { transition-delay:.1s } .reveal.d2 { transition-delay:.2s }
+    .reveal.d3 { transition-delay:.3s }
+
+    /* ════════════ HEADER ════════════ */
+    .site-header { position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,.15); background: url('images/nav-bg.jpg') left center/cover no-repeat; background-color: #dce8f0; }
+    .header-logo-row { height: 100px; display: flex; align-items: center; padding: 0 24px; transition: height .3s; }
+    .header-logo-inner { max-width: 1440px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; }
+    .header-slogan img { height: 72px; width: auto; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+    .nav-link { display: flex; align-items: center; justify-content: center; gap: 4px; color: #222; font-size: 16.5px; font-weight: 600; height: 52px; width: 100%; white-space: nowrap; transition: background .18s; cursor: pointer; letter-spacing: .5px; }
+    .nav-link:hover, .nav-item:hover .nav-link { background: rgba(0,0,0,.12); }
+    .sub-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; min-width: 170px; box-shadow: 0 6px 24px rgba(0,0,0,.15); border-top: 3px solid var(--gold); z-index: 200; }
+    .nav-item:hover .sub-menu { display: block; }
+    .sub-menu a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background .15s; }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+    .sub-menu--cols { display: none; position: absolute; top: 100%; left: 0; background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,.15); border-top: 3px solid var(--gold); z-index: 200; flex-direction: row; min-width: 480px; }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    .nav-item:last-child .sub-menu, .nav-item:last-child .sub-menu--cols,
+    .nav-item:nth-last-child(2) .sub-menu, .nav-item:nth-last-child(2) .sub-menu--cols { left: auto; right: 0; }
+    .sub-menu-col { min-width: 160px; border-right: 1px solid #f0f0f0; flex: 1; }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background .15s; white-space: nowrap; }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .site-header.scrolled .header-logo-row { height: 76px; }
+    .site-header.scrolled .site-logo img   { width: auto; height: 48px; }
+    .site-header.scrolled .header-slogan   { display: none; }
+    .site-header.scrolled .header-nav-row  { display: none; }
+    .site-header.scrolled .compact-nav     { display: flex; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform .25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan, .desktop-nav { display: none; }
+      .compact-nav { display: none !important; }
+      .mobile-nav-row { display: flex; }
+      .hamburger { display: flex; }
+      .mobile-menu { top: 128px; }
+      .site-header.scrolled .header-logo-row { height: 60px; }
+      .site-header.scrolled .site-logo img { height: 38px; }
+    }
+
+    /* ════════════ HERO ════════════ */
+    .hero {
+      background: linear-gradient(110deg, #071530 0%, #1a458b 60%, #0d3070 100%);
+      padding: 64px 24px 60px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('images/Headline_background.jpg') center/cover no-repeat;
+      opacity: 0.08;
+    }
+    .hero-inner { position: relative; max-width: 800px; margin: 0 auto; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(240,192,64,.18); border: 1px solid rgba(240,192,64,.5);
+      color: var(--gold); font-size: 12px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 20px; margin-bottom: 18px;
+    }
+    .hero-title { font-size: clamp(2rem,5vw,3rem); font-weight: 900; color: #fff; margin-bottom: 14px; letter-spacing: 1px; }
+    .hero-title span { color: var(--gold); }
+    .hero-desc { font-size: 15px; color: rgba(255,255,255,.78); line-height: 1.9; max-width: 600px; margin: 0 auto; }
+
+    /* ════════════ CALENDAR TABLE ════════════ */
+    .table-section { padding: 60px 24px; }
+    .table-inner { max-width: 1060px; margin: 0 auto; }
+
+    .year-header {
+      background: linear-gradient(90deg, var(--gold2), #e8b520);
+      color: #fff; text-align: center;
+      font-size: 22px; font-weight: 900;
+      padding: 16px; border-radius: 12px 12px 0 0;
+      letter-spacing: 2px;
+    }
+    .cal-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(0,0,0,.1);
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+    }
+    .cal-table thead th {
+      background: #e8f0fb;
+      color: var(--dark);
+      font-size: 14px; font-weight: 700;
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 2px solid #c8d8f0;
+    }
+    .cal-table tbody tr { border-bottom: 1px solid #e8eef8; transition: background .15s; }
+    .cal-table tbody tr:last-child { border-bottom: none; }
+    .cal-table tbody tr:hover { background: #f0f6ff; }
+    .cal-table tbody tr:nth-child(even) { background: #f8faff; }
+    .cal-table tbody tr:nth-child(even):hover { background: #ebf2ff; }
+    .cal-table td { padding: 14px 18px; font-size: 14px; color: #333; vertical-align: top; line-height: 1.7; }
+    .cal-table td:first-child { font-weight: 700; color: var(--primary); white-space: nowrap; min-width: 130px; }
+    .cal-table td:nth-child(2) { font-weight: 600; color: var(--dark); min-width: 180px; }
+    .cal-table td:nth-child(3) { color: #555; }
+
+    .cal-table tr.past-row td { color: #aaa; }
+    .cal-table tr.past-row td:first-child { color: #bbb; }
+    .cal-table tr.past-row td:nth-child(2) { color: #bbb; }
+    .expired-badge {
+      display: inline-block; font-size: 10px; font-weight: 800;
+      background: #e8e8e8; color: #999;
+      padding: 2px 8px; border-radius: 8px;
+      margin-left: 8px; vertical-align: middle; letter-spacing: .5px;
+    }
+    .upcoming-badge {
+      display: inline-block; font-size: 10px; font-weight: 800;
+      background: #e8f4e8; color: #2e7d32;
+      padding: 2px 8px; border-radius: 8px;
+      margin-left: 8px; vertical-align: middle;
+    }
+    .section-divider td {
+      background: #f0f0f0; font-size: 12px; font-weight: 700;
+      color: #999; letter-spacing: 1px; text-transform: uppercase;
+      padding: 8px 18px !important; border: none !important;
+    }
+
+    .event-tag {
+      display: inline-block;
+      background: #e8f0fb; color: var(--primary);
+      font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 8px;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 680px) {
+      .cal-table, .cal-table thead, .cal-table tbody, .cal-table tr, .cal-table td {
+        display: block;
+      }
+      .cal-table thead { display: none; }
+      .cal-table tr {
+        border: 1px solid #dde6f8;
+        border-radius: 10px; margin-bottom: 12px;
+        padding: 14px 16px; background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,.06);
+      }
+      .cal-table td { padding: 4px 0; border: none; }
+      .cal-table td:first-child { font-size: 13px; color: var(--gold2); }
+      .cal-table td:nth-child(2) { font-size: 16px; margin: 4px 0; }
+    }
+
+    /* ════════════ GOOGLE CALENDAR ════════════ */
+    .gcal-section {
+      background: #fff; padding: 60px 24px 70px;
+      border-top: 1px solid #e5e9f2;
+    }
+    .gcal-inner { max-width: 1060px; margin: 0 auto; }
+    .gcal-header { text-align: center; margin-bottom: 32px; }
+    .gcal-tag {
+      display: inline-block;
+      font-size: 11px; font-weight: 800; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold2);
+      margin-bottom: 10px;
+    }
+    .gcal-title { font-size: clamp(1.4rem,3vw,1.9rem); font-weight: 900; color: var(--dark); margin-bottom: 10px; }
+    .gcal-desc { font-size: 14px; color: #666; }
+
+    .gcal-wrap {
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,.12);
+      border: 1px solid #e5e9f2;
+    }
+    .gcal-wrap iframe {
+      width: 100%; height: 640px;
+      border: none; display: block;
+    }
+    @media (max-width: 600px) {
+      .gcal-wrap iframe { height: 480px; }
+    }
+
+    /* ════════════ FOOTER ════════════ */
+    .inner-footer { background: #fff; border-top: 1px solid #e5e7eb; padding: 24px 32px; }
+    .inner-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .inner-footer-logo img { height: 60px; width: auto; display: block; }
+    .inner-footer-contact { color: #555; font-size: 13px; line-height: 2; flex: 1; min-width: 220px; text-align: center; }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; transition: opacity .18s; }
+    .footer-icon-btn:hover img { opacity: .75; }
+    .footer-bar { background: #f3f4f6; color: #999; font-size: 11px; text-align: center; padding: 10px; }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo.png" alt="Rotary 國際扶輪3461地區"
+             onerror="this.src='https://pshop.myqr.com.tw/images/RWD_Home/0/201_m.jpg?407'" />
+      </a>
+      <nav class="compact-nav" id="compactNav"></nav>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題" />
+      
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="header-nav-row"><nav class="desktop-nav" id="desktopNav"></nav></div>
+  <div class="mobile-nav-row">
+    
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag reveal">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      District 3461 Calendar
+    </div>
+    <h1 class="hero-title reveal d1">地區<span>行事曆</span></h1>
+    <p class="hero-desc reveal d2">國際扶輪3461地區 2025-2026年度重要活動一覽，掌握地區動態不錯過任何精彩活動。</p>
+  </div>
+</section>
+
+<!-- ══ CALENDAR TABLE ══ -->
+<section class="table-section">
+  <div class="table-inner">
+    <div class="year-header reveal">2025 – 2026 年度 地區重要活動</div>
+    <table class="cal-table reveal d1" id="calTable">
+      <thead>
+        <tr>
+          <th>日期</th>
+          <th>活動內容</th>
+          <th>舉辦地點 / 主辦社</th>
+        </tr>
+      </thead>
+      <tbody id="calTbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+/* ── Calendar Events Data ── */
+const CAL_EVENTS = [
+  { date: '2025-09-28', dateLabel: '2025/9/28（日）',       name: '地區－國際淨灘日',            venue: '地點：大甲西勢海堤',       organizer: '主辦：台中中區社、大甲北區社、台中高美社' },
+  { date: '2025-10-24', dateLabel: '2025/10/24（五）',      name: '地區－三對三反毒籃球賽',       venue: '地點：沙鹿運動公園籃球場', organizer: '主辦：台中港區社' },
+  { date: '2025-11-22', dateLabel: '2025/11/22（六）',      name: '地區－地區扶輪日',             venue: '地點：市民廣場',           organizer: '主辦：台中大屯社' },
+  { date: '2025-12-07', dateLabel: '2025/12/7–12/11（日–四）', name: '地區－國際醫療關懷義診',    venue: '地點：菲律賓3830地區',     organizer: '主辦：義診委員會' },
+  { date: '2025-12-27', dateLabel: '2025/12/27–2026/1/11', name: '地區－盲人環台路跑公益活動',   venue: '地點：環台',               organizer: '主辦：12地區' },
+  { date: '2026-02-01', dateLabel: '2026/2/1–2/2（日–一）',name: '地區－RYLA領袖獎訓練營',       venue: '地點：苗栗自然圈農場',     organizer: '主辦：台中南光社' },
+  { date: '2026-02-24', dateLabel: '2026/2/24（二）',       name: '地區－年會高爾夫球賽',         venue: '地點：台中高爾夫球場',     organizer: '主辦：台中東興社' },
+  { date: '2026-02-28', dateLabel: '2026/2/28',             name: '地區－228扶輪愛跑',            venue: '地點：台中中央公園',       organizer: '主辦：3461/3462' },
+  { date: '2026-03-07', dateLabel: '2026/3/7（六）下午',    name: '地區－地區年會分組討論',        venue: '地點：新民高中',           organizer: '主辦：台中文心社' },
+  { date: '2026-03-14', dateLabel: '2026/3/14（六）',       name: '地區－地區年會',               venue: '地點：逢甲大學',           organizer: '主辦：年會委員會' },
+  { date: '2026-06-13', dateLabel: '2026/6/13–6/17（六–三）', name: '地區－2026台北扶輪國際年會',  venue: '地點：台北大巨蛋',         organizer: '主辦：HOC' },
+  { date: '2026-06-21', dateLabel: '2026/6/21（日）',       name: '地區－2025-26感恩餐會',        venue: '地點：清水成都雅宴',       organizer: '主辦：DG Sunny' },
+];
+
+(function renderCalTable() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const upcoming = CAL_EVENTS.filter(e => new Date(e.date) >= today).sort((a,b) => new Date(a.date)-new Date(b.date));
+  const past     = CAL_EVENTS.filter(e => new Date(e.date) <  today).sort((a,b) => new Date(b.date)-new Date(a.date));
+  const tbody = document.getElementById('calTbody');
+
+  // Upcoming
+  upcoming.forEach((e, i) => {
+    const tr = document.createElement('tr');
+    const badge = i === 0 ? '<span class="upcoming-badge">最近活動</span>' : '';
+    tr.innerHTML = `<td>${e.dateLabel}</td><td>${e.name}${badge}</td><td>${e.venue}<br>${e.organizer}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  // Divider
+  if (past.length) {
+    const div = document.createElement('tr');
+    div.className = 'section-divider';
+    div.innerHTML = `<td colspan="3">── 已過期活動 ──</td>`;
+    tbody.appendChild(div);
+  }
+
+  // Past
+  past.forEach(e => {
+    const tr = document.createElement('tr');
+    tr.className = 'past-row';
+    tr.innerHTML = `<td>${e.dateLabel}</td><td>${e.name}<span class="expired-badge">已過期</span></td><td>${e.venue}<br>${e.organizer}</td>`;
+    tbody.appendChild(tr);
+  });
+})();
+</script>
+
+<!-- ══ GOOGLE CALENDAR ══ -->
+<section class="gcal-section" id="google-calendar">
+  <div class="gcal-inner">
+    <div class="gcal-header reveal">
+      <div class="gcal-tag">Google Calendar</div>
+      <h2 class="gcal-title">線上行事曆</h2>
+      <p class="gcal-desc">即時同步地區最新活動資訊，可加入您的 Google 日曆追蹤。</p>
+    </div>
+    <div class="gcal-wrap reveal d1">
+      <iframe
+        src="https://calendar.google.com/calendar/embed?src=f5b9fc6573d541c9d33dcf3f0483148c3715a146be705abfe8ceecaae7429a6c%40group.calendar.google.com&mode=AGENDA&ctz=Asia%2FTaipei&hl=zh_TW"
+        style="border:0" frameborder="0" scrolling="no">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="inner-footer">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo">
+      <a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a>
+    </div>
+    <div class="inner-footer-contact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<script>
+/* ── Scroll Reveal ── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ── Nav ── */
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [
+      { label: 'RI社長',          url: 'ri-president.html' },
+      { label: 'RI現況',          url: 'ri-current.html' },
+    ],[
+      { label: '地區總監',    url: 'governor.html', hi: true },
+      { label: '3461各社資訊',    url: 'clubs.html', hi: true },
+      { label: '地區組織名錄',    url: 'directory.html', hi: true },
+      { label: '年度重要工作目標', url: 'annual-goals.html', hi: true },
+    ],[
+      { label: '總監當選人',      url: '#' },
+      { label: '總監提名人',      url: '#' },
+      { label: '歷屆社長、總監',  url: '#' },
+    ],
+  ]},
+  { title: '進行事', items: [
+    { label: '地區行事曆', url: 'calendar.html', hi: true },
+    { label: '扶輪日',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },
+    { label: '地區年會',   url: 'conference.html', hi: true },
+    { label: '國際年會',   url: 'international-convention.html', hi: true },
+    { label: '服務計劃',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' },
+  ]},
+  { title: '秀成果', items: [
+    { label: 'RYLA', url: 'ryla.html' }, { label: 'RYE', url: 'rye.html' },
+    { label: 'NGSE', url: 'ngse.html' }, { label: 'Rotaract', url: 'rotaract.html' },
+    { label: 'Interact', url: 'interact.html', hi: true }, { label: '生命橋樑', url: '#' },
+  ]},
+  { title: '回顧庫', items: [
+    { label: '總監月刊',     url: 'governor-monthly.html?nocache=1', hi: true },
+    { label: '公共形象新聞', url: 'news.html' },
+    { label: 'RI 成果展示', url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },
+    { label: '扶輪之子', url: '#' },
+    { label: '扶輪 Shorts', url: 'https://www.youtube.com/@Rotary3461/shorts' },
+    { label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' },
+  ]},
+  { title: '學知識', items: [
+    { label: '扶輪簡介',     url: 'rotary-intro.html' },
+    { label: '七大焦點領域', url: 'focus-areas.html' },
+    { label: '扶輪標誌', url: 'rotary-logo.html', hi: true },
+    { label: '扶輪基金',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },
+    { label: '扶輪現況',     url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' },
+  ]},
+  { title: '連結', columns: [
+    [
+      { label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },
+      { label: '地區扶輪社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },
+      { label: '地區扶青社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },
+      { label: '地區扶少圍',   url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },
+      { label: '扶輪公益網',     url: 'https://17rcn.org/' },
+      { label: '扶輪領導學院',   url: 'https://www.rlitw.org/' },
+    ],[
+      { label: '職業服務',   url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },
+      { label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },
+      { label: '相關連結',   url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' },
+    ],
+  ]},
+  { title: '更多資源', items: [
+    { label: '年度主題',           url: '#' },
+    { label: '下載專區',           url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },
+    { label: '品牌中心', url: 'https://brandcenter.rotary.org/' },
+    { label: '台灣扶輪下載',       url: 'https://taiwan-rotary.org/download/' },
+  ]},
+];
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(c) {
+  menuData.forEach(g => {
+    const item = document.createElement('div');
+    item.className = 'nav-item';
+    const mk = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`;
+    const sub = g.columns
+      ? `<div class="sub-menu sub-menu--cols">${g.columns.map(col=>`<div class="sub-menu-col">${col.map(mk).join('')}</div>`).join('')}</div>`
+      : `<div class="sub-menu">${(g.items||[]).map(mk).join('')}</div>`;
+    item.innerHTML = `<div class="nav-link">${g.title}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>${sub}`;
+    c.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+const mm = document.getElementById('mobileMenu');
+menuData.forEach(g => {
+  const item = document.createElement('div');
+  item.className = 'mobile-nav-item';
+  const all = g.columns ? g.columns.flat() : (g.items||[]);
+  item.innerHTML = `<div class="mobile-nav-top"><span>${g.title}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="mobile-sub">${all.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`).join('')}</div>`;
+  item.querySelector('.mobile-nav-top').addEventListener('click', () => item.classList.toggle('expanded'));
+  mm.appendChild(item);
+});
+const hb = document.getElementById('hamburger');
+function _syncTop() {
+  const hdr = document.getElementById('siteHeader');
+  if (hdr && window.innerWidth <= 900) mm.style.top = hdr.offsetHeight + 'px';
+}
+hb.addEventListener('click', () => {
+  const open = mm.classList.toggle('open');
+  hb.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) _syncTop();
+});
+window.addEventListener('scroll', () => { if (mm.classList.contains('open')) _syncTop(); }, { passive: true });
+window.addEventListener('resize', () => { if (mm.classList.contains('open')) _syncTop(); }, { passive: true });
+mm.addEventListener('click', e => {
+  if (e.target === mm) { mm.classList.remove('open'); hb.classList.remove('open'); document.body.style.overflow = ''; }
+});
+</script>
+<script src="search.js"></script>
+</body>
+</html>

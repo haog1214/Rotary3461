@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>總監月刊 | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark:    #0d1e3d;
+      --gold:    #f0c040;
+      --gold2:   #d4940a;
+      --overlay: rgba(13,30,61,0.92);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans TC', sans-serif; color: #222; background: #f0f2f8; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.from-scale { transform: scale(0.93); opacity: 0; }
+    .reveal.visible    { opacity: 1 !important; transform: none !important; }
+    .reveal.d1 { transition-delay:.05s } .reveal.d2 { transition-delay:.1s }
+    .reveal.d3 { transition-delay:.15s } .reveal.d4 { transition-delay:.2s }
+    .reveal.d5 { transition-delay:.25s } .reveal.d6 { transition-delay:.3s }
+
+    /* ════════ SITE HEADER ════════ */
+    .site-header { position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,.15); background: url('images/nav-bg.jpg') left center/cover no-repeat; background-color: #dce8f0; }
+    .header-logo-row { height: 100px; display: flex; align-items: center; padding: 0 24px; transition: height .3s; }
+    .header-logo-inner { max-width: 1440px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; }
+    .header-slogan img { height: 72px; width: auto; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+    .nav-link { display: flex; align-items: center; justify-content: center; gap: 4px; color: #222; font-size: 16.5px; font-weight: 600; height: 52px; width: 100%; white-space: nowrap; transition: background .18s; cursor: pointer; letter-spacing: .5px; }
+    .nav-link:hover, .nav-item:hover .nav-link { background: rgba(0,0,0,.12); }
+    .sub-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; min-width: 170px; box-shadow: 0 6px 24px rgba(0,0,0,.15); border-top: 3px solid var(--gold); z-index: 200; }
+    .nav-item:hover .sub-menu { display: block; }
+    .sub-menu a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background .15s; }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+    .sub-menu--cols { display: none; position: absolute; top: 100%; left: 0; background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,.15); border-top: 3px solid var(--gold); z-index: 200; flex-direction: row; min-width: 480px; }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    .nav-item:last-child .sub-menu, .nav-item:last-child .sub-menu--cols,
+    .nav-item:nth-last-child(2) .sub-menu, .nav-item:nth-last-child(2) .sub-menu--cols { left: auto; right: 0; }
+    .sub-menu-col { min-width: 160px; border-right: 1px solid #f0f0f0; flex: 1; }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background .15s; white-space: nowrap; }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .site-header.scrolled .header-logo-row { height: 76px; }
+    .site-header.scrolled .site-logo img { width: auto; height: 48px; }
+    .site-header.scrolled .header-slogan { display: none; }
+    .site-header.scrolled .header-nav-row { display: none; }
+    .site-header.scrolled .compact-nav { display: flex; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform .25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan, .desktop-nav { display: none; }
+      .compact-nav { display: none !important; }
+      .mobile-nav-row { display: flex; }
+      .hamburger { display: flex; }
+      .mobile-menu { top: 128px; }
+      .site-header.scrolled .header-logo-row { height: 60px; }
+      .site-header.scrolled .site-logo img { height: 38px; }
+    }
+
+    /* ════════ MAIN LAYOUT ════════ */
+    .page-layout {
+      display: flex;
+      min-height: calc(100vh - 152px);
+      background: #fff;
+    }
+
+    /* ════════ LEFT SIDEBAR (year selector) ════════ */
+    .year-sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 140px;
+      background: #fff;
+      border-right: 1px solid #e5e9f2;
+      padding: 28px 14px;
+      padding-top: 168px;
+      overflow-y: auto;
+      display: flex; flex-direction: column; gap: 8px;
+      z-index: 50;
+    }
+    .year-sidebar-label {
+      font-size: 10px; font-weight: 800; color: #bbb;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 0 6px; margin-bottom: 6px;
+    }
+    .year-tab {
+      width: 100%; padding: 11px 12px;
+      font-size: 14px; font-weight: 700; color: #666;
+      border: 2px solid transparent; border-radius: 8px;
+      cursor: pointer; text-align: center; white-space: nowrap;
+      transition: all .18s; background: none;
+      font-family: inherit;
+    }
+    .year-tab:hover { background: #f0f4ff; color: var(--primary); }
+    .year-tab.active {
+      background: var(--primary); color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* ════════ CONTENT AREA ════════ */
+    .content-area { flex: 1; padding: 28px 28px 60px; min-width: 0; margin-left: 140px; }
+
+    .year-info-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .year-info-title { font-size: 20px; font-weight: 900; color: var(--dark); }
+    .year-info-title > span:first-child {
+      display: inline-block; width: 4px; height: 20px;
+      background: var(--gold); border-radius: 2px;
+      vertical-align: middle; margin-right: 10px;
+    }
+    .issue-count {
+      font-size: 12px; color: #888;
+      background: #f0f2f8; padding: 3px 12px; border-radius: 16px;
+    }
+
+    /* ════════ MAGAZINE GRID (4 per row) ════════ */
+    .mag-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .mag-card {
+      cursor: pointer;
+      display: flex; flex-direction: column;
+      border-radius: 10px; overflow: hidden;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,.09);
+      border: 1px solid #e8ecf5;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .mag-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(26,69,139,.18);
+    }
+    /* 4px white padding around cover */
+    .mag-cover-wrap {
+      padding: 4px; background: #fff;
+    }
+    .mag-cover {
+      width: 100%; aspect-ratio: 0.707;
+      background: #eef2f8;
+      position: relative; overflow: hidden;
+      border-radius: 4px;
+    }
+    .mag-cover img,
+    .mag-cover canvas {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .4s;
+    }
+    .mag-card:hover .mag-cover img,
+    .mag-card:hover .mag-cover canvas { transform: scale(1.04); }
+    .mag-cover-shimmer {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.5) 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    .mag-cover.loaded .mag-cover-shimmer { display: none; }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    .mag-body { padding: 10px 12px 12px; }
+    .mag-no { font-size: 10px; font-weight: 800; color: var(--gold2); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
+    .mag-month { font-size: 12px; font-weight: 600; color: var(--dark); line-height: 1.4; }
+
+    @media (max-width: 900px) {
+      .year-sidebar { width: 100px; padding-left: 8px; padding-right: 8px; }
+      .year-tab { font-size: 12px; padding: 9px 8px; }
+      .content-area, .inner-footer, .footer-bar { margin-left: 100px; }
+      .mag-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .year-sidebar { width: 80px; }
+      .content-area, .inner-footer, .footer-bar { margin-left: 80px; }
+      .mag-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    }
+
+    /* ══ 手機版專屬重設 ══ */
+    @media (max-width: 768px) {
+      /* ── 年度選單改成頂部水平 Bar ── */
+      .page-layout { flex-direction: column; }
+
+      .year-sidebar {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 10px 12px !important;
+        padding-top: 10px !important;
+        border-right: none !important;
+        border-bottom: 2px solid #e5e9f2 !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        gap: 8px !important;
+        scrollbar-width: none !important;
+        background: #fff !important;
+        z-index: 10 !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,.06) !important;
+      }
+      .year-sidebar::-webkit-scrollbar { display: none; }
+      .year-sidebar-label { display: none !important; }
+      #yearTabs {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 8px !important;
+      }
+      .year-tab {
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        width: auto !important;
+        padding: 8px 18px !important;
+        font-size: 13px !important;
+        border-radius: 20px !important;
+      }
+
+      /* ── 內容區：移除左邊距 ── */
+      .content-area {
+        margin-left: 0 !important;
+        padding: 16px 12px 40px !important;
+      }
+      .inner-footer, .footer-bar {
+        margin-left: 0 !important;
+      }
+
+      /* ── 月刊格：一排兩本 ── */
+      .mag-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+      }
+
+      /* ── Flipbook：滿版單頁 ── */
+      .flipbook-overlay { flex-direction: column; }
+
+      /* 頂部 Bar：精簡，只保留標題和 Drive 連結 */
+      .fb-topbar {
+        justify-content: space-between !important;
+        padding: 0 16px !important;
+        height: 48px !important;
+        min-height: 48px !important;
+        flex-wrap: nowrap !important;
+      }
+      .fb-logo-area { gap: 8px !important; }
+      .fb-logo-img  { height: 24px !important; }
+      .fb-divider   { height: 20px !important; }
+      .fb-title     { font-size: 12px !important; }
+      .fb-subtitle  { font-size: 10px !important; }
+
+      /* 頂部只留 Drive 和 fb-close（fb-close 移至底部，在此隱藏） */
+      .fb-actions { gap: 6px !important; }
+      #fbFullscreen { display: none !important; }
+      .fb-topbar .fb-close { display: none !important; } /* 頂部關閉隱藏 */
+
+      /* Stage：滿版顯示 */
+      .fb-stage {
+        padding: 0 !important;
+        align-items: flex-start !important;
+        overflow: hidden !important;
+      }
+      .fb-row { gap: 0 !important; width: 100% !important; justify-content: center; }
+
+      /* 左右翻頁按鈕隱藏（手指滑動） */
+      .nav-btn { display: none !important; }
+
+      /* 底部 Bar：頁碼 + 關閉按鈕 */
+      .fb-bottombar {
+        height: 64px !important;
+        gap: 16px !important;
+        padding: 0 24px !important;
+        justify-content: space-between !important;
+      }
+      .key-hint { display: none !important; }
+      .page-pill { font-size: 13px !important; }
+
+      /* 底部關閉按鈕 */
+      .fb-close-bottom {
+        display: flex !important;
+        align-items: center; justify-content: center;
+        width: 48px; height: 48px;
+        background: rgba(220,50,50,.8);
+        border: none; border-radius: 50%;
+        color: #fff; font-size: 22px;
+        cursor: pointer;
+        box-shadow: 0 2px 12px rgba(0,0,0,.5);
+        flex-shrink: 0;
+        transition: background .2s;
+      }
+      .fb-close-bottom:hover { background: rgba(200,30,30,1); }
+
+      /* ── 玻璃效果引導頁 ── */
+      .mob-intro-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(8,14,30,0.55);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        animation: mobIntroIn .4s ease;
+        cursor: pointer;
+      }
+      .mob-intro-overlay.hide {
+        animation: mobIntroOut .35s ease forwards;
+        pointer-events: none;
+      }
+      @keyframes mobIntroIn  { from { opacity:0; } to { opacity:1; } }
+      @keyframes mobIntroOut { from { opacity:1; } to { opacity:0; } }
+
+      .mob-intro-card {
+        background: rgba(255,255,255,0.10);
+        border: 1px solid rgba(255,255,255,0.22);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border-radius: 28px;
+        padding: 36px 32px 28px;
+        text-align: center;
+        color: #fff;
+        max-width: 82vw;
+        box-shadow: 0 8px 40px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.18);
+      }
+      .mob-intro-title-txt {
+        font-size: 16px; font-weight: 700;
+        margin-bottom: 4px; letter-spacing: .5px;
+      }
+      .mob-intro-sub-txt {
+        font-size: 12px; color: rgba(255,255,255,.6);
+        margin-bottom: 28px;
+      }
+
+      /* 翻頁示意圖：左箭頭 + 書 + 右箭頭 */
+      .mob-intro-demo {
+        display: flex; align-items: center; justify-content: center;
+        gap: 16px; margin-bottom: 20px;
+      }
+      .mob-intro-arrow {
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+        opacity: .8;
+      }
+      .mob-intro-arrow svg { display: block; }
+      .mob-intro-arrow span { font-size: 10px; letter-spacing: .5px; color: rgba(255,255,255,.7); }
+
+      /* 手勢動畫線稿 */
+      .mob-intro-book svg { display: block; }
+
+      /* 滑動提示動畫 */
+      .swipe-anim {
+        animation: swipePulse 1.6s ease-in-out infinite;
+      }
+      @keyframes swipePulse {
+        0%, 100% { transform: translateX(0); opacity:.8; }
+        50%       { transform: translateX(6px); opacity:1; }
+      }
+      .swipe-anim-l {
+        animation: swipePulseL 1.6s ease-in-out infinite;
+      }
+      @keyframes swipePulseL {
+        0%, 100% { transform: translateX(0); opacity:.8; }
+        50%       { transform: translateX(-6px); opacity:1; }
+      }
+
+      .mob-intro-hint {
+        font-size: 13px; color: rgba(255,255,255,.85);
+        line-height: 1.6; margin-bottom: 24px;
+      }
+      .mob-intro-tap {
+        display: inline-block;
+        background: rgba(255,255,255,.15);
+        border: 1px solid rgba(255,255,255,.3);
+        border-radius: 20px;
+        padding: 8px 24px;
+        font-size: 13px; font-weight: 600;
+        letter-spacing: .5px;
+        color: #fff;
+        animation: tapPulse 2s ease-in-out infinite;
+      }
+      @keyframes tapPulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+        50%       { box-shadow: 0 0 0 8px rgba(255,255,255,.08); }
+      }
+    }
+
+    /* ════════ FLIPBOOK OVERLAY ════════ */
+    .flipbook-overlay {
+      position: fixed; inset: 0;
+      background: #0d0e12;
+      z-index: 2000;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .flipbook-overlay.open { opacity: 1; pointer-events: all; }
+
+    .fb-topbar {
+      height: 60px; flex-shrink: 0;
+      background: rgba(0,0,0,.6);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .fb-logo-area { display: flex; align-items: center; gap: 16px; }
+    .fb-logo-img { height: 40px; width: auto; display: block; object-fit: contain; filter: brightness(0) invert(1); }
+    .fb-divider { width: 1px; height: 32px; background: rgba(255,255,255,.2); flex-shrink: 0; }
+    .fb-title { color: #fff; font-size: 14px; font-weight: 700; }
+    .fb-subtitle { color: rgba(255,255,255,.5); font-size: 11px; margin-top: 1px; }
+    .fb-actions { display: flex; gap: 8px; align-items: center; }
+    .fb-btn {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.8); font-size: 12px; padding: 6px 14px;
+      border-radius: 20px; cursor: pointer;
+      transition: all .2s; display: flex; align-items: center; gap: 5px;
+      font-family: inherit; text-decoration: none;
+    }
+    .fb-btn:hover { background: rgba(255,255,255,.2); color: #fff; }
+    .fb-close {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+      color: #fff; font-size: 18px; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s; line-height: 1;
+    }
+    .fb-close:hover { background: rgba(220,50,50,.6); }
+
+    .fb-stage {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px 16px; overflow: hidden;
+    }
+    .fb-row { display: flex; align-items: center; gap: 20px; }
+    .nav-btn {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+      color: #fff; font-size: 28px; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, transform .1s; flex-shrink: 0; line-height: 1;
+    }
+    .nav-btn:hover   { background: rgba(255,255,255,.22); }
+    .nav-btn:active  { transform: scale(.9); }
+    .nav-btn:disabled { opacity: .2; cursor: not-allowed; transform: none; }
+    .book-wrap {
+      box-shadow: 0 0 0 1px rgba(255,255,255,.04), 0 24px 72px rgba(0,0,0,.9);
+      border-radius: 2px;
+    }
+
+    .fb-bottombar {
+      height: 52px; flex-shrink: 0;
+      background: rgba(0,0,0,.5);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255,255,255,.06);
+      display: flex; align-items: center; justify-content: center; gap: 24px;
+    }
+    .page-pill {
+      background: rgba(255,255,255,.12); color: rgba(255,255,255,.8);
+      font-size: 12px; padding: 4px 18px; border-radius: 12px;
+      font-family: 'Roboto', sans-serif;
+    }
+    .key-hint { color: rgba(255,255,255,.3); font-size: 11px; }
+
+    .fb-loading {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      color: rgba(255,255,255,.6); font-size: 14px; text-align: center;
+    }
+    .spinner {
+      width: 44px; height: 44px;
+      border: 3px solid rgba(255,255,255,.1);
+      border-top-color: var(--gold);
+      border-radius: 50%; animation: spin .85s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ════════ FOOTER ════════ */
+    .inner-footer { background: #fff; border-top: 1px solid #e5e7eb; padding: 24px 32px; margin-left: 140px; }
+    .inner-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .inner-footer-logo img { height: 60px; width: auto; display: block; }
+    .inner-footer-contact { color: #555; font-size: 13px; line-height: 2; flex: 1; min-width: 220px; text-align: center; }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; transition: opacity .18s; }
+    .footer-icon-btn:hover img { opacity: .75; }
+    .footer-bar { background: #f3f4f6; color: #999; font-size: 11px; text-align: center; padding: 10px; margin-left: 140px; }
+
+    @media (max-width: 640px) {
+      .mag-grid { grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
+      .nav-btn { display: none; }
+      .key-hint { display: none; }
+      .year-tabs-bar { top: 128px; }
+    }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo.png" alt="Rotary 國際扶輪3461地區"
+             onerror="this.src='https://pshop.myqr.com.tw/images/RWD_Home/0/201_m.jpg?407'" />
+      </a>
+      <nav class="compact-nav" id="compactNav"></nav>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題" />
+      
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="header-nav-row"><nav class="desktop-nav" id="desktopNav"></nav></div>
+  <div class="mobile-nav-row">
+    
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+<!-- ══ PAGE LAYOUT ══ -->
+<div class="page-layout">
+
+  <!-- Left Sidebar -->
+  <aside class="year-sidebar">
+    <div class="year-sidebar-label">年度</div>
+    <div id="yearTabs"></div>
+  </aside>
+
+  <!-- Content -->
+  <div class="content-area">
+    <div class="year-info-bar">
+      <div class="year-info-title"><span></span><span id="yearHeading">2025–26 年度</span></div>
+      <div class="issue-count" id="issueCount"></div>
+    </div>
+    <div class="mag-grid" id="magGrid"></div>
+  </div>
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="inner-footer">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo">
+      <a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a>
+    </div>
+    <div class="inner-footer-contact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<!-- ══ FLIPBOOK OVERLAY ══ -->
+<div class="flipbook-overlay" id="fbOverlay">
+
+  <!-- 玻璃效果引導頁（手機首次開啟顯示） -->
+  <div class="mob-intro-overlay" id="mobIntroOverlay" style="display:none;">
+    <div class="mob-intro-card">
+      <div class="mob-intro-title-txt" id="mobIntroTitle">總監月刊</div>
+      <div class="mob-intro-sub-txt" id="mobIntroSub">國際扶輪 D3461</div>
+
+      <!-- 翻頁示意 -->
+      <div class="mob-intro-demo">
+        <!-- 左滑 -->
+        <div class="mob-intro-arrow swipe-anim-l">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          <span>上一頁</span>
+        </div>
+
+        <!-- 書本 + 手指 icon -->
+        <div class="mob-intro-book">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" stroke="rgba(255,255,255,0.95)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <!-- 書本左頁 -->
+            <path d="M36 18 C28 18 14 20 12 24 L12 56 C14 52 28 50 36 50"/>
+            <!-- 書本右頁 -->
+            <path d="M36 18 C44 18 58 20 60 24 L60 56 C58 52 44 50 36 50"/>
+            <!-- 書脊 -->
+            <line x1="36" y1="18" x2="36" y2="50"/>
+            <!-- 書本線條裝飾 左 -->
+            <line x1="18" y1="28" x2="32" y2="28"/>
+            <line x1="18" y1="34" x2="32" y2="34"/>
+            <line x1="18" y1="40" x2="30" y2="40"/>
+            <!-- 書本線條裝飾 右 -->
+            <line x1="40" y1="28" x2="54" y2="28"/>
+            <line x1="40" y1="34" x2="54" y2="34"/>
+            <line x1="40" y1="40" x2="52" y2="40"/>
+            <!-- 手指向右 -->
+            <path d="M40 62 L50 58 Q54 57 54 53 L54 47 Q54 44 51 44 L46 44 L46 40 Q46 37 43 37 Q40 37 40 40 L40 52 Q38 49 35 50 Q32 51 34 55 Z"/>
+          </svg>
+        </div>
+
+        <!-- 右滑 -->
+        <div class="mob-intro-arrow swipe-anim">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+          <span>下一頁</span>
+        </div>
+      </div>
+
+      <div class="mob-intro-hint">手指左右滑動或點擊邊緣翻頁</div>
+      <div class="mob-intro-tap">點擊開始閱讀</div>
+    </div>
+  </div>
+
+  <div class="fb-topbar">
+    <div class="fb-logo-area">
+      <img class="fb-logo-img" src="images/logo.png" alt="國際扶輪3461地區"
+           onerror="this.src='https://pshop.myqr.com.tw/images/RWD_Home/0/201_m.jpg?407'" />
+      <div class="fb-divider"></div>
+      <div>
+        <div class="fb-title" id="fbTitle">總監月刊</div>
+        <div class="fb-subtitle" id="fbSubtitle">國際扶輪 D3461</div>
+      </div>
+    </div>
+    <div class="fb-actions">
+      <button class="fb-btn" id="fbFullscreen">
+        <svg id="fsIcon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+          <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+        </svg>
+        全螢幕
+      </button>
+      <a class="fb-btn" id="fbDriveLink" href="#" target="_blank" rel="noopener">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Drive
+      </a>
+      <button class="fb-close" id="fbClose">✕</button>
+    </div>
+  </div>
+  <div class="fb-stage">
+    <div class="fb-row" id="fbRow">
+      <button class="nav-btn" id="btnPrev">&#8249;</button>
+      <div class="book-wrap" id="bookWrap">
+        <div style="width:520px;height:680px;display:flex;align-items:center;justify-content:center;">
+          <div class="fb-loading"><div class="spinner"></div><div>準備中…</div></div>
+        </div>
+      </div>
+      <button class="nav-btn" id="btnNext">&#8250;</button>
+    </div>
+  </div>
+  <div class="fb-bottombar">
+    <span class="page-pill" id="pagePill">—</span>
+    <span class="key-hint">← → 鍵翻頁 · 拖曳翻頁</span>
+    <!-- 手機版底部關閉按鈕 -->
+    <button class="fb-close-bottom" id="fbCloseBottom" style="display:none;">✕</button>
+  </div>
+</div>
+
+<!-- ══ SCRIPTS ══ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+function _load(key, fallback) {
+  try { const s = localStorage.getItem('r3461_' + key); return s ? JSON.parse(s) : fallback; } catch(e) { return fallback; }
+}
+window.addEventListener('storage', e => { if (e.key === 'r3461_monthly') location.reload(); });
+
+const BASE = 'pdfs/總監月刊-電子檔/';
+const DATA_DEFAULTS = {
+  '25-26': { heading: '2025–26 年度', issues: [
+    { no: 'NO.01', month: '2025.7 July',      id: '1bgweARrOcFVVxz5MR-1FwRhMjq9b-jQc', local: BASE+'25-26年度/D3461-202507.pdf.pdf' },
+    { no: 'NO.02', month: '2025.8 August',    id: '14Oxend27jPw7ttQLqHhKT-UtlRTDp9R6', local: BASE+'25-26年度/D3461-202508.pdf' },
+    { no: 'NO.03', month: '2025.9 September', id: '1uI7yWHWz009uF88BaW7wDrrbhFCDVBJv', local: BASE+'25-26年度/D3461-202509.pdf' },
+    { no: 'NO.04', month: '2025.10 October',  id: null, local: BASE+'25-26年度/D3461-202510.pdf' },
+    { no: 'NO.05', month: '2025.11 November', id: null, local: BASE+'25-26年度/D3461-202511.pdf' },
+    { no: 'NO.06', month: '2025.12 December', id: null, local: BASE+'25-26年度/D3461-202512.pdf' },
+    { no: 'NO.07', month: '2026.1 January',   id: null, local: BASE+'25-26年度/D3461-202601.pdf.pdf' },
+    { no: 'NO.08', month: '2026.2 February',  id: null, local: BASE+'25-26年度/D3461-202602.pdf.pdf' },
+    { no: 'NO.09', month: '2026.3 March',     id: null, local: BASE+'25-26年度/D3461-202603.pdf.pdf' },
+    { no: 'NO.10', month: '2026.4 April',     id: null, local: BASE+'25-26年度/D3461-202604.pdf.pdf' },
+    { no: 'NO.11', month: '2026.5 May',       id: null, local: BASE+'25-26年度/D3461-202605.pdf' },
+  ]},
+  '24-25': { heading: '2024–25 年度', issues: [
+    { no: 'NO.01', month: '2024.7 July',      id: '1EBHdUybpvEwGAindyBXOwAfrrSfVOEn4', local: BASE+'24-25年度/d3461-202407 (2).pdf' },
+    { no: 'NO.02', month: '2024.8 August',    id: '1welnmUJUpq8eaWmcAZoVuVwN326JB_1Y', local: BASE+'24-25年度/D3461-202408 (1).pdf' },
+    { no: 'NO.03', month: '2024.9 September', id: '1C95vmYC9gGJmmg1sBeicmDYf6K-LNrYb', local: BASE+'24-25年度/扶輪3461總監月刊2024-09月電子檔.pdf' },
+    { no: 'NO.04', month: '2024.10 October',  id: '1_44xuTifWpUwRYeFo-cyiJkGWqfCrv0m', local: BASE+'24-25年度/D3461-202410.pdf' },
+    { no: 'NO.05', month: '2024.11 November', id: '1Njoz1EAgTXPMsi8KTZ3SCo65E1ypVy_b', local: BASE+'24-25年度/D3461-202411.pdf' },
+    { no: 'NO.06', month: '2024.12 December', id: '1QNY70QNnLyJxejvO_F8jXIMkOfFFoBTx', local: BASE+'24-25年度/D3461-202412.pdf' },
+    { no: 'NO.07', month: '2025.1 January',   id: '1wuLsXk9vvse33qgpeHn_13XvxO5lgbRS', local: BASE+'24-25年度/D3461-202501 (1).pdf' },
+    { no: 'NO.08', month: '2025.2 February',  id: '1kCSvnKPvgNtCr9U3Ty6j0a8flmSIRRZF', local: BASE+'24-25年度/D3461-202502 (1).pdf' },
+    { no: 'NO.09', month: '2025.3 March',     id: '1eyssX_ONTQ3JlkjW2CO29QYLe_JS8vV3', local: BASE+'24-25年度/D3461-202503 (1).pdf' },
+    { no: 'NO.10', month: '2025.4 April',     id: '1Ge1ZtnqMH-Dnc-1TPTu6WLLMmZZzQmHl', local: BASE+'24-25年度/D3462-202504.pdf' },
+    { no: 'NO.11', month: '2025.5 May',       id: '1Ynxe6xo3P1sNRkT1gJfpDtAWp4nisfC1', local: BASE+'24-25年度/D3461-202505.pdf' },
+    { no: 'NO.12', month: '2025.6 June',      id: '1qiq-bAdT98x7odP2MRx_OjnZtMn-qXZ4', local: BASE+'24-25年度/D3461-202506.pdf' },
+  ]},
+  '23-24': { heading: '2023–24 年度', issues: [
+    { no: 'NO.01', month: '2023.7 July',      id: '16weaX5OrPxOV2JGET5Udmzmr1msVcaDP', local: BASE+'23-24年度/7月電子檔-扶輪3461總監月刊2023.pdf' },
+    { no: 'NO.02', month: '2023.8 August',    id: '1YQSaur_EmqB_s586pzh9DmC15Yeut-Tf', local: BASE+'23-24年度/8月總監月刊_3461地區23-24年度.pdf' },
+    { no: 'NO.03', month: '2023.9 September', id: '1B4Xc5eRe12XxZ62Gg0oeaPTb2pVUQ195', local: BASE+'23-24年度/9月電子檔-扶輪3461總監月刊2023.pdf' },
+    { no: 'NO.04', month: '2023.10 October',  id: '1hcT-oZ5YiQd0jqxtVb6B-BEQuiHca-ex', local: BASE+'23-24年度/10月電子檔-扶輪3461總監月刊2023.pdf' },
+    { no: 'NO.05', month: '2023.11 November', id: '16wUH1VUPsedy8QqVjZPTzIjbHO04Q9cr', local: BASE+'23-24年度/11月電子檔-扶輪3461總監月刊2023pdf.pdf' },
+    { no: 'NO.06', month: '2023.12 December', id: '1OuiMCMEnQNylRSOzKNw9vN2a9USzjdPB', local: BASE+'23-24年度/12月電子檔-扶輪3461總監月刊2023.pdf' },
+    { no: 'NO.07', month: '2024.1 January',   id: '1pub-cll8S9xkUdQ_MlVWdBOkz8H1hJgJ', local: BASE+'23-24年度/1月電子檔-扶輪3461總監月刊2024.pdf' },
+    { no: 'NO.08', month: '2024.2 February',  id: '1f-muQbsCu283iC_-jVAFOqoF6xZ2HVs7', local: BASE+'23-24年度/2月電子檔-扶輪3461總監月刊2024pdf.pdf' },
+    { no: 'NO.09', month: '2024.3 March',     id: '1ILJ3O9I8PPOBigaB9lhldkWiAyG0ppOj', local: BASE+'23-24年度/3月電子檔-扶輪3461總監月刊2024pdf.pdf' },
+    { no: 'NO.10', month: '2024.4 April',     id: '1TN2LztGe3E1h2pmPqpnXmD3hcXO7rqC1', local: BASE+'23-24年度/4月電子檔-扶輪3461總監月刊2024pdf.pdf' },
+    { no: 'NO.11', month: '2024.5 May',       id: '1Q7YaPatM_KXGfEyPD5B4vtm43sZ4vrHn', local: BASE+'23-24年度/5月電子檔-扶輪3461總監月刊2024pdf.pdf' },
+    { no: 'NO.12', month: '2024.6 June',      id: '1sekTT75R_ZeOaUgnbHZcskbRdcNzvus4', local: BASE+'23-24年度/6月總監月刊_3461地區23-24年度.pdf' },
+  ]},
+  '22-23': { heading: '2022–23 年度', issues: [
+    { no: 'NO.01', month: '2022.7 July',      id: '1YZRavazx1R6wz8OMlEoMjL4rL4mpaxyG', local: BASE+'22-23年度/7月總監月刊_電子版ok.pdf' },
+    { no: 'NO.02', month: '2022.8 August',    id: '1FFhDM5VYJmV7L3ZUrn7_f4gI-16Vv7tT', local: BASE+'22-23年度/8月總監月刊_電子版ok.pdf' },
+    { no: 'NO.03', month: '2022.9 September', id: '1js6kl7mOu_lTj_1Bldeh_ldj6Ks_8dMm', local: BASE+'22-23年度/9月總監月刊_電子版ok.pdf' },
+    { no: 'NO.04', month: '2022.10 October',  id: '1jVk1P5I9DeknTFU-D3UkuFjGpozDuBTp', local: BASE+'22-23年度/10月總監月刊_電子版ok.pdf' },
+    { no: 'NO.05', month: '2022.11 November', id: '1iWIVbPAMkUrUAMtNQlg1Ow-amH4ZJQLr', local: BASE+'22-23年度/11月總監月刊_電子版ok_compressed.pdf' },
+    { no: 'NO.06', month: '2022.12 December', id: '11wRmFAsn0CXUuggDGbM-is0eUgiMDYQQ', local: BASE+'22-23年度/12月總監月刊_電子版ok_compressed.pdf' },
+    { no: 'NO.07', month: '2023.1 January',   id: '1ceiwFnk3Ta30feZCkHl0DUN4Tv72CCxo', local: BASE+'22-23年度/1月總監月刊_電子版ok.pdf' },
+    { no: 'NO.08', month: '2023.2 February',  id: '11qKUoMMAL0hsBc0m1AFCsS9vcmxaMHpo', local: BASE+'22-23年度/2月總監月刊_電子版ok_compressed.pdf' },
+    { no: 'NO.09', month: '2023.3 March',     id: '1XBZ20FcdELEb_YFXlYteOga31zN97Tv7', local: BASE+'22-23年度/3月總監月刊_電子版ok_compressed.pdf' },
+    { no: 'NO.10', month: '2023.4 April',     id: '17fx33y28AGl23TsBYI-MTzvQLxJhR85v', local: BASE+'22-23年度/4月總監月刊_電子版ok_compressed.pdf' },
+    { no: 'NO.11', month: '2023.5 May',       id: '1SPZ8m8T_4JQh8hI9T5u-Kx1Ya8UC2VkN', local: BASE+'22-23年度/5月總監月刊_電子版ok.pdf' },
+    { no: 'NO.12', month: '2023.6 June',      id: '1hbxKVXx4a6ozzryXy7hRxm_wrKBTaCLv', local: BASE+'22-23年度/6月總監月刊_電子版ok.pdf' },
+  ]},
+  '21-22': { heading: '2021–22 年度', issues: [
+    { no: 'NO.01', month: '2021.7 July',      id: '1FY8T1cw5P2i7-Fdl4LX84kI6voxnjQee', local: BASE+'21-22年度/D3461-202107.pdf' },
+    { no: 'NO.02', month: '2021.8 August',    id: '1OLPBRrpEWPPIUzMSwOOpaoZaU4vGodBP', local: BASE+'21-22年度/D3461-202108.pdf' },
+    { no: 'NO.03', month: '2021.9 September', id: '14CyFtNRC6VReQxvyUHo325itGKtzsIw1', local: BASE+'21-22年度/D3461-202109.pdf' },
+    { no: 'NO.04', month: '2021.10 October',  id: '1rSpPrQ1KKGTjSnbcrmTaRF6lLc8L7XXr', local: BASE+'21-22年度/D3461-202110.pdf' },
+    { no: 'NO.05', month: '2021.11 November', id: '1Mp0ySdv8sgHOVNIUAPkj67C5KkcvPa23', local: BASE+'21-22年度/D3461-202111.pdf' },
+    { no: 'NO.06', month: '2022.1 January',   id: '1TzH8olDh-K_gFAlAoltC1UUO-gSR9nIE', local: BASE+'21-22年度/D3461-202201.pdf' },
+    { no: 'NO.07', month: '2022.2 February',  id: '1aixSoin3IWsOoGHu5oLyUz7-YoDcoNvi', local: BASE+'21-22年度/D3461-202202.pdf' },
+    { no: 'NO.08', month: '2022.3 March',     id: '19PVmgG59-xtzh7WyN-U_EJkZkMBAEm8-', local: BASE+'21-22年度/D3461-202203.pdf' },
+    { no: 'NO.09', month: '2022.4 April',     id: '1ruPdFwqLS2kON6FT2we-xJqCZnYwYAcs', local: BASE+'21-22年度/D3461-202204.pdf' },
+    { no: 'NO.10', month: '2022.5 May',       id: '1n7dC8EglmpIFeJ7vmxN7FnhRHK2GF8SS', local: BASE+'21-22年度/D3461-202205.pdf' },
+    { no: 'NO.11', month: '2022.6 June',      id: '1h57AVnT-HrVvunHY-2JCbM3sJ6UCHVu1', local: BASE+'21-22年度/D3461-202206.pdf' },
+  ]},
+};
+
+const _rawMonthly = _load('monthly', null);
+const DATA = (_rawMonthly && Object.keys(_rawMonthly).length > 0) ? _rawMonthly : DATA_DEFAULTS;
+
+/* ── DOM ── */
+const magGrid      = document.getElementById('magGrid');
+const yearHeading  = document.getElementById('yearHeading');
+const issueCount   = document.getElementById('issueCount');
+const overlay      = document.getElementById('fbOverlay');
+const bookWrap     = document.getElementById('bookWrap');
+const btnPrev      = document.getElementById('btnPrev');
+const btnNext      = document.getElementById('btnNext');
+const pagePill     = document.getElementById('pagePill');
+const fbTitle      = document.getElementById('fbTitle');
+const fbSubtitle   = document.getElementById('fbSubtitle');
+const fbDriveLink  = document.getElementById('fbDriveLink');
+const fbClose      = document.getElementById('fbClose');
+const fbCloseBottom= document.getElementById('fbCloseBottom');
+const fbFullscreen = document.getElementById('fbFullscreen');
+const mobIntroOv   = document.getElementById('mobIntroOverlay');
+const mobIntroTitle= document.getElementById('mobIntroTitle');
+const mobIntroSub  = document.getElementById('mobIntroSub');
+
+let pageFlip = null, totalPages = 0;
+
+/* ── Build year tabs ── */
+const yearKeys = Object.keys(DATA);
+const yearTabsEl = document.getElementById('yearTabs');
+let activeYear = yearKeys[0];
+yearKeys.forEach(k => {
+  const btn = document.createElement('button');
+  btn.className = 'year-tab' + (k === activeYear ? ' active' : '');
+  btn.textContent = DATA[k].heading.replace(' 年度','');
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.year-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeYear = k;
+    renderYear(k);
+  });
+  yearTabsEl.appendChild(btn);
+});
+
+/* ── Render PDF cover thumbnail ── */
+async function renderPdfCover(covEl, pdfPath) {
+  try {
+    if (!window.pdfjsLib) return;
+    const pdf  = await pdfjsLib.getDocument({ url: pdfPath, withCredentials: false }).promise;
+    const page = await pdf.getPage(1);
+    const vp0  = page.getViewport({ scale: 1 });
+    const scale = covEl.offsetWidth / vp0.width || 1;
+    const vp   = page.getViewport({ scale: Math.max(scale, 0.5) });
+    const cv   = document.createElement('canvas');
+    cv.width   = Math.round(vp.width);
+    cv.height  = Math.round(vp.height);
+    cv.style.width  = '100%';
+    cv.style.height = '100%';
+    cv.style.display = 'block';
+    cv.style.objectFit = 'cover';
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, cv.width, cv.height);
+    await page.render({ canvasContext: ctx, viewport: vp }).promise;
+    covEl.innerHTML = '';
+    covEl.appendChild(cv);
+    covEl.classList.add('loaded');
+  } catch(e) {
+    covEl.classList.add('loaded');
+  }
+}
+
+/* ── Gallery render ── */
+function renderYear(key) {
+  const data = DATA[key] || DATA[yearKeys[0]];
+  yearHeading.textContent = data.heading;
+  issueCount.textContent  = `共 ${data.issues.length} 期`;
+  magGrid.innerHTML = '';
+  data.issues.forEach((issue, i) => {
+    const covId = `cov-${key}-${i}`;
+    const card = document.createElement('div');
+    card.className = 'mag-card reveal from-scale d' + Math.min(i + 1, 6);
+
+    if (issue.id) {
+      // Google Drive thumbnail
+      const thumb = `https://drive.google.com/thumbnail?id=${issue.id}&sz=w400`;
+      card.innerHTML = `
+        <div class="mag-cover-wrap">
+          <div class="mag-cover" id="${covId}">
+            <img src="${thumb}" alt="${issue.no}" loading="lazy"
+                 onload="document.getElementById('${covId}').classList.add('loaded')"
+                 onerror="renderPdfCover(document.getElementById('${covId}'), '${issue.local || ''}')">
+            <div class="mag-cover-shimmer"></div>
+          </div>
+        </div>
+        <div class="mag-body">
+          <div class="mag-no">${issue.no}</div>
+          <div class="mag-month">${issue.month}</div>
+        </div>`;
+    } else {
+      // Local PDF — render with pdf.js
+      card.innerHTML = `
+        <div class="mag-cover-wrap">
+          <div class="mag-cover" id="${covId}">
+            <div class="mag-cover-shimmer"></div>
+          </div>
+        </div>
+        <div class="mag-body">
+          <div class="mag-no">${issue.no}</div>
+          <div class="mag-month">${issue.month}</div>
+        </div>`;
+      // Defer PDF rendering so DOM is ready
+      setTimeout(() => {
+        const covEl = document.getElementById(covId);
+        if (covEl && issue.local) renderPdfCover(covEl, issue.local);
+      }, 50 + i * 30);
+    }
+
+    card.addEventListener('click', () => openFlipper(issue, key, i));
+    magGrid.appendChild(card);
+  });
+  document.querySelectorAll('.mag-card.reveal').forEach(el => ro.observe(el));
+}
+
+/* ── Flipbook ── */
+function showLoading(w, h, msg) {
+  bookWrap.innerHTML = `<div style="width:${w}px;height:${h}px;display:flex;align-items:center;justify-content:center;">
+    <div class="fb-loading"><div class="spinner"></div><div>${msg}</div></div></div>`;
+  pagePill.textContent = '載入中…';
+}
+function showError(w, h) {
+  bookWrap.innerHTML = `<div style="width:${w}px;height:${h}px;display:flex;align-items:center;justify-content:center;">
+    <div class="fb-loading">
+      <div style="font-size:38px">⚠️</div>
+      <div>無法直接載入 PDF</div>
+      ${fbDriveLink.href !== '#' ? `<a href="${fbDriveLink.href}" target="_blank" style="margin-top:12px;background:var(--gold);color:var(--dark);padding:8px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;">在 Drive 開啟</a>` : ''}
+    </div></div>`;
+  pagePill.textContent = '載入失敗';
+}
+function isMobile() { return window.innerWidth <= 768; }
+
+function calcSize(pdfW, pdfH) {
+  if (isMobile()) {
+    // 手機：單頁滿版
+    const avH = window.innerHeight - 100;  // topbar + bottombar
+    const avW = window.innerWidth - 0;
+    const s   = Math.min(avH / pdfH, avW / pdfW);
+    return { w: Math.round(pdfW * s), h: Math.round(pdfH * s), s, portrait: true };
+  }
+  const avH = window.innerHeight - 130;
+  const avW = (window.innerWidth - 200) / 2;
+  const s   = Math.min(avH / pdfH, avW / pdfW, 1.8);
+  return { w: Math.round(pdfW * s), h: Math.round(pdfH * s), s, portrait: false };
+}
+
+function showMobIntro(issue) {
+  if (window.innerWidth > 768) return;
+  mobIntroTitle.textContent = `總監月刊 ${issue.no}`;
+  mobIntroSub.textContent   = issue.month;
+  mobIntroOv.style.display  = 'flex';
+  mobIntroOv.classList.remove('hide');
+  // 點擊任意處關閉引導頁
+  const dismiss = () => {
+    mobIntroOv.classList.add('hide');
+    setTimeout(() => { mobIntroOv.style.display = 'none'; }, 360);
+    mobIntroOv.removeEventListener('click', dismiss);
+  };
+  mobIntroOv.addEventListener('click', dismiss);
+}
+
+function toggleMobBottomClose() {
+  const mob = window.innerWidth <= 768;
+  fbCloseBottom.style.display = mob ? 'flex' : 'none';
+  fbClose.style.display       = mob ? 'none' : '';
+}
+
+async function openFlipper(issue, yearKey, issueIdx) {
+  /* ── 更新網址 hash，讓每一期有獨立 URL ── */
+  if (yearKey !== undefined && issueIdx !== undefined) {
+    history.pushState(null, '', `#${yearKey}/${issueIdx}`);
+  }
+  if (pageFlip) { try { pageFlip.destroy(); } catch(_) {} pageFlip = null; }
+  totalPages = 0;
+  btnPrev.disabled = btnNext.disabled = true;
+  fbTitle.textContent    = `總監月刊 ${issue.no}`;
+  fbSubtitle.textContent = issue.month;
+  fbDriveLink.href = issue.id ? `https://drive.google.com/file/d/${issue.id}/view` : '#';
+  fbDriveLink.style.display = issue.id ? '' : 'none';
+  toggleMobBottomClose();
+  showLoading(520, 680, 'PDF 載入中…');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  showMobIntro(issue);
+
+  const urls = [
+    issue.local || null,
+    issue.id ? `https://drive.usercontent.google.com/download?id=${issue.id}&export=download&authuser=0` : null,
+    issue.id ? `https://drive.google.com/uc?export=download&id=${issue.id}` : null,
+  ].filter(Boolean);
+
+  let pdf = null;
+  for (const url of urls) {
+    try { pdf = await pdfjsLib.getDocument({ url, withCredentials: false }).promise; break; } catch(_) {}
+  }
+  if (!pdf) { showError(520, 680); return; }
+
+  totalPages = pdf.numPages;
+  const fp   = await pdf.getPage(1);
+  const vp0  = fp.getViewport({ scale: 1 });
+  const { w, h, s, portrait } = calcSize(vp0.width, vp0.height);
+  const imgs = [];
+  for (let i = 1; i <= totalPages; i++) {
+    const pg = await pdf.getPage(i);
+    const vp = pg.getViewport({ scale: s });
+    const cv = document.createElement('canvas');
+    cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+    await pg.render({ canvasContext: ctx, viewport: vp }).promise;
+    imgs.push(cv.toDataURL('image/jpeg', 0.92));
+    pagePill.textContent = `渲染中… ${Math.round(i / totalPages * 100)}%`;
+    if (i === 1) showLoading(portrait ? w : w * 2, h, `渲染中… 1/${totalPages}`);
+  }
+
+  bookWrap.innerHTML = '';
+  const el = document.createElement('div');
+  bookWrap.appendChild(el);
+  pageFlip = new St.PageFlip(el, {
+    width: w, height: h, size: 'fixed',
+    minWidth: w, maxWidth: w, minHeight: h, maxHeight: h,
+    showCover: true,
+    usePortrait: portrait,    // 手機單頁直排
+    drawShadow: !portrait,
+    flippingTime: portrait ? 450 : 700,
+    useMouseEvents: true,
+    swipeDistance: portrait ? 20 : 30,  // 手機更靈敏
+    clickEventForward: true,
+  });
+  pageFlip.loadFromImages(imgs);
+  updatePill();
+  pageFlip.on('flip', updatePill);
+  pageFlip.on('changeState', updatePill);
+}
+
+function updatePill() {
+  if (!pageFlip) return;
+  const idx = pageFlip.getCurrentPageIndex();
+  pagePill.textContent = `第 ${idx + 1} 頁 / 共 ${totalPages} 頁`;
+  btnPrev.disabled = idx === 0;
+  btnNext.disabled = idx >= totalPages - 1;
+}
+
+btnPrev.addEventListener('click', () => pageFlip?.flipPrev());
+btnNext.addEventListener('click', () => pageFlip?.flipNext());
+
+function closeFlipper() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  if (pageFlip) { try { pageFlip.destroy(); } catch(_) {} pageFlip = null; }
+  bookWrap.innerHTML = '';
+  /* ── 關閉時清除 hash ── */
+  history.pushState(null, '', location.pathname + location.search);
+}
+fbClose.addEventListener('click', closeFlipper);
+fbCloseBottom.addEventListener('click', closeFlipper);
+window.addEventListener('resize', toggleMobBottomClose);
+document.addEventListener('keydown', e => {
+  if (!overlay.classList.contains('open')) return;
+  if (e.key === 'Escape') closeFlipper();
+  if (e.key === 'ArrowRight') pageFlip?.flipNext();
+  if (e.key === 'ArrowLeft')  pageFlip?.flipPrev();
+});
+fbFullscreen.addEventListener('click', () => {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+  else document.exitFullscreen?.();
+});
+document.addEventListener('fullscreenchange', () => {
+  const icon = document.getElementById('fsIcon');
+  icon.innerHTML = document.fullscreenElement
+    ? `<polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/>`
+    : `<polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>`;
+});
+
+/* ── Scroll reveal ── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.08 });
+
+/* ── Nav ── */
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [
+      { label: 'RI社長',         url: 'ri-president.html' },
+      { label: 'RI現況',         url: 'ri-current.html' },
+    ],[
+      { label: '地區總監',   url: 'governor.html', hi: true },
+      { label: '3461各社資訊',   url: 'clubs.html', hi: true },
+      { label: '地區組織名錄',   url: 'directory.html', hi: true },
+      { label: '年度重要工作目標', url: 'annual-goals.html', hi: true },
+    ],[
+      { label: '總監當選人',     url: '#' },
+      { label: '總監提名人',     url: '#' },
+      { label: '歷屆社長、總監', url: '#' },
+    ],
+  ]},
+  { title: '進行事', items: [
+    { label: '地區行事曆', url: 'calendar.html', hi: true },
+    { label: '扶輪日',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },
+    { label: '地區年會',   url: 'conference.html', hi: true },
+    { label: '國際年會',   url: 'international-convention.html', hi: true },
+    { label: '服務計劃',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' },
+  ]},
+  { title: '秀成果', items: [
+    { label: 'RYLA', url: 'ryla.html' }, { label: 'RYE', url: 'rye.html' },
+    { label: 'NGSE', url: 'ngse.html' }, { label: 'Rotaract', url: 'rotaract.html' },
+    { label: 'Interact', url: 'interact.html', hi: true }, { label: '生命橋樑', url: '#' },
+  ]},
+  { title: '回顧庫', items: [
+    { label: '總監月刊',      url: 'governor-monthly.html?nocache=1', hi: true },
+    { label: '公共形象新聞', url: 'news.html' },
+    { label: 'RI 成果展示',  url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },
+    { label: '扶輪之子',      url: '#' },
+    { label: '扶輪 Shorts',    url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5323/2112-0' },
+    { label: '扶輪百工百業',  url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' },
+  ]},
+  { title: '學知識', items: [
+    { label: '扶輪簡介',     url: 'rotary-intro.html' },
+    { label: '七大焦點領域', url: 'focus-areas.html' },
+    { label: '扶輪標誌', url: 'rotary-logo.html', hi: true },
+    { label: '扶輪基金',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },
+    { label: '扶輪現況',     url: 'ri-current.html' },
+  ]},
+  { title: '連結', columns: [
+    [
+      { label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },
+      { label: '地區扶輪社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },
+      { label: '地區扶青社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },
+      { label: '地區扶少圍',   url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },
+      { label: '扶輪公益網',     url: 'https://17rcn.org/' },
+      { label: '扶輪領導學院',   url: 'https://www.rlitw.org/' },
+    ],[
+      { label: '職業服務',   url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },
+      { label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },
+      { label: '相關連結',   url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' },
+    ],
+  ]},
+  { title: '更多資源', items: [
+    { label: '年度主題',           url: '#' },
+    { label: '下載專區',           url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },
+    { label: '品牌中心', url: 'https://brandcenter.rotary.org/' },
+    { label: '台灣扶輪下載',       url: 'https://taiwan-rotary.org/download/' },
+  ]},
+];
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(c) {
+  menuData.forEach(g => {
+    const item = document.createElement('div');
+    item.className = 'nav-item';
+    const mk = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`;
+    const sub = g.columns
+      ? `<div class="sub-menu sub-menu--cols">${g.columns.map(col=>`<div class="sub-menu-col">${col.map(mk).join('')}</div>`).join('')}</div>`
+      : `<div class="sub-menu">${(g.items||[]).map(mk).join('')}</div>`;
+    item.innerHTML = `<div class="nav-link">${g.title}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>${sub}`;
+    c.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+const mm = document.getElementById('mobileMenu');
+menuData.forEach(g => {
+  const item = document.createElement('div');
+  item.className = 'mobile-nav-item';
+  const all = g.columns ? g.columns.flat() : (g.items||[]);
+  item.innerHTML = `<div class="mobile-nav-top"><span>${g.title}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="mobile-sub">${all.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`).join('')}</div>`;
+  item.querySelector('.mobile-nav-top').addEventListener('click', () => item.classList.toggle('expanded'));
+  mm.appendChild(item);
+});
+const hb = document.getElementById('hamburger');
+function _syncTop() {
+  const hdr = document.getElementById('siteHeader');
+  if (hdr && window.innerWidth <= 900) mm.style.top = hdr.offsetHeight + 'px';
+}
+hb.addEventListener('click', () => {
+  const open = mm.classList.toggle('open');
+  hb.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) _syncTop();
+});
+window.addEventListener('scroll', () => { if (mm.classList.contains('open')) _syncTop(); }, { passive: true });
+window.addEventListener('resize', () => { if (mm.classList.contains('open')) _syncTop(); }, { passive: true });
+mm.addEventListener('click', e => {
+  if (e.target === mm) { mm.classList.remove('open'); hb.classList.remove('open'); document.body.style.overflow = ''; }
+});
+
+/* ── Init ── */
+renderYear(activeYear);
+
+/* ── 讀取 URL hash，自動開啟對應期數 ── */
+(function initFromHash() {
+  const hash = location.hash.replace('#', '');   // e.g. "25-26/0"
+  if (!hash) return;
+  const parts = hash.split('/');
+  if (parts.length !== 2) return;
+  const [yearKey, idxStr] = parts;
+  const idx = parseInt(idxStr, 10);
+  const yearData = DATA[yearKey];
+  if (!yearData || isNaN(idx) || idx < 0 || idx >= yearData.issues.length) return;
+
+  // 切換到對應年度 tab
+  document.querySelectorAll('.year-tab').forEach((btn, i) => {
+    const k = yearKeys[i];
+    btn.classList.toggle('active', k === yearKey);
+  });
+  activeYear = yearKey;
+  renderYear(yearKey);
+
+  // 等 DOM 更新後開啟
+  setTimeout(() => openFlipper(yearData.issues[idx], yearKey, idx), 200);
+})();
+
+/* 瀏覽器上/下一頁（popstate）同步 */
+window.addEventListener('popstate', () => {
+  const hash = location.hash.replace('#', '');
+  if (!hash && overlay.classList.contains('open')) {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if (pageFlip) { try { pageFlip.destroy(); } catch(_) {} pageFlip = null; }
+    bookWrap.innerHTML = '';
+  }
+});
+</script>
+<script src="search.js"></script>
+</body>
+</html>

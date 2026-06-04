@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>70扶輪社10扶青 | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark: #1a2d5c;
+      --gold: #f0c040;
+      --overlay: rgba(26,45,92,0.92);
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; background: #f4f6fb; color: #222; min-height: 100vh; }
+
+    /* ── Site Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background: url('images/nav-bg.jpg') left center / cover no-repeat;
+      background-color: #dce8f0;
+      transition: height 0.3s;
+    }
+    .header-logo-row {
+      background: transparent;
+      height: 100px;
+      display: flex; align-items: center;
+      padding: 0 24px;
+      transition: height 0.3s;
+    }
+    .header-logo-inner {
+      max-width: 1440px; margin: 0 auto; width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .site-logo { display: flex; align-items: center; flex-shrink: 0; }
+    .site-logo img {
+      width: 437px; height: 82px;
+      object-fit: contain; display: block;
+      transition: width 0.3s, height 0.3s;
+    }
+    .header-slogan { display: flex; align-items: center; flex-shrink: 0; }
+    .header-slogan img { height: 72px; width: auto; object-fit: contain; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; transition: height 0.3s, opacity 0.3s; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+        .nav-link {
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      color: #222; font-size: 16.5px; font-weight: 600; text-decoration: none;
+      height: 52px; width: 100%;
+      white-space: nowrap;
+      transition: background 0.18s, color 0.18s;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+    }
+    .nav-link:hover,
+    .nav-item:hover .nav-link { background: rgba(0,0,0,0.12); color: #000; }
+
+    .nav-link svg { flex-shrink: 0; }
+
+    .sub-menu {
+      display: none;
+      position: absolute; top: 100%; left: 0;
+      background: #fff;
+      min-width: 170px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      border-top: 3px solid var(--gold);
+      z-index: 200;
+    }
+    .nav-item:hover .sub-menu { display: block; }
+
+    .sub-menu a {
+      display: block; padding: 16px 17px;
+      font-size: 15.5px; color: var(--dark);
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+
+    /* Multi-column dropdown */
+    .sub-menu--cols {
+      display: none;
+      position: absolute; top: 100%; left: 0;
+      background: #fff;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      border-top: 3px solid var(--gold);
+      z-index: 200;
+      flex-direction: row;
+      min-width: 480px;
+    }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    /* Right-edge dropdowns open to the left */
+    .nav-item:last-child .sub-menu,
+    .nav-item:last-child .sub-menu--cols,
+    .nav-item:nth-last-child(2) .sub-menu,
+    .nav-item:nth-last-child(2) .sub-menu--cols {
+      left: auto;
+      right: 0;
+    }
+    .sub-menu-col {
+      min-width: 160px;
+      border-right: 1px solid #f0f0f0;
+      flex: 1;
+    }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a {
+      display: block; padding: 16px 17px;
+      font-size: 15.5px; color: var(--dark);
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .sub-menu-col a.nav-hi:hover { color: #fff; }
+
+    .site-header.scrolled .header-logo-row { height: 76px; }
+    .site-header.scrolled .site-logo img   { width: auto; height: 48px; }
+    .site-header.scrolled .header-slogan   { display: none; }
+    .site-header.scrolled .header-nav-row  { display: none; }
+    .site-header.scrolled .compact-nav     { display: flex; }
+    .hamburger {
+      display: none; flex-direction: column;
+      gap: 5px; cursor: pointer; padding: 8px;
+      background: none; border: none;
+    }
+    .hamburger span {
+      display: block; width: 26px; height: 2px;
+      background: #333; border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row {
+      display: none;
+      background: transparent;
+      height: 48px;
+      align-items: center; justify-content: flex-end;
+      padding: 0 16px;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 188px; left: 0; right: 0; bottom: 0;
+      background: var(--overlay);
+      z-index: 999;
+      overflow-y: auto;
+      padding-bottom: 40px;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .mobile-nav-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px;
+      color: #fff; font-size: 21px; font-weight: 500;
+      cursor: pointer;
+    }
+    .mobile-nav-top svg { transition: transform 0.25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,0.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a {
+      display: block; padding: 12px 36px;
+      color: rgba(255,255,255,0.8); font-size: 17px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: color 0.15s;
+    }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media screen and (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img   { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan   { display: none; }
+      .desktop-nav     { display: none; }
+      .compact-nav     { display: none !important; }
+      .mobile-nav-row  { display: flex; }
+      .hamburger       { display: flex; }
+      .mobile-menu { top: 128px; }
+      .site-header.scrolled .header-logo-row { height: 60px; }
+      .site-header.scrolled .site-logo img   { height: 38px; }
+      .site-header.scrolled .header-nav-row  { display: none; }
+      .site-header.scrolled .mobile-menu     { top: 108px; }
+    }
+
+    /* ── Inner Page Footer ── */
+    .inner-footer {
+      background: #ffffff;
+      border-top: 1px solid #e5e7eb;
+      padding: 24px 32px;
+    }
+    .inner-footer-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .inner-footer-logo img { height: 60px; width: auto; object-fit: contain; display: block; }
+    .inner-footer-contact {
+      color: #555; font-size: 17px; line-height: 2;
+      flex: 1; min-width: 220px; text-align: center;
+    }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; transition: opacity 0.18s; }
+    .footer-icon-btn:hover img { opacity: 0.75; }
+    .footer-bar {
+      background: #f3f4f6; color: #999;
+      font-size: 17px; text-align: center; padding: 10px;
+    }
+
+    /* ── Page Layout ── */
+    .page-main { max-width: 1280px; margin: 0 auto; padding: 36px 24px 60px; }
+    .page-title-row {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .page-title {
+      font-size: 30px; font-weight: 800; color: var(--dark);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .page-title::before {
+      content: ''; display: inline-block;
+      width: 5px; height: 26px; background: var(--primary);
+      border-radius: 3px;
+    }
+    .page-subtitle {
+      font-size: 16px; color: #888; margin-bottom: 32px;
+    }
+
+    /* ── Zone Group ── */
+    .zone-section { margin-bottom: 48px; }
+    .zone-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--gold);
+    }
+    .zone-badge {
+      background: var(--primary); color: #fff;
+      font-size: 21px; font-weight: 800;
+      padding: 6px 16px; border-radius: 6px;
+      letter-spacing: 1px;
+    }
+    .zone-badge.rotaract {
+      background: #6d28d9;
+    }
+    .zone-name {
+      font-size: 23px; font-weight: 700; color: var(--dark);
+    }
+    .zone-count {
+      font-size: 17px; color: #888; font-weight: 400;
+      margin-left: auto;
+    }
+
+    /* ── District Cards Grid ── */
+    .district-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .district-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .district-grid { grid-template-columns: 1fr; } }
+
+    .district-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      border: 1px solid #e8ecf4;
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+    .district-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(26,69,139,0.13);
+    }
+    .district-card-header {
+      background: var(--primary);
+      color: #fff;
+      padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .district-card-header.rotaract { background: #6d28d9; }
+    .district-id {
+      font-size: 23px; font-weight: 800;
+      letter-spacing: 1px;
+    }
+    .district-ag {
+      font-size: 16px; opacity: 0.88; text-align: right; line-height: 1.5;
+    }
+    .district-ag strong { display: block; font-size: 17px; opacity: 1; }
+    .club-list { padding: 8px 0; }
+    .club-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 18px;
+      border-bottom: 1px solid #f0f2f8;
+      font-size: 16px; color: #333;
+      transition: background 0.15s;
+    }
+    .club-item:last-child { border-bottom: none; }
+    .club-item:hover { background: #f0f4ff; }
+    .club-no {
+      width: 22px; height: 22px; flex-shrink: 0;
+      background: #e8ecf4; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; font-weight: 700; color: var(--primary);
+    }
+
+    /* ── Detailed District Table (A zone style) ── */
+    .detail-district-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 1000px) { .detail-district-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  { .detail-district-grid { grid-template-columns: 1fr; } }
+
+    .detail-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.09);
+      border: 1px solid #e0e6f0;
+    }
+    .detail-card-title-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px 10px;
+      border-bottom: 2px solid #e0e6f0;
+    }
+    .detail-district-name {
+      font-size: 25px; font-weight: 900; color: var(--dark);
+    }
+    .detail-intro-btn {
+      background: #6b8ec7; color: #fff;
+      font-size: 16px; font-weight: 700;
+      padding: 5px 14px; border-radius: 5px;
+      text-decoration: none; white-space: nowrap;
+      transition: background 0.18s;
+    }
+    .detail-intro-btn:hover { background: var(--primary); }
+
+    .detail-leaders-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-bottom: 2px solid #e0e6f0;
+    }
+    .detail-leader {
+      padding: 10px 16px;
+      text-align: center;
+    }
+    .detail-leader:first-child { border-right: 1px solid #e0e6f0; }
+    .detail-leader-name {
+      font-size: 17px; font-weight: 800; color: #222;
+    }
+    .detail-leader-en {
+      font-size: 17px; color: #555; margin-top: 1px;
+    }
+    .detail-leader-role {
+      font-size: 17px; color: #888; margin-top: 3px; letter-spacing: 0.5px;
+    }
+
+    .detail-col-header {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      background: #f0f3fa;
+      padding: 7px 12px;
+      font-size: 17px; font-weight: 700; color: #666;
+      border-bottom: 1px solid #e0e6f0;
+      gap: 4px;
+    }
+    .detail-club-row {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      padding: 9px 12px;
+      border-bottom: 1px solid #f0f3fa;
+      gap: 4px;
+      align-items: center;
+      transition: background 0.15s;
+    }
+    .detail-club-row:last-child { border-bottom: none; }
+    .detail-club-row:hover { background: #f5f8ff; }
+    .detail-club-name {
+      font-size: 17px; font-weight: 800; color: #6b21a8;
+      line-height: 1.3;
+    }
+    .detail-club-date {
+      font-size: 16px; color: #aaa; margin-top: 2px;
+    }
+    .detail-person {
+      text-align: center;
+    }
+    .detail-person-zh { font-size: 16px; font-weight: 700; color: #222; line-height: 1.3; }
+    .detail-person-en { font-size: 17px; color: #777; }
+
+    /* ── Stats Bar ── */
+    .stats-bar {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .stat-chip {
+      background: #fff; border-radius: 8px;
+      padding: 12px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      border: 1px solid #e5e9f2;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .stat-num {
+      font-size: 32px; font-weight: 800; color: var(--primary);
+    }
+    .stat-label { font-size: 17px; color: #666; line-height: 1.4; }
+
+    /* ── Rotaract Section ── */
+    .rotaract-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .rotaract-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .rotaract-grid { grid-template-columns: 1fr; } }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo.png" alt="Rotary 國際扶輪3461地區"
+             onerror="this.src='https://pshop.myqr.com.tw/images/RWD_Home/0/201_m.jpg?407'" />
+      </a>
+      <nav class="compact-nav" id="compactNav"></nav>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題" />
+      
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="header-nav-row">
+    <nav class="desktop-nav" id="desktopNav"></nav>
+  </div>
+  <div class="mobile-nav-row">
+    
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu"></div>
+
+<main class="page-main">
+  <div class="page-title-row">
+    <h1 class="page-title">70扶輪社 10扶青</h1>
+  </div>
+  <p class="page-subtitle">國際扶輪第3461地區 · 涵蓋台中、彰化、南投地區 · 25-26年度</p>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-chip">
+      <div class="stat-num">70</div>
+      <div class="stat-label">扶輪社<br>Rotary Clubs</div>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-num">10</div>
+      <div class="stat-label">扶青社<br>Rotaract Clubs</div>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-num">12</div>
+      <div class="stat-label">扶輪分區<br>Districts</div>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-num">4</div>
+      <div class="stat-label">扶青分區<br>Rotaract Districts</div>
+    </div>
+  </div>
+
+  <!-- ── A 區 ── -->
+  <div class="zone-section">
+    <div class="zone-header">
+      <div class="zone-badge">A 區</div>
+      <div class="zone-name">台中市中心北區</div>
+      <div class="zone-count">3 分區 · 20 扶輪社</div>
+    </div>
+    <div class="detail-district-grid">
+
+      <!-- A1 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">A1分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">賴玉寶 Polly</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">施士塵 Success</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中扶輪社</div><div class="detail-club-date">1995.03.18</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蔡三章</div><div class="detail-person-en">Eyes</div></div>
+          <div class="detail-person"><div class="detail-person-zh">吳志正</div><div class="detail-person-en">Marketing</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中中央扶輪社</div><div class="detail-club-date">1991.12.12</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蘇麗鈴</div><div class="detail-person-en">Lighting</div></div>
+          <div class="detail-person"><div class="detail-person-zh">鄭圓圓</div><div class="detail-person-en">Art</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中省都扶輪社</div><div class="detail-club-date">1995.11.28</div></div>
+          <div class="detail-person"><div class="detail-person-zh">王志成</div><div class="detail-person-en">Goods</div></div>
+          <div class="detail-person"><div class="detail-person-zh">廖朝昕</div><div class="detail-person-en">Power</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中文心扶輪社</div><div class="detail-club-date">2007.03.16</div></div>
+          <div class="detail-person"><div class="detail-person-zh">賴品佑</div><div class="detail-person-en">Building</div></div>
+          <div class="detail-person"><div class="detail-person-zh">童玉蘭</div><div class="detail-person-en">Janice</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中文教扶輪社</div><div class="detail-club-date">2018.06.08</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳佳瑛</div><div class="detail-person-en">Bonnie</div></div>
+          <div class="detail-person"><div class="detail-person-zh">許頌昇</div><div class="detail-person-en">Sung</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中達文西扶輪社</div><div class="detail-club-date">2022.12</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳英傑</div><div class="detail-person-en">Hammer</div></div>
+          <div class="detail-person"><div class="detail-person-zh">黃聖傑</div><div class="detail-person-en">Kevin</div></div>
+        </div>
+      </div>
+
+      <!-- A2 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">A2分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">葉采寧 Kate</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">呂明政 Mark</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中中區扶輪社</div><div class="detail-club-date">1979.05.08</div></div>
+          <div class="detail-person"><div class="detail-person-zh">謝政洋</div><div class="detail-person-en">Nano</div></div>
+          <div class="detail-person"><div class="detail-person-zh">邱瑞鈺</div><div class="detail-person-en">Nima</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中西區扶輪社</div><div class="detail-club-date">1989.06.05</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳冠領</div><div class="detail-person-en">Andrew</div></div>
+          <div class="detail-person"><div class="detail-person-zh">鄭文傑</div><div class="detail-person-en">City</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中市政扶輪社</div><div class="detail-club-date">2011.09.28</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林建銘</div><div class="detail-person-en">Jamie</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蔡明憲</div><div class="detail-person-en">Bill</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中柳川扶輪社</div><div class="detail-club-date">2018.12.21</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林柏劭</div><div class="detail-person-en">Lawyer</div></div>
+          <div class="detail-person"><div class="detail-person-zh">羅羽童</div><div class="detail-person-en">Helen</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中大新扶輪社</div><div class="detail-club-date">2020.01.16</div></div>
+          <div class="detail-person"><div class="detail-person-zh">許晉瑋</div><div class="detail-person-en">Jim</div></div>
+          <div class="detail-person"><div class="detail-person-zh">葉偉勝</div><div class="detail-person-en">Wilson</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中中英扶輪社</div><div class="detail-club-date">2023.08.23</div></div>
+          <div class="detail-person"><div class="detail-person-zh">黃小娟</div><div class="detail-person-en">Maple</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蕭淑芬</div><div class="detail-person-en">Fendi</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中高爾夫扶輪社</div><div class="detail-club-date">2024.11.01</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蔡瀚德</div><div class="detail-person-en">Stroller</div></div>
+          <div class="detail-person"><div class="detail-person-zh">白金隆</div><div class="detail-person-en">Charles</div></div>
+        </div>
+      </div>
+
+      <!-- A3 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">A3分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">劉界東 Morti</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">石翔升 Tea Stone</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中大屯扶輪社</div><div class="detail-club-date">1983.02.28</div></div>
+          <div class="detail-person"><div class="detail-person-zh">謝溫國</div><div class="detail-person-en">DJ</div></div>
+          <div class="detail-person"><div class="detail-person-zh">楊家勳</div><div class="detail-person-en">BBQ</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中大同扶輪社</div><div class="detail-club-date">1988.12.28</div></div>
+          <div class="detail-person"><div class="detail-person-zh">劉恩杰</div><div class="detail-person-en">Chef</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林仁淯</div><div class="detail-person-en">Jerry</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中中州扶輪社</div><div class="detail-club-date">1997.10.29</div></div>
+          <div class="detail-person"><div class="detail-person-zh">柯銘哲</div><div class="detail-person-en">Air</div></div>
+          <div class="detail-person"><div class="detail-person-zh">周明政</div><div class="detail-person-en">Calvin</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中大光扶輪社</div><div class="detail-club-date">2016.11.16</div></div>
+          <div class="detail-person"><div class="detail-person-zh">莊富翔</div><div class="detail-person-en">Louis</div></div>
+          <div class="detail-person"><div class="detail-person-zh">周莛女含</div><div class="detail-person-en">Angel</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中向上扶輪社</div><div class="detail-club-date">2018.03.06</div></div>
+          <div class="detail-person"><div class="detail-person-zh">黃照明</div><div class="detail-person-en">Paris</div></div>
+          <div class="detail-person"><div class="detail-person-zh">何孟瑾</div><div class="detail-person-en">Lorie</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中朝富扶輪社</div><div class="detail-club-date">2022.12</div></div>
+          <div class="detail-person"><div class="detail-person-zh">熊亞萍</div><div class="detail-person-en">Kuma</div></div>
+          <div class="detail-person"><div class="detail-person-zh">朱英凱</div><div class="detail-person-en">Design</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中羽球扶輪社</div><div class="detail-club-date">2025.01.18</div></div>
+          <div class="detail-person"><div class="detail-person-zh">何明松</div><div class="detail-person-en">Leo</div></div>
+          <div class="detail-person"><div class="detail-person-zh">廖英豪</div><div class="detail-person-en">Terry</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── B 區 ── -->
+  <div class="zone-section">
+    <div class="zone-header">
+      <div class="zone-badge">B 區</div>
+      <div class="zone-name">台中市東南區</div>
+      <div class="zone-count">3 分區 · 19 扶輪社</div>
+    </div>
+    <div class="detail-district-grid">
+
+      <!-- B1 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">B1分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">陳梓銘 Webb</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">朱峻毅 Mario</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中東南扶輪社</div><div class="detail-club-date">1968.10.14</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蔡進鍇</div><div class="detail-person-en">Simon</div></div>
+          <div class="detail-person"><div class="detail-person-zh">范志來</div><div class="detail-person-en">Vincent</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中中興扶輪社</div><div class="detail-club-date">1989.05.23</div></div>
+          <div class="detail-person"><div class="detail-person-zh">駱銘堃</div><div class="detail-person-en">Camel</div></div>
+          <div class="detail-person"><div class="detail-person-zh">廖泰傑</div><div class="detail-person-en">Terry</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中東興扶輪社</div><div class="detail-club-date">1999.01.13</div></div>
+          <div class="detail-person"><div class="detail-person-zh">李正同</div><div class="detail-person-en">Water</div></div>
+          <div class="detail-person"><div class="detail-person-zh">賴宏瑋</div><div class="detail-person-en">Henry</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中台美扶輪社</div><div class="detail-club-date">2003.03.25</div></div>
+          <div class="detail-person"><div class="detail-person-zh">李佩璇</div><div class="detail-person-en">Tax</div></div>
+          <div class="detail-person"><div class="detail-person-zh">曾薇智</div><div class="detail-person-en">Vicky</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中台興扶輪社</div><div class="detail-club-date">2014.08.01</div></div>
+          <div class="detail-person"><div class="detail-person-zh">楊承皓</div><div class="detail-person-en">Hao</div></div>
+          <div class="detail-person"><div class="detail-person-zh">鄭為仁</div><div class="detail-person-en">Power</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中曙光扶輪社</div><div class="detail-club-date">2024.02.08</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳智鴻</div><div class="detail-person-en">Wolf</div></div>
+          <div class="detail-person"><div class="detail-person-zh">何秉宸</div><div class="detail-person-en">Jason</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中高美扶輪社</div><div class="detail-club-date">2024.03.25</div></div>
+          <div class="detail-person"><div class="detail-person-zh">黃聖心</div><div class="detail-person-en">ESG</div></div>
+          <div class="detail-person"><div class="detail-person-zh">李阡翔</div><div class="detail-person-en">Bell</div></div>
+        </div>
+      </div>
+
+      <!-- B2 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">B2分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">蔡銘座 Archi</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">賴明興 Star</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中東區扶輪社</div><div class="detail-club-date">1983.02.23</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林戴啓</div><div class="detail-person-en">TC</div></div>
+          <div class="detail-person"><div class="detail-person-zh">何本立</div><div class="detail-person-en">Nice</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中東北扶輪社</div><div class="detail-club-date">1996.01.17</div></div>
+          <div class="detail-person"><div class="detail-person-zh">黃培展</div><div class="detail-person-en">Johnny</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳泰源</div><div class="detail-person-en">Terry</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中東友扶輪社</div><div class="detail-club-date">1997.02.26</div></div>
+          <div class="detail-person"><div class="detail-person-zh">張清權</div><div class="detail-person-en">Office</div></div>
+          <div class="detail-person"><div class="detail-person-zh">廖福禎</div><div class="detail-person-en">JP Home</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中惠中扶輪社</div><div class="detail-club-date">2018.06.08</div></div>
+          <div class="detail-person"><div class="detail-person-zh">郭鳳玉</div><div class="detail-person-en">Jade</div></div>
+          <div class="detail-person"><div class="detail-person-zh">王子揚</div><div class="detail-person-en">Yong</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中東昇扶輪社</div><div class="detail-club-date">2018.07.27</div></div>
+          <div class="detail-person"><div class="detail-person-zh">王雲以</div><div class="detail-person-en">Iri</div></div>
+          <div class="detail-person"><div class="detail-person-zh">戴祖亮</div><div class="detail-person-en">Archi</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中玉山扶輪社</div><div class="detail-club-date">2020.09.20</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳忠延</div><div class="detail-person-en">Johnny</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林永裕</div><div class="detail-person-en">Gary</div></div>
+        </div>
+      </div>
+
+      <!-- B3 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">B3分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">翁政宏 Angelo</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">王正杏 Saint</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中南區扶輪社</div><div class="detail-club-date">1987.01.20</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林春進</div><div class="detail-person-en">Chin</div></div>
+          <div class="detail-person"><div class="detail-person-zh">吳豐裕</div><div class="detail-person-en">Bert</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中南門扶輪社</div><div class="detail-club-date">1994.10.31</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳慶璋</div><div class="detail-person-en">Star</div></div>
+          <div class="detail-person"><div class="detail-person-zh">何國禎</div><div class="detail-person-en">Hope</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中惠來扶輪社</div><div class="detail-club-date">2009.12.04</div></div>
+          <div class="detail-person"><div class="detail-person-zh">吳哲璁</div><div class="detail-person-en">Print</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳志銘</div><div class="detail-person-en">Poly</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中南光扶輪社</div><div class="detail-club-date">2013.11.27</div></div>
+          <div class="detail-person"><div class="detail-person-zh">張采緹</div><div class="detail-person-en">Angel</div></div>
+          <div class="detail-person"><div class="detail-person-zh">謝依潔</div><div class="detail-person-en">Jessie</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中馬拉松扶輪社</div><div class="detail-club-date">2017.10.20</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蔡欣儒</div><div class="detail-person-en">Filter</div></div>
+          <div class="detail-person"><div class="detail-person-zh">王信烜</div><div class="detail-person-en">Think</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中天元扶輪社</div><div class="detail-club-date">2020.03.09</div></div>
+          <div class="detail-person"><div class="detail-person-zh">許鈴娟</div><div class="detail-person-en">Coco</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林佩君</div><div class="detail-person-en">Smile</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── C 區 ── -->
+  <div class="zone-section">
+    <div class="zone-header">
+      <div class="zone-badge">C 區</div>
+      <div class="zone-name">豐原、大雅地區</div>
+      <div class="zone-count">3 分區 · 15 扶輪社</div>
+    </div>
+    <div class="detail-district-grid">
+
+      <!-- C1 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">C1分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">張喜盛 Tony</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">邱居亮 Paint</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">豐原扶輪社</div><div class="detail-club-date">1961.04.24</div></div>
+          <div class="detail-person"><div class="detail-person-zh">張閣位</div><div class="detail-person-en">Mentor</div></div>
+          <div class="detail-person"><div class="detail-person-zh">廖興邦</div><div class="detail-person-en">Daikin</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">東勢扶輪社</div><div class="detail-club-date">1970.09.14</div></div>
+          <div class="detail-person"><div class="detail-person-zh">劉發成</div><div class="detail-person-en">Sdada</div></div>
+          <div class="detail-person"><div class="detail-person-zh">黃興舒</div><div class="detail-person-en">Health</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">后里扶輪社</div><div class="detail-club-date">1994.02.10</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳志祥</div><div class="detail-person-en">Mixer</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蘇世偉</div><div class="detail-person-en">Jackal</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">神岡扶輪社</div><div class="detail-club-date">1998.10.21</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林殷世</div><div class="detail-person-en">Lawyer</div></div>
+          <div class="detail-person"><div class="detail-person-zh">王幼桃</div><div class="detail-person-en">YoYo</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">石岡扶輪社</div><div class="detail-club-date">2003.03.08</div></div>
+          <div class="detail-person"><div class="detail-person-zh">王繹傑</div><div class="detail-person-en">D.J</div></div>
+          <div class="detail-person"><div class="detail-person-zh">宋尚儒</div><div class="detail-person-en">Song</div></div>
+        </div>
+      </div>
+
+      <!-- C2 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">C2分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">朱鎮正 H-Beam</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">陳仲廉 Chen</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">豐原西南扶輪社</div><div class="detail-club-date">1982.08.02</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林益源</div><div class="detail-person-en">Diamond</div></div>
+          <div class="detail-person"><div class="detail-person-zh">沈丕猷</div><div class="detail-person-en">Insurance</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">豐原北區扶輪社</div><div class="detail-club-date">1986.04.14</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳大曦</div><div class="detail-person-en">Paint</div></div>
+          <div class="detail-person"><div class="detail-person-zh">秦學偉</div><div class="detail-person-en">Auto</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">豐原中央扶輪社</div><div class="detail-club-date">1996.04.23</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林佩芬</div><div class="detail-person-en">Kathy Wine</div></div>
+          <div class="detail-person"><div class="detail-person-zh">包于蕙</div><div class="detail-person-en">Lisa</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">潭子扶輪社</div><div class="detail-club-date">1997.01.22</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林忠仁</div><div class="detail-person-en">Design</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林泳驗</div><div class="detail-person-en">Casting</div></div>
+        </div>
+      </div>
+
+      <!-- C3 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">C3分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">林金成 Joint</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">李仁傑 Tim</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">豐原西北扶輪社</div><div class="detail-club-date">1992.12.26</div></div>
+          <div class="detail-person"><div class="detail-person-zh">藍宸睿</div><div class="detail-person-en">Breaker</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳嘉文</div><div class="detail-person-en">Lawyer</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">大雅扶輪社</div><div class="detail-club-date">1997.02.26</div></div>
+          <div class="detail-person"><div class="detail-person-zh">錢錦輝</div><div class="detail-person-en">Auto</div></div>
+          <div class="detail-person"><div class="detail-person-zh">劉聖文</div><div class="detail-person-en">Sam</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">豐原富春扶輪社</div><div class="detail-club-date">1998.05.27</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳冠文</div><div class="detail-person-en">Rich</div></div>
+          <div class="detail-person"><div class="detail-person-zh">黃智揚</div><div class="detail-person-en">Wales</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">豐原東區扶輪社</div><div class="detail-club-date">1998.05.27</div></div>
+          <div class="detail-person"><div class="detail-person-zh">江耿碩</div><div class="detail-person-en">Box</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳坤和</div><div class="detail-person-en">Cowboy</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中山海屯扶輪社</div><div class="detail-club-date">2018.03.02</div></div>
+          <div class="detail-person"><div class="detail-person-zh">徐碧琴</div><div class="detail-person-en">Gina</div></div>
+          <div class="detail-person"><div class="detail-person-zh">趙雅萍</div><div class="detail-person-en">Grace</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中潭雅神扶輪社</div><div class="detail-club-date">2018.03.09</div></div>
+          <div class="detail-person"><div class="detail-person-zh">張瓔元</div><div class="detail-person-en">HR</div></div>
+          <div class="detail-person"><div class="detail-person-zh">李景浩</div><div class="detail-person-en">Dentist</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── D 區 ── -->
+  <div class="zone-section">
+    <div class="zone-header">
+      <div class="zone-badge">D 區</div>
+      <div class="zone-name">台中港、大甲、苑裡地區</div>
+      <div class="zone-count">3 分區 · 16 扶輪社</div>
+    </div>
+    <div class="detail-district-grid">
+
+      <!-- D1 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">D1分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">林政杰 Bento</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">張世鴻 CNC</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中港區扶輪社</div><div class="detail-club-date">1971.03.24</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蔣翼隆</div><div class="detail-person-en">Allen</div></div>
+          <div class="detail-person"><div class="detail-person-zh">楊志鴻</div><div class="detail-person-en">Life</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中港北區扶輪社</div><div class="detail-club-date">1986.05.09</div></div>
+          <div class="detail-person"><div class="detail-person-zh">顏子清</div><div class="detail-person-en">Truck</div></div>
+          <div class="detail-person"><div class="detail-person-zh">許金龍</div><div class="detail-person-en">Allen</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中港亞太扶輪社</div><div class="detail-club-date">1996.03.01</div></div>
+          <div class="detail-person"><div class="detail-person-zh">葉沂凱</div><div class="detail-person-en">House</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林富美</div><div class="detail-person-en">Fu-Mei</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中港西濱扶輪社</div><div class="detail-club-date">2014.12.31</div></div>
+          <div class="detail-person"><div class="detail-person-zh">王勤惠</div><div class="detail-person-en">Bernice</div></div>
+          <div class="detail-person"><div class="detail-person-zh">王予宥</div><div class="detail-person-en">Yumi</div></div>
+        </div>
+      </div>
+
+      <!-- D2 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">D2分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">陳榮富 Archi</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">陳政宏 Lagis</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">大甲扶輪社</div><div class="detail-club-date">1973.10.02</div></div>
+          <div class="detail-person"><div class="detail-person-zh">紀崇楠</div><div class="detail-person-en">Daniel</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳森杰</div><div class="detail-person-en">Kilin</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">苑裡扶輪社</div><div class="detail-club-date">1976.06.24</div></div>
+          <div class="detail-person"><div class="detail-person-zh">吳閔逢</div><div class="detail-person-en">Johnson</div></div>
+          <div class="detail-person"><div class="detail-person-zh">江柏穎</div><div class="detail-person-en">Carton</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">大甲北區扶輪社</div><div class="detail-club-date">1985.03.07</div></div>
+          <div class="detail-person"><div class="detail-person-zh">高永鋒</div><div class="detail-person-en">Kao Sir</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林國勝</div><div class="detail-person-en">Jr.</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">大甲中央扶輪社</div><div class="detail-club-date">1991.11.18</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蔣德勇</div><div class="detail-person-en">Paper</div></div>
+          <div class="detail-person"><div class="detail-person-zh">張正明</div><div class="detail-person-en">Akira</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">大甲百齡扶輪社</div><div class="detail-club-date">2005.02.23</div></div>
+          <div class="detail-person"><div class="detail-person-zh">鄭采琳</div><div class="detail-person-en">Irene</div></div>
+          <div class="detail-person"><div class="detail-person-zh">葉慧珠</div><div class="detail-person-en">Joy</div></div>
+        </div>
+      </div>
+
+      <!-- D3 -->
+      <div class="detail-card">
+        <div class="detail-card-title-row">
+          <div class="detail-district-name">D3分區</div>
+          <a class="detail-intro-btn" href="https://www.rotary3461.org/RWD/U3/tw/1617/5475/2311-0" target="_blank" rel="noopener">所有分區介紹</a>
+        </div>
+        <div class="detail-leaders-row">
+          <div class="detail-leader">
+            <div class="detail-leader-name">林輝煌 Machine</div>
+            <div class="detail-leader-role">A.G.</div>
+          </div>
+          <div class="detail-leader">
+            <div class="detail-leader-name">林志隆 Lyon</div>
+            <div class="detail-leader-role">A.S.</div>
+          </div>
+        </div>
+        <div class="detail-col-header">
+          <span>社名／RI核准日期</span><span style="text-align:center">社長</span><span style="text-align:center">秘書</span>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中港東南扶輪社</div><div class="detail-club-date">1979.02.22</div></div>
+          <div class="detail-person"><div class="detail-person-zh">巫兆文</div><div class="detail-person-en">Hotel</div></div>
+          <div class="detail-person"><div class="detail-person-zh">何炳煌</div><div class="detail-person-en">Globe</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中港西南扶輪社</div><div class="detail-club-date">1987.05.28</div></div>
+          <div class="detail-person"><div class="detail-person-zh">王志維</div><div class="detail-person-en">Iron-Man</div></div>
+          <div class="detail-person"><div class="detail-person-zh">溫堂埏</div><div class="detail-person-en">Safe</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中港中區扶輪社</div><div class="detail-club-date">1992.01.14</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳貝展</div><div class="detail-person-en">Can Ban</div></div>
+          <div class="detail-person"><div class="detail-person-zh">張志名</div><div class="detail-person-en">Walf</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中港東區扶輪社</div><div class="detail-club-date">1998.06.30</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林正治</div><div class="detail-person-en">Villa</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林世修</div><div class="detail-person-en">Jason</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中港中央扶輪社</div><div class="detail-club-date">2008.10.10</div></div>
+          <div class="detail-person"><div class="detail-person-zh">林政孝</div><div class="detail-person-en">Andy Lin</div></div>
+          <div class="detail-person"><div class="detail-person-zh">蔡政倫</div><div class="detail-person-en">Kanban</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">大肚扶輪社</div><div class="detail-club-date">2016.03.18</div></div>
+          <div class="detail-person"><div class="detail-person-zh">溫正隆</div><div class="detail-person-en">Along</div></div>
+          <div class="detail-person"><div class="detail-person-zh">劉潤琳</div><div class="detail-person-en">Data</div></div>
+        </div>
+        <div class="detail-club-row">
+          <div><div class="detail-club-name">台中港都扶輪社</div><div class="detail-club-date">2017.11.21</div></div>
+          <div class="detail-person"><div class="detail-person-zh">陳柏霖</div><div class="detail-person-en">Polin</div></div>
+          <div class="detail-person"><div class="detail-person-zh">胡錦芳</div><div class="detail-person-en">Hugo</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 扶青社 ── -->
+  <div class="zone-section">
+    <div class="zone-header">
+      <div class="zone-badge rotaract">扶青社</div>
+      <div class="zone-name">Rotaract Clubs</div>
+      <div class="zone-count">4 分區 · 10 扶青社</div>
+    </div>
+    <div class="rotaract-grid">
+
+      <div class="district-card">
+        <div class="district-card-header rotaract">
+          <div class="district-id">FA 分區</div>
+        </div>
+        <ul class="club-list">
+          <li class="club-item" style="font-size:13px;color:#555;padding:14px 18px;">扶青社資訊</li>
+        </ul>
+      </div>
+
+      <div class="district-card">
+        <div class="district-card-header rotaract">
+          <div class="district-id">FB 分區</div>
+        </div>
+        <ul class="club-list">
+          <li class="club-item" style="font-size:13px;color:#555;padding:14px 18px;">扶青社資訊</li>
+        </ul>
+      </div>
+
+      <div class="district-card">
+        <div class="district-card-header rotaract">
+          <div class="district-id">FC 分區</div>
+        </div>
+        <ul class="club-list">
+          <li class="club-item" style="font-size:13px;color:#555;padding:14px 18px;">扶青社資訊</li>
+        </ul>
+      </div>
+
+      <div class="district-card">
+        <div class="district-card-header rotaract">
+          <div class="district-id">FD 分區</div>
+        </div>
+        <ul class="club-list">
+          <li class="club-item" style="font-size:13px;color:#555;padding:14px 18px;">扶青社資訊</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="inner-footer">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo">
+      <a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a>
+    </div>
+    <div class="inner-footer-contact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<script>
+function _load(key, fallback) {
+  try { const v = localStorage.getItem('r3461_' + key); return v ? JSON.parse(v) : fallback; } catch(e) { return fallback; }
+}
+function _flatToNested(flat) {
+  const result = [];
+  let group = null;
+  flat.forEach(item => {
+    if (item.level === 1) { group = { title: item.label, items: [] }; result.push(group); }
+    else if (item.level === 2 && group) { group.items.push({ label: item.label, url: item.url }); }
+  });
+  return result.filter(g => g.items.length > 0);
+}
+
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [
+      { label: 'RI社長',         url: 'ri-president.html' },
+      { label: 'RI現況',         url: 'ri-current.html' },
+    ],[
+      { label: '地區總監',   url: 'governor.html', hi: true },
+      { label: '3461各社資訊',   url: 'clubs.html', hi: true },
+      { label: '地區組織名錄',   url: 'directory.html', hi: true },
+      { label: '年度重要工作目標', url: 'annual-goals.html', hi: true },
+    ],[
+      { label: '總監當選人',     url: '#' },
+      { label: '總監提名人',     url: '#' },
+      { label: '歷屆社長、總監', url: '#' },
+    ],
+  ]},
+  { title: '進行事', items: [
+    { label: '地區行事曆', url: 'calendar.html', hi: true },
+    { label: '扶輪日',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },
+    { label: '地區年會',   url: 'conference.html', hi: true },
+    { label: '國際年會',   url: 'international-convention.html', hi: true },
+    { label: '服務計劃',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' },
+  ]},
+  { title: '秀成果', items: [
+    { label: 'RYLA',   url: 'ryla.html' },
+    { label: 'RYE',    url: 'rye.html' },
+    { label: 'NGSE',   url: 'ngse.html' },
+    { label: 'Rotaract', url: 'rotaract.html' },
+    { label: 'Interact', url: 'interact.html', hi: true },
+    { label: '生命橋樑', url: '#' },
+  ]},
+  { title: '回顧庫', items: [
+    { label: '總監月刊',     url: 'governor-monthly.html?nocache=1', hi: true },
+    { label: '公共形象新聞', url: 'news.html' },
+    { label: 'RI 成果展示', url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },
+    { label: '扶輪之子',     url: '#' },
+    { label: '扶輪 Shorts',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5323/2112-0' },
+    { label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' },
+  ]},
+  { title: '學知識', items: [
+    { label: '扶輪簡介',   url: 'rotary-intro.html' },
+    { label: '七大焦點領域', url: 'focus-areas.html' },
+    { label: '扶輪標誌', url: 'rotary-logo.html', hi: true },
+    { label: '扶輪基金',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },
+    { label: '扶輪現況',   url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' },
+  ]},
+  { title: '連結', columns: [
+    [
+      { label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },
+      { label: '地區扶輪社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },
+      { label: '地區扶青社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },
+      { label: '地區扶少圍',   url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },
+      { label: '扶輪公益網',     url: 'https://17rcn.org/' },
+      { label: '扶輪領導學院',   url: 'https://www.rlitw.org/' },
+    ],[
+      { label: '職業服務', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },
+      { label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },
+      { label: '相關連結', url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' },
+    ],
+  ]},
+  { title: '更多資源', items: [
+    { label: '年度主題',         url: '#' },
+    { label: '下載專區',         url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },
+    { label: '品牌中心', url: 'https://brandcenter.rotary.org/' },
+    { label: '台灣扶輪下載',     url: 'https://taiwan-rotary.org/download/' },
+  ]},
+];
+
+// 前台固定使用 MENU_DEFAULTS（支援多欄），admin 另有獨立選單管理
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(container) {
+  menuData.forEach(group => {
+    const item = document.createElement('div');
+    item.className = 'nav-item';
+    let subHtml = '';
+    const mkLink = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener"${i.hi?' class="nav-hi"':''}>${i.label}</a>`;
+    if (group.columns) {
+      const colsHtml = group.columns.map(col =>
+        `<div class="sub-menu-col">${col.map(mkLink).join('')}</div>`
+      ).join('');
+      subHtml = `<div class="sub-menu sub-menu--cols">${colsHtml}</div>`;
+    } else {
+      subHtml = `<div class="sub-menu">${(group.items||[]).map(mkLink).join('')}</div>`;
+    }
+    item.innerHTML = `<div class="nav-link">${group.title}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>${subHtml}`;
+    container.appendChild(item);
+  });
+}
+
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+const mobileMenu = document.getElementById('mobileMenu');
+menuData.forEach(group => {
+  const item = document.createElement('div');
+  item.className = 'mobile-nav-item';
+  const allItems = group.columns ? group.columns.flat() : (group.items||[]);
+  item.innerHTML = `<div class="mobile-nav-top"><span>${group.title}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="mobile-sub">${allItems.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`).join('')}</div>`;
+  item.querySelector('.mobile-nav-top').addEventListener('click', () => item.classList.toggle('expanded'));
+  mobileMenu.appendChild(item);
+});
+
+const hamburger = document.getElementById('hamburger');
+const siteHeaderEl = document.getElementById('siteHeader');
+
+function syncMobileMenuTop() {
+  if (window.innerWidth <= 900 && siteHeaderEl) {
+    mobileMenu.style.top = siteHeaderEl.offsetHeight + 'px';
+  }
+}
+
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) syncMobileMenuTop();
+});
+
+window.addEventListener('scroll', () => {
+  if (mobileMenu.classList.contains('open')) syncMobileMenuTop();
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+  if (mobileMenu.classList.contains('open')) syncMobileMenuTop();
+}, { passive: true });
+
+mobileMenu.addEventListener('click', e => {
+  if (e.target === mobileMenu) {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+</script>
+<script src="search.js"></script>
+</body>
+</html>

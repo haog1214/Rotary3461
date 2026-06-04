@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RI 現況 | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark:    #0d1e3d;
+      --gold:    #f0c040;
+      --gold2:   #d4940a;
+      --overlay: rgba(13,30,61,0.92);
+      --white:   #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans TC', sans-serif; color: #222; background: #f4f6fb; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.from-left  { transform: translateX(-48px); }
+    .reveal.from-right { transform: translateX(48px); }
+    .reveal.from-scale { transform: scale(0.92); opacity: 0; }
+    .reveal.visible    { opacity: 1 !important; transform: none !important; }
+    .reveal.d1 { transition-delay:.1s } .reveal.d2 { transition-delay:.2s }
+    .reveal.d3 { transition-delay:.3s } .reveal.d4 { transition-delay:.4s }
+
+    /* ════════════════════════════════════
+       HEADER / NAV
+    ════════════════════════════════════ */
+    .site-header {
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background: url('images/nav-bg.jpg') left center / cover no-repeat;
+      background-color: #dce8f0;
+    }
+    .header-logo-row { height: 100px; display: flex; align-items: center; padding: 0 24px; transition: height .3s; }
+    .header-logo-inner { max-width: 1440px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; }
+    .header-slogan img { height: 72px; width: auto; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+    .nav-link { display: flex; align-items: center; justify-content: center; gap: 4px; color: #222; font-size: 16.5px; font-weight: 600; height: 52px; width: 100%; white-space: nowrap; transition: background .18s; cursor: pointer; letter-spacing: .5px; }
+    .nav-link:hover, .nav-item:hover .nav-link { background: rgba(0,0,0,.12); }
+    .sub-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; min-width: 170px; box-shadow: 0 6px 24px rgba(0,0,0,.15); border-top: 3px solid var(--gold); z-index: 200; }
+    .nav-item:hover .sub-menu { display: block; }
+    .sub-menu a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background .15s; }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+    .sub-menu--cols { display: none; position: absolute; top: 100%; left: 0; background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,.15); border-top: 3px solid var(--gold); z-index: 200; flex-direction: row; min-width: 480px; }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    .nav-item:last-child .sub-menu, .nav-item:last-child .sub-menu--cols,
+    .nav-item:nth-last-child(2) .sub-menu, .nav-item:nth-last-child(2) .sub-menu--cols { left: auto; right: 0; }
+    .sub-menu-col { min-width: 160px; border-right: 1px solid #f0f0f0; flex: 1; }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background .15s; white-space: nowrap; }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .site-header.scrolled .header-logo-row { height: 76px; }
+    .site-header.scrolled .site-logo img   { width: auto; height: 48px; }
+    .site-header.scrolled .header-slogan   { display: none; }
+    .site-header.scrolled .header-nav-row  { display: none; }
+    .site-header.scrolled .compact-nav     { display: flex; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform .25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan, .desktop-nav { display: none; }
+      .compact-nav { display: none !important; }
+      .mobile-nav-row { display: flex; }
+      .hamburger { display: flex; }
+      .mobile-menu { top: 128px; }
+      .site-header.scrolled .header-logo-row { height: 60px; }
+      .site-header.scrolled .site-logo img { height: 38px; }
+    }
+
+    /* ════════════════════════════════════
+       HERO
+    ════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 520px;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1600&h=700&fit=crop&auto=format') center/cover no-repeat;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(110deg, rgba(10,20,60,0.93) 0%, rgba(20,50,130,0.80) 60%, rgba(10,20,60,0.70) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 760px; padding: 80px 48px;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(240,192,64,0.18);
+      border: 1px solid rgba(240,192,64,0.5);
+      color: var(--gold); font-size: 12px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 20px; margin-bottom: 22px;
+    }
+    .hero-title {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 900; color: #fff; line-height: 1.15;
+      margin-bottom: 20px; letter-spacing: 1px;
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-desc {
+      font-size: 16px; color: rgba(255,255,255,.82);
+      line-height: 1.9; margin-bottom: 36px; max-width: 600px;
+    }
+    .hero-stats {
+      display: flex; gap: 32px; flex-wrap: wrap;
+    }
+    .hero-stat-box {
+      border-left: 3px solid var(--gold);
+      padding-left: 16px;
+    }
+    .hero-stat-num {
+      font-size: 28px; font-weight: 900; color: #fff; line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 12px; color: rgba(255,255,255,.65); margin-top: 4px;
+    }
+
+    /* ════════════════════════════════════
+       SECTION COMMON
+    ════════════════════════════════════ */
+    .sec-tag {
+      display: inline-block;
+      font-size: 11px; font-weight: 800; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold2);
+      margin-bottom: 10px;
+    }
+    .sec-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 900; color: var(--dark); line-height: 1.25;
+      margin-bottom: 14px;
+    }
+    .sec-desc {
+      font-size: 15px; color: #555; line-height: 1.85;
+    }
+
+    /* ════════════════════════════════════
+       THREE LEVELS  (dark blue)
+    ════════════════════════════════════ */
+    .levels-section {
+      background: linear-gradient(160deg, #071530 0%, #0d2455 50%, #1a3a80 100%);
+      padding: 80px 24px;
+    }
+    .levels-inner { max-width: 1160px; margin: 0 auto; }
+    .levels-header {
+      text-align: center; margin-bottom: 52px;
+    }
+    .levels-header .sec-tag { color: var(--gold); }
+    .levels-header .sec-title { color: #fff; }
+    .levels-header .sec-desc { color: rgba(255,255,255,.65); max-width: 640px; margin: 0 auto; }
+
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .level-card {
+      border-radius: 20px; overflow: hidden;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      display: flex; flex-direction: column;
+      transition: transform .3s, box-shadow .3s, background .3s;
+    }
+    .level-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 56px rgba(0,0,0,.45);
+      background: rgba(255,255,255,.10);
+    }
+    .level-card-img {
+      width: 100%; aspect-ratio: 16/9;
+      object-fit: cover; display: block;
+    }
+    .level-card-body { padding: 26px 26px 32px; flex: 1; display: flex; flex-direction: column; }
+    .level-num {
+      font-size: 11px; font-weight: 800; letter-spacing: 2px;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .level-num::before {
+      content: ''; display: block;
+      width: 24px; height: 2px; background: var(--gold);
+    }
+    .level-card-title {
+      font-size: 22px; font-weight: 800; color: #fff;
+      margin-bottom: 6px;
+    }
+    .level-card-en {
+      font-size: 11px; color: rgba(255,255,255,.4);
+      letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .level-card-text {
+      font-size: 14px; color: rgba(255,255,255,.75);
+      line-height: 1.95; flex: 1;
+    }
+
+    @media (max-width: 860px) {
+      .levels-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+    }
+
+    /* ════════════════════════════════════
+       BOARD SPLIT
+    ════════════════════════════════════ */
+    .board-section { background: #fff; padding: 80px 24px; }
+    .board-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .board-img-wrap {
+      position: relative; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.15);
+    }
+    .board-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+    .board-img-badge {
+      position: absolute; bottom: 24px; left: 24px;
+      background: var(--primary); color: #fff;
+      padding: 12px 20px; border-radius: 12px;
+      font-size: 13px; font-weight: 700;
+      box-shadow: 0 4px 16px rgba(0,0,0,.25);
+    }
+    .board-img-badge strong { font-size: 28px; display: block; }
+    .board-points { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .board-point {
+      display: flex; align-items: flex-start; gap: 14px;
+      font-size: 15px; color: #444; line-height: 1.7;
+    }
+    .board-point-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: #eef2ff; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    @media (max-width: 800px) {
+      .board-inner { grid-template-columns: 1fr; }
+    }
+
+    /* ════════════════════════════════════
+       SECRETARIAT SPLIT (reversed, blue bg)
+    ════════════════════════════════════ */
+    .secret-section {
+      background: #f4f6fb; padding: 80px 24px;
+    }
+    .secret-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .secret-text-col { order: 1; }
+    .secret-img-wrap { order: 2; border-radius: 20px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,.12); }
+    .secret-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+    .secret-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-top: 28px;
+    }
+    .secret-stat {
+      background: #fff; border-radius: 14px;
+      padding: 20px; border: 1px solid #e5e9f2;
+      text-align: center;
+    }
+    .secret-stat-num { font-size: 30px; font-weight: 900; color: var(--primary); }
+    .secret-stat-label { font-size: 12px; color: #888; margin-top: 4px; }
+    @media (max-width: 800px) {
+      .secret-inner { grid-template-columns: 1fr; }
+      .secret-img-wrap { order: 1; }
+      .secret-text-col { order: 2; }
+    }
+
+    /* ════════════════════════════════════
+       GLOBAL OFFICES
+    ════════════════════════════════════ */
+    .offices-section { background: var(--dark); padding: 80px 24px; }
+    .offices-inner { max-width: 1160px; margin: 0 auto; }
+    .offices-header { text-align: center; margin-bottom: 52px; }
+    .offices-header .sec-tag { color: var(--gold); }
+    .offices-header .sec-title { color: #fff; }
+    .offices-header .sec-desc { color: rgba(255,255,255,.6); max-width: 560px; margin: 0 auto; }
+
+    .hq-card {
+      background: linear-gradient(135deg, var(--primary), #1565c0);
+      border-radius: 20px; padding: 36px 40px;
+      display: flex; align-items: center; gap: 28px;
+      margin-bottom: 28px;
+    }
+    .hq-icon {
+      width: 72px; height: 72px; flex-shrink: 0;
+      background: rgba(255,255,255,.15); border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 34px;
+    }
+    .hq-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    .hq-addr { font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.7; }
+    .hq-badge {
+      margin-left: auto; flex-shrink: 0;
+      background: var(--gold); color: var(--dark);
+      font-size: 12px; font-weight: 800;
+      padding: 8px 18px; border-radius: 20px;
+    }
+
+    .offices-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .office-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; padding: 22px 20px;
+      display: flex; align-items: center; gap: 14px;
+      transition: background .2s, transform .2s;
+    }
+    .office-card:hover { background: rgba(255,255,255,.12); transform: translateY(-3px); }
+    .office-flag { font-size: 34px; line-height: 1; }
+    .office-country { font-size: 15px; font-weight: 700; color: #fff; }
+    .office-role { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 2px; }
+    @media (max-width: 860px) {
+      .offices-grid { grid-template-columns: repeat(2, 1fr); }
+      .hq-card { flex-wrap: wrap; }
+      .hq-badge { margin-left: 0; }
+    }
+    @media (max-width: 480px) {
+      .offices-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════ */
+    .inner-footer { background: #fff; border-top: 1px solid #e5e7eb; padding: 24px 32px; }
+    .inner-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .inner-footer-logo img { height: 60px; width: auto; display: block; }
+    .inner-footer-contact { color: #555; font-size: 13px; line-height: 2; flex: 1; min-width: 220px; text-align: center; }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; transition: opacity .18s; }
+    .footer-icon-btn:hover img { opacity: .75; }
+    .footer-bar { background: #f3f4f6; color: #999; font-size: 11px; text-align: center; padding: 10px; }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo.png" alt="Rotary 國際扶輪3461地區"
+             onerror="this.src='https://pshop.myqr.com.tw/images/RWD_Home/0/201_m.jpg?407'" />
+      </a>
+      <nav class="compact-nav" id="compactNav"></nav>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題" />
+      
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="header-nav-row"><nav class="desktop-nav" id="desktopNav"></nav></div>
+  <div class="mobile-nav-row">
+    
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow reveal">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      Rotary International
+    </div>
+    <h1 class="hero-title reveal d1">國際扶輪<br><span>RI 現況</span></h1>
+    <p class="hero-desc reveal d2">
+      扶輪的組織分成扶輪社、地區與國際三種階層，透過全球超過 35,000 個扶輪社，協助實現超越個人的服務計畫。
+    </p>
+    <div class="hero-stats reveal d3">
+      <div class="hero-stat-box">
+        <div class="hero-stat-num">35,000+</div>
+        <div class="hero-stat-label">全球扶輪社</div>
+      </div>
+      <div class="hero-stat-box">
+        <div class="hero-stat-num">1,200,000+</div>
+        <div class="hero-stat-label">全球社友人數</div>
+      </div>
+      <div class="hero-stat-box">
+        <div class="hero-stat-num">530+</div>
+        <div class="hero-stat-label">國際扶輪地區</div>
+      </div>
+      <div class="hero-stat-box">
+        <div class="hero-stat-num">200+</div>
+        <div class="hero-stat-label">涵蓋國家及地域</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ THREE LEVELS ══ -->
+<section class="levels-section">
+  <div class="levels-inner">
+    <div class="levels-header">
+      <div class="sec-tag reveal">Organization Structure</div>
+      <h2 class="sec-title reveal d1">三層組織架構</h2>
+      <p class="sec-desc reveal d2">扶輪透過三個層次的組織，將全球社友凝聚在一起，共同推動服務計畫。</p>
+    </div>
+    <div class="levels-grid">
+
+      <div class="level-card reveal from-left d1">
+        <img class="level-card-img"
+             src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=450&fit=crop&auto=format"
+             alt="扶輪社 社區服務" />
+        <div class="level-card-body">
+          <div class="level-num">Level 01</div>
+          <div class="level-card-title">扶輪社</div>
+          <div class="level-card-en">Rotary Club</div>
+          <div class="level-card-text">
+            扶輪社員是扶輪社的社員，而扶輪社為國際扶輪（RI）這個全球組織的會員。每個扶輪社選舉自己的職員，並在模範扶輪社章程與國際扶輪章程及細則的架構下，享有相當大的自主權。
+          </div>
+        </div>
+      </div>
+
+      <div class="level-card reveal from-scale d2">
+        <img class="level-card-img"
+             src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=450&fit=crop&auto=format"
+             alt="扶輪地區 區域領導" />
+        <div class="level-card-body">
+          <div class="level-num">Level 02</div>
+          <div class="level-card-title">地區</div>
+          <div class="level-card-en">District</div>
+          <div class="level-card-text">
+            全世界的扶輪社分成 530 個左右國際扶輪地區，每一地區由一位地區總監領導。地區的行政管理組織包含助理總監及各種委員會，負責指導及支援地區各社。
+          </div>
+        </div>
+      </div>
+
+      <div class="level-card reveal from-right d3">
+        <img class="level-card-img"
+             src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&h=450&fit=crop&auto=format"
+             alt="國際扶輪理事會 全球治理" />
+        <div class="level-card-body">
+          <div class="level-num">Level 03</div>
+          <div class="level-card-title">國際扶輪</div>
+          <div class="level-card-en">Rotary International</div>
+          <div class="level-card-text">
+            國際扶輪由國際扶輪理事會管理。理事有 19 名，包括國際扶輪社長及社長當選人，每季開會以制定各項政策及年度工作重點。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ BOARD OF DIRECTORS ══ -->
+<section class="board-section">
+  <div class="board-inner">
+    <div class="board-img-wrap reveal from-left">
+      <img class="board-img"
+           src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=600&fit=crop&auto=format"
+           alt="國際扶輪理事會議" />
+      <div class="board-img-badge">
+        <strong>19</strong>名理事
+      </div>
+    </div>
+    <div class="reveal from-right d1">
+      <div class="sec-tag">Board of Directors</div>
+      <h2 class="sec-title">國際扶輪理事會</h2>
+      <p class="sec-desc">
+        國際扶輪理事會由 19 名理事組成，負責制定國際扶輪的全球政策與方向，是扶輪最高的治理機構。
+      </p>
+      <ul class="board-points">
+        <li class="board-point">
+          <div class="board-point-icon">👑</div>
+          <div>社長為理事會主席，另有社長當選人，加上由各地帶扶輪社提名並在國際年會中選出之 <strong>17 名理事</strong>。</div>
+        </li>
+        <li class="board-point">
+          <div class="board-point-icon">🗳️</div>
+          <div>每一理事雖係由某一地帶扶輪社所提名，但均提經國際年會由所有各社代表選舉，代表全體扶輪社。</div>
+        </li>
+        <li class="board-point">
+          <div class="board-point-icon">📅</div>
+          <div>理事會<strong>每季開會</strong>，制定各項政策。傳統上，每年社長都會擬定年度主題及工作重點。</div>
+        </li>
+        <li class="board-point">
+          <div class="board-point-icon">🌐</div>
+          <div>理事來自世界各地，確保扶輪政策反映全球多元社友的需求與願景。</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECRETARIAT ══ -->
+<section class="secret-section">
+  <div class="secret-inner">
+    <div class="secret-text-col reveal from-left">
+      <div class="sec-tag">Secretariat</div>
+      <h2 class="sec-title">國際扶輪秘書處</h2>
+      <p class="sec-desc">
+        雖然國際扶輪社長是最高職員，但實際負責行政管理的是國際扶輪秘書長，領導秘書處全體辦事員盡力服務全世界的扶輪社員。
+      </p>
+      <div class="secret-stats">
+        <div class="secret-stat reveal from-scale d1">
+          <div class="secret-stat-num">~740</div>
+          <div class="secret-stat-label">秘書處辦事員人數</div>
+        </div>
+        <div class="secret-stat reveal from-scale d2">
+          <div class="secret-stat-num">8</div>
+          <div class="secret-stat-label">全球區域辦事處</div>
+        </div>
+        <div class="secret-stat reveal from-scale d3">
+          <div class="secret-stat-num">1905</div>
+          <div class="secret-stat-label">創立年份</div>
+        </div>
+        <div class="secret-stat reveal from-scale d4">
+          <div class="secret-stat-num">200+</div>
+          <div class="secret-stat-label">服務國家及地域</div>
+        </div>
+      </div>
+    </div>
+    <div class="secret-img-wrap reveal from-right">
+      <img class="secret-img"
+           src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop&auto=format"
+           alt="國際扶輪秘書處辦公室" />
+    </div>
+  </div>
+</section>
+
+<!-- ══ GLOBAL OFFICES ══ -->
+<section class="offices-section">
+  <div class="offices-inner">
+    <div class="offices-header">
+      <div class="sec-tag reveal">Global Presence</div>
+      <h2 class="sec-title reveal d1">全球辦事處</h2>
+      <p class="sec-desc reveal d2">國際扶輪世界總部位於美國伊文斯敦，並在全球設有 7 個區域辦事處及 1 個英愛辦事處。</p>
+    </div>
+
+    <div class="hq-card reveal from-scale">
+      <div class="hq-icon">🏛️</div>
+      <div>
+        <div class="hq-title">國際扶輪世界總部</div>
+        <div class="hq-addr">
+          美國伊利諾州伊文斯敦（芝加哥郊區）<br>
+          One Rotary Center, 1560 Sherman Ave, Evanston, IL 60201, USA
+        </div>
+      </div>
+      <div class="hq-badge">World HQ</div>
+    </div>
+
+    <div class="offices-grid">
+      <div class="office-card reveal from-left d1">
+        <div class="office-flag">🇦🇷</div>
+        <div>
+          <div class="office-country">阿根廷</div>
+          <div class="office-role">南美洲辦事處</div>
+        </div>
+      </div>
+      <div class="office-card reveal from-scale d1">
+        <div class="office-flag">🇦🇺</div>
+        <div>
+          <div class="office-country">澳大利亞</div>
+          <div class="office-role">大洋洲辦事處</div>
+        </div>
+      </div>
+      <div class="office-card reveal from-scale d2">
+        <div class="office-flag">🇧🇷</div>
+        <div>
+          <div class="office-country">巴西</div>
+          <div class="office-role">南美洲辦事處</div>
+        </div>
+      </div>
+      <div class="office-card reveal from-right d1">
+        <div class="office-flag">🇮🇳</div>
+        <div>
+          <div class="office-country">印度</div>
+          <div class="office-role">南亞辦事處</div>
+        </div>
+      </div>
+      <div class="office-card reveal from-left d2">
+        <div class="office-flag">🇯🇵</div>
+        <div>
+          <div class="office-country">日本</div>
+          <div class="office-role">東亞辦事處</div>
+        </div>
+      </div>
+      <div class="office-card reveal from-scale d3">
+        <div class="office-flag">🇰🇷</div>
+        <div>
+          <div class="office-country">韓國</div>
+          <div class="office-role">東亞辦事處</div>
+        </div>
+      </div>
+      <div class="office-card reveal from-scale d3">
+        <div class="office-flag">🇨🇭</div>
+        <div>
+          <div class="office-country">瑞士</div>
+          <div class="office-role">歐洲辦事處</div>
+        </div>
+      </div>
+      <div class="office-card reveal from-right d2">
+        <div class="office-flag">🇬🇧</div>
+        <div>
+          <div class="office-country">英國（英愛辦事處）</div>
+          <div class="office-role">服務英國及愛爾蘭地區</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="inner-footer">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo">
+      <a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a>
+    </div>
+    <div class="inner-footer-contact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<script>
+/* ── Scroll Reveal ── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ── Nav ── */
+function _load(k,f){try{const v=localStorage.getItem('r3461_'+k);return v?JSON.parse(v):f;}catch(e){return f;}}
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [
+      { label: 'RI社長',         url: 'ri-president.html' },
+      { label: 'RI現況',         url: 'ri-current.html' },
+    ],[
+      { label: '地區總監',   url: 'governor.html', hi: true },
+      { label: '3461各社資訊',   url: 'clubs.html', hi: true },
+      { label: '地區組織名錄',   url: 'directory.html', hi: true },
+      { label: '年度重要工作目標', url: 'annual-goals.html', hi: true },
+    ],[
+      { label: '總監當選人',     url: '#' },
+      { label: '總監提名人',     url: '#' },
+      { label: '歷屆社長、總監', url: '#' },
+    ],
+  ]},
+  { title: '進行事', items: [
+    { label: '地區行事曆', url: 'calendar.html', hi: true },
+    { label: '扶輪日',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },
+    { label: '地區年會',   url: 'conference.html', hi: true },
+    { label: '國際年會',   url: 'international-convention.html', hi: true },
+    { label: '服務計劃',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' },
+  ]},
+  { title: '秀成果', items: [
+    { label: 'RYLA', url: 'ryla.html' }, { label: 'RYE', url: 'rye.html' },
+    { label: 'NGSE', url: 'ngse.html' }, { label: 'Rotaract', url: 'rotaract.html' },
+    { label: 'Interact', url: 'interact.html', hi: true }, { label: '生命橋樑', url: '#' },
+  ]},
+  { title: '回顧庫', items: [
+    { label: '總監月刊',     url: 'governor-monthly.html?nocache=1', hi: true },
+    { label: '公共形象新聞', url: 'news.html' },
+    { label: 'RI 成果展示', url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },
+    { label: '扶輪之子', url: '#' },
+    { label: '扶輪 Shorts', url: 'https://www.youtube.com/@Rotary3461/shorts' },
+    { label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' },
+  ]},
+  { title: '學知識', items: [
+    { label: '扶輪簡介',   url: 'rotary-intro.html' },
+    { label: '七大焦點領域', url: 'focus-areas.html' },
+    { label: '扶輪標誌', url: 'rotary-logo.html', hi: true },
+    { label: '扶輪基金',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },
+    { label: '扶輪現況',   url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' },
+  ]},
+  { title: '連結', columns: [
+    [
+      { label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },
+      { label: '地區扶輪社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },
+      { label: '地區扶青社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },
+      { label: '地區扶少圍',   url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },
+      { label: '扶輪公益網',     url: 'https://17rcn.org/' },
+      { label: '扶輪領導學院',   url: 'https://www.rlitw.org/' },
+    ],[
+      { label: '職業服務',   url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },
+      { label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },
+      { label: '相關連結',   url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' },
+    ],
+  ]},
+  { title: '更多資源', items: [
+    { label: '年度主題',           url: '#' },
+    { label: '下載專區',           url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },
+    { label: '品牌中心', url: 'https://brandcenter.rotary.org/' },
+    { label: '台灣扶輪下載',       url: 'https://taiwan-rotary.org/download/' },
+  ]},
+];
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(container) {
+  menuData.forEach(group => {
+    const item = document.createElement('div');
+    item.className = 'nav-item';
+    const mkLink = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`;
+    let subHtml = group.columns
+      ? `<div class="sub-menu sub-menu--cols">${group.columns.map(col=>`<div class="sub-menu-col">${col.map(mkLink).join('')}</div>`).join('')}</div>`
+      : `<div class="sub-menu">${(group.items||[]).map(mkLink).join('')}</div>`;
+    item.innerHTML = `<div class="nav-link">${group.title}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>${subHtml}`;
+    container.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+const mobileMenu = document.getElementById('mobileMenu');
+menuData.forEach(group => {
+  const item = document.createElement('div');
+  item.className = 'mobile-nav-item';
+  const allItems = group.columns ? group.columns.flat() : (group.items||[]);
+  item.innerHTML = `<div class="mobile-nav-top"><span>${group.title}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="mobile-sub">${allItems.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`).join('')}</div>`;
+  item.querySelector('.mobile-nav-top').addEventListener('click', () => item.classList.toggle('expanded'));
+  mobileMenu.appendChild(item);
+});
+const hamburger = document.getElementById('hamburger');
+const siteHeaderEl = document.getElementById('siteHeader');
+
+function syncMobileMenuTop() {
+  if (window.innerWidth <= 900 && siteHeaderEl) {
+    mobileMenu.style.top = siteHeaderEl.offsetHeight + 'px';
+  }
+}
+
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) syncMobileMenuTop();
+});
+
+window.addEventListener('scroll', () => {
+  if (mobileMenu.classList.contains('open')) syncMobileMenuTop();
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+  if (mobileMenu.classList.contains('open')) syncMobileMenuTop();
+}, { passive: true });
+
+mobileMenu.addEventListener('click', e => {
+  if (e.target === mobileMenu) {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+</script>
+<script src="search.js"></script>
+</body>
+</html>

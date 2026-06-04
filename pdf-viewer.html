@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF 文件庫 ─ 扶輪 D3461</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1a3a5c;
+      --gold: #f7b731;
+      --bg: #eef1f6;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', 'Roboto', sans-serif;
+      background: var(--bg);
+      color: #333;
+      min-height: 100vh;
+    }
+
+    /* ───── HEADER ───── */
+    .site-header {
+      background: var(--navy);
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+
+    .h-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .h-logo-mark {
+      width: 34px;
+      height: 34px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+
+    .h-logo-text { line-height: 1; }
+    .h-logo-text strong { display: block; color: #fff; font-size: 15px; letter-spacing: 0.5px; }
+    .h-logo-text span { color: rgba(255,255,255,0.55); font-size: 11px; }
+
+    .h-back {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 5px 14px;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+    .h-back:hover { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.5); }
+
+    /* ───── TOOLBAR ───── */
+    .toolbar {
+      background: #fff;
+      border-bottom: 1px solid #dde3ea;
+      padding: 10px 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .toolbar-count { font-size: 13px; color: #666; }
+    .toolbar-count b { color: var(--navy); }
+
+    /* ───── GALLERY GRID ───── */
+    .gallery {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 32px 28px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 24px;
+    }
+
+    /* ───── CARD ───── */
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.14);
+    }
+
+    .card-date {
+      font-size: 11.5px;
+      color: #888;
+      padding: 10px 12px 4px;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* Keep A4 aspect ratio */
+    .card-thumb {
+      position: relative;
+      width: 100%;
+      padding-top: 141.4%;
+      background: linear-gradient(145deg, #dce8f5, #b8cfe6);
+      overflow: hidden;
+    }
+
+    .card-thumb canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .thumb-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #8fa8c0;
+      font-size: 12px;
+    }
+
+    .spin-ring {
+      width: 28px; height: 28px;
+      border: 3px solid #c0d4e8;
+      border-top-color: var(--navy);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .card-body {
+      padding: 10px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 12.5px;
+      color: #2c2c2c;
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .badge {
+      background: var(--navy);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+    }
+
+    .card-views {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    /* ───── MODAL OVERLAY ───── */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 14, 24, 0.93);
+      z-index: 9000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      overflow: hidden;
+    }
+    .modal.open { opacity: 1; pointer-events: all; }
+
+    .modal-topbar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%);
+    }
+
+    .modal-doc-title {
+      color: rgba(255,255,255,0.8);
+      font-size: 13px;
+      max-width: calc(100vw - 120px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .modal-close-btn {
+      width: 34px; height: 34px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .modal-close-btn:hover { background: rgba(255,255,255,0.25); }
+
+    /* ───── FLIPBOOK AREA ───── */
+    .flipbook-stage {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-btn {
+      width: 46px; height: 46px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 26px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.1s;
+      flex-shrink: 0;
+      user-select: none;
+      line-height: 1;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.22); }
+    .nav-btn:active { transform: scale(0.9); }
+    .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; transform: none; }
+
+    .book-wrap {
+      border-radius: 2px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        0 20px 60px rgba(0,0,0,0.7),
+        0 4px 16px rgba(0,0,0,0.5);
+    }
+
+    #flipbook { display: block; }
+
+    /* ───── BOTTOM BAR ───── */
+    .modal-bottombar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%);
+    }
+
+    .page-pill {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      padding: 4px 14px;
+      border-radius: 12px;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .key-hint {
+      color: rgba(255,255,255,0.35);
+      font-size: 11px;
+    }
+
+    /* ───── LOADING & ERROR ───── */
+    .center-msg {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      color: rgba(255,255,255,0.65);
+      font-size: 14px;
+    }
+
+    .big-spinner {
+      width: 46px; height: 46px;
+      border: 4px solid rgba(255,255,255,0.12);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* ───── RESPONSIVE ───── */
+    @media (max-width: 700px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 18px; }
+      .nav-btn { display: none; }
+      .key-hint { display: none; }
+    }
+    @media (max-width: 420px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="h-logo">
+    <div class="h-logo-mark">RI</div>
+    <div class="h-logo-text">
+      <strong>文件庫</strong>
+      <span>國際扶輪 D3461</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===== TOOLBAR ===== -->
+<div class="toolbar">
+  <p class="toolbar-count">共 <b id="docCount">0</b> 份文件</p>
+</div>
+
+<!-- ===== GALLERY ===== -->
+<main class="gallery" id="gallery"></main>
+
+<!-- ===== MODAL READER ===== -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="PDF 閱讀器">
+  <div class="modal-topbar">
+    <div class="modal-doc-title" id="modalTitle"></div>
+    <button class="modal-close-btn" id="btnClose" aria-label="關閉">✕</button>
+  </div>
+
+  <div id="modalBody">
+    <!-- populated by JS -->
+  </div>
+
+  <div class="modal-bottombar">
+    <span class="page-pill" id="pagePill">第 1 頁 / 共 1 頁</span>
+    <span class="key-hint">← → 鍵翻頁 · 拖曳翻頁</span>
+  </div>
+</div>
+
+<!-- ===== SCRIPTS ===== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script>
+  // ── PDF.js worker ──
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  // ── Document library ──
+  // Add more entries here to expand the gallery
+  const DOCS = [
+    {
+      id: '013',
+      title: '函請各社踴躍報名 2025-26 年度扶輪日繪畫比賽',
+      file: 'pdfs/013 函請各社踴躍報名2025-26年度扶輪日繪畫比賽.pdf',
+      date: 'August 13, 2025',
+      badge: 'D3461',
+      views: 128,
+    }
+  ];
+
+  // ── DOM refs ──
+  const gallery   = document.getElementById('gallery');
+  const docCount  = document.getElementById('docCount');
+  const modal     = document.getElementById('modal');
+  const modalBody = document.getElementById('modalBody');
+  const modalTitle= document.getElementById('modalTitle');
+  const pagePill  = document.getElementById('pagePill');
+
+  docCount.textContent = DOCS.length;
+
+  // ───────────────────────────────────────────────────
+  //  BUILD GALLERY
+  // ───────────────────────────────────────────────────
+  DOCS.forEach(doc => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-date">${doc.date}</div>
+      <div class="card-thumb" id="thumb-${doc.id}">
+        <div class="thumb-placeholder">
+          <div class="spin-ring"></div>
+          <span>載入中…</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${doc.title}</div>
+        <div class="card-footer">
+          <span class="badge">${doc.badge}</span>
+          <span class="card-views">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            ${doc.views}
+          </span>
+        </div>
+      </div>
+    `;
+    card.addEventListener('click', () => openReader(doc));
+    gallery.appendChild(card);
+
+    // Async thumbnail render
+    renderThumb(doc.file, document.getElementById(`thumb-${doc.id}`));
+  });
+
+  // ───────────────────────────────────────────────────
+  //  THUMBNAIL RENDERER
+  // ───────────────────────────────────────────────────
+  async function renderThumb(url, container) {
+    try {
+      const pdf  = await pdfjsLib.getDocument(url).promise;
+      const page = await pdf.getPage(1);
+      const vp0  = page.getViewport({ scale: 1 });
+
+      // Scale to fill card width
+      const targetW = container.offsetWidth || 190;
+      const scale   = targetW / vp0.width;
+      const vp      = page.getViewport({ scale });
+
+      const canvas = document.createElement('canvas');
+      canvas.width  = vp.width;
+      canvas.height = vp.height;
+
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      await page.render({ canvasContext: ctx, viewport: vp }).promise;
+
+      container.innerHTML = '';
+      container.appendChild(canvas);
+    } catch (e) {
+      container.innerHTML = `
+        <div class="thumb-placeholder" style="color:#b44">
+          <div style="font-size:30px">📄</div>
+          <span>無法載入</span>
+        </div>`;
+      console.error('[thumb]', e);
+    }
+  }
+
+  // ───────────────────────────────────────────────────
+  //  MODAL HELPERS
+  // ───────────────────────────────────────────────────
+  let pageFlip = null;
+  let totalPages = 0;
+
+  function openModal(title) {
+    modalTitle.textContent = title;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    if (pageFlip) { pageFlip.destroy(); pageFlip = null; }
+    modalBody.innerHTML = '';
+    pagePill.textContent = '';
+  }
+
+  function showLoading(msg = 'PDF 載入中…') {
+    modalBody.innerHTML = `
+      <div class="center-msg">
+        <div class="big-spinner"></div>
+        <div>${msg}</div>
+      </div>`;
+  }
+
+  function updatePill() {
+    if (!pageFlip) return;
+    const idx = pageFlip.getCurrentPageIndex();
+    pagePill.textContent = `第 ${idx + 1} 頁 / 共 ${totalPages} 頁`;
+    document.getElementById('btnPrev') &&
+      (document.getElementById('btnPrev').disabled = idx === 0);
+    document.getElementById('btnNext') &&
+      (document.getElementById('btnNext').disabled = idx >= totalPages - 1);
+  }
+
+  // ───────────────────────────────────────────────────
+  //  FLIPBOOK READER
+  // ───────────────────────────────────────────────────
+  async function openReader(doc) {
+    openModal(doc.title);
+    showLoading();
+
+    try {
+      const pdf = await pdfjsLib.getDocument(doc.file).promise;
+      totalPages = pdf.numPages;
+
+      // ── Calculate per-page dimensions ──
+      const firstPage = await pdf.getPage(1);
+      const vp0 = firstPage.getViewport({ scale: 1 });
+      const pdfAspect = vp0.width / vp0.height; // <1 for portrait A4
+
+      const availH = window.innerHeight - 160; // modal top/bottom bars
+      const availW = (window.innerWidth  - 200) / 2; // two pages + nav buttons
+
+      // Pick scale that fits both constraints, cap at 1.6×
+      const scale = Math.min(
+        availH / vp0.height,
+        availW / vp0.width,
+        1.6
+      );
+
+      const pageW = Math.round(vp0.width  * scale);
+      const pageH = Math.round(vp0.height * scale);
+
+      // ── Render all pages to data-URLs ──
+      const imgUrls = [];
+      for (let i = 1; i <= totalPages; i++) {
+        const page = await pdf.getPage(i);
+        const vp   = page.getViewport({ scale });
+        const cv   = document.createElement('canvas');
+        cv.width   = vp.width;
+        cv.height  = vp.height;
+        const ctx  = cv.getContext('2d');
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, cv.width, cv.height);
+        await page.render({ canvasContext: ctx, viewport: vp }).promise;
+        imgUrls.push(cv.toDataURL('image/jpeg', 0.92));
+      }
+
+      // ── Build flipbook DOM ──
+      modalBody.innerHTML = `
+        <div class="flipbook-stage">
+          <button class="nav-btn" id="btnPrev" aria-label="上一頁">&#8249;</button>
+          <div class="book-wrap">
+            <div id="flipbook"></div>
+          </div>
+          <button class="nav-btn" id="btnNext" aria-label="下一頁">&#8250;</button>
+        </div>
+      `;
+
+      const el = document.getElementById('flipbook');
+
+      pageFlip = new St.PageFlip(el, {
+        width:        pageW,
+        height:       pageH,
+        size:         'fixed',
+        minWidth:     pageW,
+        maxWidth:     pageW,
+        minHeight:    pageH,
+        maxHeight:    pageH,
+        showCover:    true,   // first page shown as standalone cover
+        usePortrait:  false,  // two-page spread
+        drawShadow:   true,
+        flippingTime: 700,
+        useMouseEvents: true,
+        swipeDistance:  30,
+        clickEventForward: true,
+      });
+
+      pageFlip.loadFromImages(imgUrls);
+
+      updatePill();
+      pageFlip.on('flip', updatePill);
+      pageFlip.on('changeState', updatePill);
+
+      document.getElementById('btnPrev').addEventListener('click', () => pageFlip.flipPrev());
+      document.getElementById('btnNext').addEventListener('click', () => pageFlip.flipNext());
+
+    } catch (err) {
+      modalBody.innerHTML = `
+        <div class="center-msg">
+          <div style="font-size:42px">⚠️</div>
+          <div>載入失敗：${err.message}</div>
+        </div>`;
+      console.error('[reader]', err);
+    }
+  }
+
+  // ───────────────────────────────────────────────────
+  //  EVENT LISTENERS
+  // ───────────────────────────────────────────────────
+  document.getElementById('btnClose').addEventListener('click', closeModal);
+
+  // Click outside book → close
+  modal.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape')      closeModal();
+    if (e.key === 'ArrowRight' && pageFlip) pageFlip.flipNext();
+    if (e.key === 'ArrowLeft'  && pageFlip) pageFlip.flipPrev();
+  });
+</script>
+</body>
+</html>

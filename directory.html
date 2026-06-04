@@ -1,0 +1,2161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>地區組織名錄 | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark: #1a2d5c;
+      --gold: #f0c040;
+      --overlay: rgba(26,45,92,0.92);
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; background: #f0f2f8; color: #222; min-height: 100vh; }
+
+    /* ── Header ── */
+    .site-header { position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.15); background: url('images/nav-bg.jpg') left center / cover no-repeat; background-color: #dce8f0; }
+    .header-logo-row { height: 100px; display: flex; align-items: center; padding: 0 24px; }
+    .header-logo-inner { max-width: 1440px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; transition: width 0.3s, height 0.3s; }
+    .header-slogan img { height: 72px; width: auto; object-fit: contain; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+        .nav-link {
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      color: #222; font-size: 16.5px; font-weight: 600; text-decoration: none;
+      height: 52px; width: 100%;
+      white-space: nowrap;
+      transition: background 0.18s, color 0.18s;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+    }
+    .nav-link:hover,
+    .nav-item:hover .nav-link { background: rgba(0,0,0,0.12); color: #000; }
+
+    .nav-link svg { flex-shrink: 0; }
+
+    .sub-menu {
+      display: none;
+      position: absolute; top: 100%; left: 0;
+      background: #fff;
+      min-width: 170px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      border-top: 3px solid var(--gold);
+      z-index: 200;
+    }
+    .nav-item:hover .sub-menu { display: block; }
+
+    .sub-menu a {
+      display: block; padding: 16px 17px;
+      font-size: 15.5px; color: var(--dark);
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+
+    /* Multi-column dropdown */
+    .sub-menu--cols {
+      display: none;
+      position: absolute; top: 100%; left: 0;
+      background: #fff;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      border-top: 3px solid var(--gold);
+      z-index: 200;
+      flex-direction: row;
+      min-width: 480px;
+    }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    /* Right-edge dropdowns open to the left */
+    .nav-item:last-child .sub-menu,
+    .nav-item:last-child .sub-menu--cols,
+    .nav-item:nth-last-child(2) .sub-menu,
+    .nav-item:nth-last-child(2) .sub-menu--cols {
+      left: auto;
+      right: 0;
+    }
+    .sub-menu-col {
+      min-width: 160px;
+      border-right: 1px solid #f0f0f0;
+      flex: 1;
+    }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a {
+      display: block; padding: 16px 17px;
+      font-size: 15.5px; color: var(--dark);
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .sub-menu-col a.nav-hi:hover { color: #fff; }
+
+    .site-header.scrolled .header-logo-row { height: 76px; }
+    .site-header.scrolled .site-logo img { width: auto; height: 48px; }
+    .site-header.scrolled .header-slogan { display: none; }
+    .site-header.scrolled .header-nav-row { display: none; }
+    .site-header.scrolled .compact-nav { display: flex; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform 0.25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,0.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,0.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.15s; }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media screen and (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan { display: none; }
+      .desktop-nav { display: none; }
+      .compact-nav { display: none !important; }
+      .mobile-nav-row { display: flex; }
+      .hamburger { display: flex; }
+      .mobile-menu { top: 128px; }
+    }
+
+    /* ── Page Hero ── */
+    .page-hero {
+      background: linear-gradient(135deg, #0f2153 0%, var(--primary) 100%);
+      padding: 44px 24px 40px; text-align: center;
+    }
+    .page-hero h1 { font-size: 32px; font-weight: 900; color: #fff; letter-spacing: 5px; }
+    .page-hero p { font-size: 13px; color: rgba(255,255,255,0.65); letter-spacing: 3px; margin-top: 8px; }
+
+    /* ── Layout ── */
+    .page-body {
+      max-width: 1400px; margin: 0 auto;
+      padding: 32px 24px 60px;
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    @media (max-width: 860px) { .page-body { grid-template-columns: 1fr; } }
+
+    /* ── Left Sidebar ── */
+    .sidebar {
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      border: 1px solid #e8ecf4;
+      overflow: hidden;
+      position: sticky; top: 168px;
+    }
+    .sidebar-title {
+      background: var(--primary); color: #fff;
+      padding: 14px 18px;
+      font-size: 13px; font-weight: 800; letter-spacing: 2px;
+    }
+    .sidebar-btn {
+      display: block; width: 100%;
+      padding: 13px 18px;
+      text-align: left; border: none; background: none;
+      font-family: inherit; font-size: 14px; font-weight: 600;
+      color: #444; cursor: pointer;
+      border-bottom: 1px solid #f0f3fa;
+      transition: background 0.15s, color 0.15s;
+      position: relative;
+    }
+    .sidebar-btn:last-child { border-bottom: none; }
+    .sidebar-btn:hover { background: #f0f4ff; color: var(--primary); }
+    .sidebar-btn.active {
+      background: #eef2ff; color: var(--primary);
+      font-weight: 800;
+    }
+    .sidebar-btn.active::before {
+      content: ''; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 4px;
+      background: var(--primary); border-radius: 0 2px 2px 0;
+    }
+    .sidebar-count {
+      float: right; background: #e8ecf4; color: #666;
+      font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 10px; margin-top: 1px;
+    }
+    .sidebar-btn.active .sidebar-count { background: var(--primary); color: #fff; }
+
+    /* ── Search Bar ── */
+    .search-bar-wrap {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .search-bar-wrap svg {
+      position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+      color: #aaa; pointer-events: none;
+    }
+    .search-input {
+      width: 100%; padding: 10px 16px 10px 40px;
+      border: 1.5px solid #d0d7e8; border-radius: 8px;
+      font-size: 14px; font-family: inherit; color: #333;
+      background: #fff; outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,69,139,0.10); }
+    .search-no-result {
+      text-align: center; color: #aaa; font-size: 14px; padding: 40px 0;
+      display: none;
+    }
+
+    /* ── Right Content ── */
+    .content-area { min-height: 400px; zoom: 1.1; }
+    .content-panel { display: none; }
+    .content-panel.active { display: block; }
+
+    .panel-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .panel-title {
+      font-size: 20px; font-weight: 900; color: var(--dark);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .panel-title::before { content: ''; display: inline-block; width: 4px; height: 20px; background: var(--primary); border-radius: 2px; }
+    .panel-subtitle { font-size: 13px; color: #888; }
+
+    /* ── Cards Grid ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 1100px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  { .cards-grid { grid-template-columns: 1fr; } }
+
+    .person-card {
+      background: #fff; border-radius: 12px;
+      border: 1px solid #e0e6f0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      padding: 20px 22px 18px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .person-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,69,139,0.12); }
+
+    .card-role {
+      font-size: 12px; font-weight: 700;
+      color: var(--primary); letter-spacing: 0.5px;
+      margin-bottom: 9.5px; line-height: 1.4;
+    }
+    .card-role-badge {
+      display: inline-block;
+      background: #eef2ff; color: var(--primary);
+      padding: 3.3px 11px; border-radius: 4px;
+      font-size: 12.1px; font-weight: 800;
+    }
+    .card-name {
+      font-size: 22px; font-weight: 900; color: var(--dark);
+      letter-spacing: 2px; margin-bottom: 3.8px; line-height: 1.2;
+    }
+    .card-rotary-name {
+      font-size: 13px; color: #777; font-weight: 600; margin-bottom: 11.4px;
+    }
+    .card-club {
+      font-size: 13px; color: #444;
+      display: flex; align-items: center; gap: 5.7px;
+      padding-top: 11.4px;
+      border-top: 1px solid #f0f3fa;
+    }
+    .card-club-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    .inner-footer { background: #fff; border-top: 1px solid #e5e7eb; padding: 24px 32px; }
+    .inner-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .inner-footer-logo img { height: 60px; width: auto; object-fit: contain; display: block; }
+    .inner-footer-contact { color: #555; font-size: 13px; line-height: 2; flex: 1; min-width: 220px; text-align: center; }
+    .inner-footer-social { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-icon-btn img { width: 36px; height: 36px; object-fit: contain; display: block; transition: opacity 0.18s; }
+    .footer-icon-btn:hover img { opacity: 0.75; }
+    .footer-bar { background: #f3f4f6; color: #999; font-size: 11px; text-align: center; padding: 10px; }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo.png" alt="Rotary 國際扶輪3461地區"
+             onerror="this.src='https://pshop.myqr.com.tw/images/RWD_Home/0/201_m.jpg?407'" />
+      </a>
+      <nav class="compact-nav" id="compactNav"></nav>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題" />
+      
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="header-nav-row">
+    <nav class="desktop-nav" id="desktopNav"></nav>
+  </div>
+  <div class="mobile-nav-row">
+    
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+<div class="page-hero">
+  <h1>地 區 組 織 名 錄</h1>
+  <p>District 3461 · 2025–2026 年度</p>
+</div>
+
+<div class="page-body">
+
+  <!-- ── 左側分類 ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">組織分類</div>
+    <button class="sidebar-btn active" onclick="switchPanel(this,'panel-advisor')">
+      地區總監顧問 <span class="sidebar-count">10</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-consult')">
+      地區諮詢委員會 <span class="sidebar-count">19</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-dag-team')">
+      地區助理總監團隊 <span class="sidebar-count">8</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-dag')">
+      分區助理總監 <span class="sidebar-count">12</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-sec')">
+      分區副秘書長 <span class="sidebar-count">12</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-secretariat')">
+      地區秘書處 <span class="sidebar-count">17</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-finance')">
+      地區財務法務 <span class="sidebar-count">6</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-govoffice')">
+      地區總監辦公室 <span class="sidebar-count">7</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-spouses')">
+      地區寶眷委員會 <span class="sidebar-count">23</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-fellowship')">
+      地區親睦委員會 <span class="sidebar-count">29</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-annconf')">
+      地區年會委員會 <span class="sidebar-count">37</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-annconf-general')">
+      年會總務委員會 <span class="sidebar-count">12</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-annconf-agenda')">
+      年會議事委員會 <span class="sidebar-count">11</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-annconf-reception')">
+      年會接待委員會 <span class="sidebar-count">17</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-annconf-activity')">
+      年會活動委員會 <span class="sidebar-count">15</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-annconf-service')">
+      年會服務委員會 <span class="sidebar-count">13</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-annconf-program')">
+      年會節目委員會 <span class="sidebar-count">9</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-newsletter')">
+      地區總監月刊編輯委員會 <span class="sidebar-count">45</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-learning')">
+      地區學習委員會 <span class="sidebar-count">12</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-special-core')">
+      地區特別委員會 <span class="sidebar-count">6</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-dei')">
+      地區DEI推廣委員會 <span class="sidebar-count">24</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-fund-rli')">
+      地區基金與學習院 <span class="sidebar-count">11</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-sports')">
+      地區體育藝文委員會 <span class="sidebar-count">21</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-community')">
+      地區社區服務委員會 <span class="sidebar-count">21</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-special-intl')">
+      特別委員會(國際服務) <span class="sidebar-count">24</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-special-fund')">
+      特別委員會(基金學術) <span class="sidebar-count">26</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-foundation')">
+      地區扶輪基金委員會 <span class="sidebar-count">21</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-admin')">
+      地區社務行政委員會 <span class="sidebar-count">46</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-membership')">
+      地區社員委員會 <span class="sidebar-count">30</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-pubimage')">
+      地區公共形象委員會 <span class="sidebar-count">28</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-service-plan')">
+      地區服務計畫委員會 <span class="sidebar-count">55</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-community-voc')">
+      地區社區與職業服務 <span class="sidebar-count">14</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-rotaract')">
+      地區扶輪之子委員會 <span class="sidebar-count">10</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-intl-service')">
+      地區國際服務委員會 <span class="sidebar-count">23</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-misc-service')">
+      地區其他服務委員會 <span class="sidebar-count">14</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-rye')">
+      地區新世代委員會(RYE) <span class="sidebar-count">48</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-rotaract-comm')">
+      地區Rotaract委員會 <span class="sidebar-count">14</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-interact-comm')">
+      地區Interact委員會 <span class="sidebar-count">26</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-ryla')">
+      地區RYLA委員會 <span class="sidebar-count">32</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-rcnet')">
+      地區扶輪公益網委員會 <span class="sidebar-count">28</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-bridge')">
+      地區生命橋樑助學計畫 <span class="sidebar-count">29</span>
+    </button>
+    <button class="sidebar-btn" onclick="switchPanel(this,'panel-youth-misc')">
+      地區新世代其他委員會 <span class="sidebar-count">24</span>
+    </button>
+  </aside>
+
+  <!-- ── 右側內容 ── -->
+  <div class="content-area">
+    <div class="search-bar-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+      </svg>
+      <input class="search-input" id="searchInput" type="text" placeholder="搜尋姓名、英文名或扶輪社…" oninput="filterCards(this.value)">
+    </div>
+    <div class="search-no-result" id="noResult">找不到符合「<span id="noResultKeyword"></span>」的結果</div>
+
+    <!-- 地區總監顧問 -->
+    <div id="panel-advisor" class="content-panel active">
+      <div class="panel-header">
+        <div class="panel-title">地區總監顧問</div>
+        <div class="panel-subtitle">共 10 位</div>
+      </div>
+      <div class="cards-grid" id="grid-advisor"></div>
+    </div>
+
+    <!-- 地區諮詢委員會 -->
+    <div id="panel-consult" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區諮詢委員會</div>
+        <div class="panel-subtitle">共 19 位</div>
+      </div>
+      <div class="cards-grid" id="grid-consult"></div>
+    </div>
+
+    <!-- 地區助理總監團隊 -->
+    <div id="panel-dag-team" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區助理總監團隊</div>
+        <div class="panel-subtitle">共 8 位</div>
+      </div>
+      <div class="cards-grid" id="grid-dag-team"></div>
+    </div>
+
+    <!-- 分區助理總監 -->
+    <div id="panel-dag" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">分區助理總監</div>
+        <div class="panel-subtitle">共 12 位</div>
+      </div>
+      <div class="cards-grid" id="grid-dag"></div>
+    </div>
+
+    <!-- 分區副秘書長 -->
+    <div id="panel-sec" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">分區副秘書長</div>
+        <div class="panel-subtitle">共 12 位</div>
+      </div>
+      <div class="cards-grid" id="grid-sec"></div>
+    </div>
+
+    <!-- 地區秘書處 -->
+    <div id="panel-secretariat" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區秘書處</div>
+        <div class="panel-subtitle">共 17 位</div>
+      </div>
+      <div class="cards-grid" id="grid-secretariat"></div>
+    </div>
+
+    <!-- 地區財務法務 -->
+    <div id="panel-finance" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區財務法務</div>
+        <div class="panel-subtitle">共 6 位</div>
+      </div>
+      <div class="cards-grid" id="grid-finance"></div>
+    </div>
+
+    <!-- 地區總監辦公室 -->
+    <div id="panel-govoffice" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區總監辦公室</div>
+        <div class="panel-subtitle">共 7 位</div>
+      </div>
+      <div class="cards-grid" id="grid-govoffice"></div>
+    </div>
+
+    <!-- 地區寶眷委員會 -->
+    <div id="panel-spouses" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區寶眷委員會</div>
+        <div class="panel-subtitle">共 23 位</div>
+      </div>
+      <div class="cards-grid" id="grid-spouses"></div>
+    </div>
+
+    <!-- 地區親睦委員會 -->
+    <div id="panel-fellowship" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區親睦委員會</div>
+        <div class="panel-subtitle">共 29 位</div>
+      </div>
+      <div class="cards-grid" id="grid-fellowship"></div>
+    </div>
+
+    <!-- 地區年會委員會 -->
+    <div id="panel-annconf" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區年會委員會</div>
+        <div class="panel-subtitle">共 37 位</div>
+      </div>
+      <div class="cards-grid" id="grid-annconf"></div>
+    </div>
+
+    <!-- 年會總務委員會 -->
+    <div id="panel-annconf-general" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區年會總務委員會</div>
+        <div class="panel-subtitle">共 12 位</div>
+      </div>
+      <div class="cards-grid" id="grid-annconf-general"></div>
+    </div>
+
+    <!-- 年會議事委員會 -->
+    <div id="panel-annconf-agenda" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區年會議事委員會</div>
+        <div class="panel-subtitle">共 11 位</div>
+      </div>
+      <div class="cards-grid" id="grid-annconf-agenda"></div>
+    </div>
+
+    <!-- 年會接待委員會 -->
+    <div id="panel-annconf-reception" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區年會接待委員會</div>
+        <div class="panel-subtitle">共 17 位</div>
+      </div>
+      <div class="cards-grid" id="grid-annconf-reception"></div>
+    </div>
+
+    <!-- 年會活動委員會 -->
+    <div id="panel-annconf-activity" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區年會活動委員會</div>
+        <div class="panel-subtitle">共 15 位</div>
+      </div>
+      <div class="cards-grid" id="grid-annconf-activity"></div>
+    </div>
+
+    <!-- 年會服務委員會 -->
+    <div id="panel-annconf-service" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區年會服務委員會</div>
+        <div class="panel-subtitle">共 13 位</div>
+      </div>
+      <div class="cards-grid" id="grid-annconf-service"></div>
+    </div>
+
+    <!-- 年會節目委員會 -->
+    <div id="panel-annconf-program" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區年會節目委員會</div>
+        <div class="panel-subtitle">共 9 位</div>
+      </div>
+      <div class="cards-grid" id="grid-annconf-program"></div>
+    </div>
+
+    <!-- 月刊編輯委員會 -->
+    <div id="panel-newsletter" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區總監月刊編輯委員會</div>
+        <div class="panel-subtitle">共 45 位</div>
+      </div>
+      <div class="cards-grid" id="grid-newsletter"></div>
+    </div>
+
+    <!-- 地區學習委員會 -->
+    <div id="panel-learning" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區學習委員會</div>
+        <div class="panel-subtitle">共 12 位</div>
+      </div>
+      <div class="cards-grid" id="grid-learning"></div>
+    </div>
+
+    <!-- 地區特別委員會核心 -->
+    <div id="panel-special-core" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區特別委員會</div>
+        <div class="panel-subtitle">共 6 位</div>
+      </div>
+      <div class="cards-grid" id="grid-special-core"></div>
+    </div>
+
+    <!-- 地區DEI推廣委員會 -->
+    <div id="panel-dei" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區DEI推廣委員會</div>
+        <div class="panel-subtitle">共 24 位</div>
+      </div>
+      <div class="cards-grid" id="grid-dei"></div>
+    </div>
+
+    <!-- 地區基金與學習院 -->
+    <div id="panel-fund-rli" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區基金與學習院</div>
+        <div class="panel-subtitle">共 11 位</div>
+      </div>
+      <div class="cards-grid" id="grid-fund-rli"></div>
+    </div>
+
+    <!-- 地區體育藝文委員會 -->
+    <div id="panel-sports" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區體育藝文委員會</div>
+        <div class="panel-subtitle">共 21 位</div>
+      </div>
+      <div class="cards-grid" id="grid-sports"></div>
+    </div>
+
+    <!-- 地區社區服務委員會 -->
+    <div id="panel-community" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區社區服務委員會</div>
+        <div class="panel-subtitle">共 21 位</div>
+      </div>
+      <div class="cards-grid" id="grid-community"></div>
+    </div>
+
+    <!-- 特別委員會(國際服務) -->
+    <div id="panel-special-intl" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區特別委員會（國際服務）</div>
+        <div class="panel-subtitle">共 24 位</div>
+      </div>
+      <div class="cards-grid" id="grid-special-intl"></div>
+    </div>
+
+    <!-- 地區扶輪基金委員會 -->
+    <div id="panel-foundation" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區扶輪基金委員會</div>
+        <div class="panel-subtitle">共 21 位</div>
+      </div>
+      <div class="cards-grid" id="grid-foundation"></div>
+    </div>
+
+    <!-- 特別委員會(基金學術) -->
+    <div id="panel-special-fund" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區特別委員會（基金學術）</div>
+        <div class="panel-subtitle">共 26 位</div>
+      </div>
+      <div class="cards-grid" id="grid-special-fund"></div>
+    </div>
+
+    <!-- 地區社員委員會 -->
+    <div id="panel-membership" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區社員委員會</div>
+        <div class="panel-subtitle">共 30 位</div>
+      </div>
+      <div class="cards-grid" id="grid-membership"></div>
+    </div>
+
+    <!-- 地區社務行政委員會 -->
+    <div id="panel-admin" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區社務行政委員會</div>
+        <div class="panel-subtitle">共 46 位</div>
+      </div>
+      <div class="cards-grid" id="grid-admin"></div>
+    </div>
+
+    <!-- 地區公共形象委員會 -->
+    <div id="panel-pubimage" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區公共形象委員會</div>
+        <div class="panel-subtitle">共 28 位</div>
+      </div>
+      <div class="cards-grid" id="grid-pubimage"></div>
+    </div>
+
+    <!-- 地區服務計畫委員會 -->
+    <div id="panel-service-plan" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區服務計畫委員會</div>
+        <div class="panel-subtitle">共 55 位</div>
+      </div>
+      <div class="cards-grid" id="grid-service-plan"></div>
+    </div>
+
+    <!-- 地區社區與職業服務 -->
+    <div id="panel-community-voc" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區社區與職業服務</div>
+        <div class="panel-subtitle">共 14 位</div>
+      </div>
+      <div class="cards-grid" id="grid-community-voc"></div>
+    </div>
+
+    <!-- 地區扶輪之子委員會 -->
+    <div id="panel-rotaract" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區扶輪之子委員會</div>
+        <div class="panel-subtitle">共 10 位</div>
+      </div>
+      <div class="cards-grid" id="grid-rotaract"></div>
+    </div>
+
+    <!-- 地區國際服務委員會 -->
+    <div id="panel-intl-service" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區國際服務委員會</div>
+        <div class="panel-subtitle">共 23 位</div>
+      </div>
+      <div class="cards-grid" id="grid-intl-service"></div>
+    </div>
+
+    <!-- 地區其他服務委員會 -->
+    <div id="panel-misc-service" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區其他服務委員會</div>
+        <div class="panel-subtitle">共 14 位</div>
+      </div>
+      <div class="cards-grid" id="grid-misc-service"></div>
+    </div>
+
+    <!-- 地區新世代委員會(RYE) -->
+    <div id="panel-rye" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區新世代委員會（RYE）</div>
+        <div class="panel-subtitle">共 48 位</div>
+      </div>
+      <div class="cards-grid" id="grid-rye"></div>
+    </div>
+
+    <!-- 地區Rotaract委員會 -->
+    <div id="panel-rotaract-comm" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區扶輪青年服務社 Rotaract 委員會</div>
+        <div class="panel-subtitle">共 14 位</div>
+      </div>
+      <div class="cards-grid" id="grid-rotaract-comm"></div>
+    </div>
+
+    <!-- 地區Interact委員會 -->
+    <div id="panel-interact-comm" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區 Interact 委員會暨扶少年會</div>
+        <div class="panel-subtitle">共 26 位</div>
+      </div>
+      <div class="cards-grid" id="grid-interact-comm"></div>
+    </div>
+
+    <!-- 地區RYLA委員會 -->
+    <div id="panel-ryla" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區扶輪青少年領袖獎 RYLA 委員會</div>
+        <div class="panel-subtitle">共 32 位</div>
+      </div>
+      <div class="cards-grid" id="grid-ryla"></div>
+    </div>
+
+    <!-- 地區扶輪公益網委員會 -->
+    <div id="panel-rcnet" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區扶輪公益網委員會</div>
+        <div class="panel-subtitle">共 28 位</div>
+      </div>
+      <div class="cards-grid" id="grid-rcnet"></div>
+    </div>
+
+    <!-- 地區生命橋樑助學計畫 -->
+    <div id="panel-bridge" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區生命橋樑助學計畫委員會</div>
+        <div class="panel-subtitle">共 29 位</div>
+      </div>
+      <div class="cards-grid" id="grid-bridge"></div>
+    </div>
+
+    <!-- 地區新世代其他委員會 -->
+    <div id="panel-youth-misc" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-title">地區新世代其他委員會</div>
+        <div class="panel-subtitle">共 24 位</div>
+      </div>
+      <div class="cards-grid" id="grid-youth-misc"></div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="inner-footer">
+  <div class="inner-footer-inner">
+    <div class="inner-footer-logo">
+      <a href="index.html"><img src="images/logo_02.png" alt="Rotary 3461"></a>
+    </div>
+    <div class="inner-footer-contact">
+      總監辦公室：404台中市北區三民路三段291巷30號2樓<br>
+      辦公室電話：0987-220-088<br>
+      Email：3461dg2425@gmail.com
+    </div>
+    <div class="inner-footer-social">
+      <a class="footer-icon-btn" href="https://maps.app.goo.gl/8MN4cMGrRwbLwc65A" target="_blank" rel="noopener"><img src="images/map.png" alt="地圖"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/groups/193573858743057/about" target="_blank" rel="noopener"><img src="images/facebook.png" alt="社團"></a>
+      <a class="footer-icon-btn" href="https://www.facebook.com/RID3461" target="_blank" rel="noopener"><img src="images/facebook02.png" alt="粉絲頁"></a>
+      <a class="footer-icon-btn" href="https://linevoom.line.me/user/_dcDFfrVpR7RiDld855I0DSRoJZ3nzDPfG0XESQI" target="_blank" rel="noopener"><img src="images/linevoom.png" alt="Line Voom"></a>
+      <a class="footer-icon-btn" href="https://www.tiktok.com/@rotary3461?_t=8nxW5jiBvnz&_r=1" target="_blank" rel="noopener"><img src="images/tiktok.png" alt="TikTok"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/featured" target="_blank" rel="noopener"><img src="images/youtube.png" alt="YouTube"></a>
+      <a class="footer-icon-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener"><img src="images/shorts.png" alt="Shorts"></a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bar">©2026 Rotary扶輪社3461 &nbsp;|&nbsp; 傳啓資訊股份有限公司 AI設計</div>
+
+<script>
+/* ── 搜尋過濾 ── */
+function filterCards(keyword) {
+  const q = keyword.trim().toLowerCase();
+  const noResult = document.getElementById('noResult');
+  const noKw = document.getElementById('noResultKeyword');
+
+  if (!q) {
+    document.querySelectorAll('.person-card').forEach(c => c.style.display = '');
+    document.querySelectorAll('.cards-grid').forEach(g => g.style.display = '');
+    noResult.style.display = 'none';
+    return;
+  }
+
+  let anyVisible = false;
+  document.querySelectorAll('.person-card').forEach(card => {
+    const text = card.innerText.toLowerCase();
+    const match = text.includes(q);
+    card.style.display = match ? '' : 'none';
+    if (match) anyVisible = true;
+  });
+
+  noResult.style.display = anyVisible ? 'none' : 'block';
+  if (!anyVisible) noKw.textContent = keyword;
+
+  /* 確保有結果的 panel 顯示（跨分類搜尋時顯示所有面板） */
+  document.querySelectorAll('.content-panel').forEach(panel => {
+    const hasVisible = [...panel.querySelectorAll('.person-card')].some(c => c.style.display !== 'none');
+    panel.style.display = hasVisible ? 'block' : 'none';
+  });
+}
+
+/* ── 切換分類 ── */
+function switchPanel(btn, panelId) {
+  /* 清空搜尋框並還原所有卡片 */
+  const inp = document.getElementById('searchInput');
+  if (inp) { inp.value = ''; filterCards(''); }
+
+  document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.content-panel').forEach(p => { p.classList.remove('active'); p.style.display = ''; });
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+  document.getElementById(panelId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── 地區總監顧問資料 ── */
+const advisorData = [
+  { role: '地區總監首席顧問', name: '劉昭惠', rotary: 'PP Music',    club: '台中中央扶輪社' },
+  { role: '地區總監顧問',     name: '歐忠吉', rotary: 'PP Racket',   club: '豐原北區扶輪社' },
+  { role: '地區總監顧問',     name: '李勝華', rotary: 'PP Cupola',   club: '豐原西北扶輪社' },
+  { role: '地區總監顧問',     name: '顏精華', rotary: 'PP Brain',    club: '豐原北區扶輪社' },
+  { role: '地區總監顧問',     name: '林增森', rotary: 'PP Chair',    club: '豐原扶輪社' },
+  { role: '地區總監顧問',     name: '蘇麗香', rotary: 'PP Susan',    club: '台中台美扶輪社' },
+  { role: '地區總監顧問',     name: '陳志修', rotary: 'PP Hsiu',     club: '台中港亞太扶輪社' },
+  { role: '地區總監顧問',     name: '林伶緯', rotary: 'PP Clare',    club: '台中中央扶輪社' },
+  { role: '地區總監顧問',     name: '陳耀西', rotary: 'PP Claudio',  club: '台中大光扶輪社' },
+  { role: '地區總監顧問',     name: '楊焜棠', rotary: 'PP Cooling',  club: '台中東友扶輪社' },
+];
+
+function renderCards(data, gridId) {
+  const grid = document.getElementById(gridId);
+  grid.innerHTML = data.map(p => `
+    <div class="person-card">
+      <div class="card-role"><span class="card-role-badge">${p.role}</span></div>
+      <div class="card-name">${p.name}</div>
+      <div class="card-rotary-name">${p.rotary}</div>
+      <div class="card-club"><span class="card-club-dot"></span>${p.club}</div>
+    </div>
+  `).join('');
+}
+
+renderCards(advisorData, 'grid-advisor');
+
+/* ── 地區諮詢委員會 ── */
+const consultData = [
+  { role: '地區諮詢委員會主委',   name: '董瑞龍', rotary: 'Five',      club: '台中港東區扶輪社' },
+  { role: '地區諮詢委員會副主委', name: '李兆祥', rotary: 'Lee',       club: '台中東南扶輪社' },
+  { role: '地區諮詢委員會副主委', name: '吳忠光', rotary: 'John',      club: '台中中區扶輪社' },
+  { role: '地區諮詢委員會副主委', name: '李順安', rotary: 'Surgeon',   club: '苑裡扶輪社' },
+  { role: '地區諮詢委員會副主委', name: '顧清正', rotary: 'Tiger',     club: '台中港區扶輪社' },
+  { role: '地區諮詢委員會副主委', name: '劉昭惠', rotary: 'Music',     club: '台中中央扶輪社' },
+  { role: '地區諮詢委員會副主委', name: '陳福振', rotary: 'Bill',      club: '豐原西南扶輪社' },
+  { role: '地區諮詢委員會',       name: '張光瑋', rotary: 'Concept',   club: '台中南門扶輪社' },
+  { role: '地區諮詢委員會',       name: '李芽裕', rotary: 'Medicheml', club: '大甲北區扶輪社' },
+  { role: '地區諮詢委員會',       name: '賴光雄', rotary: 'Jim',       club: '台中扶輪社' },
+  { role: '地區諮詢委員會',       name: '邱世文', rotary: 'Dental',    club: '豐原扶輪社' },
+  { role: '地區諮詢委員會',       name: '陳俊雄', rotary: 'Joy',       club: '台中東區扶輪社' },
+  { role: '地區諮詢委員會',       name: '張光雄', rotary: 'Mintong',   club: '台中大屯扶輪社' },
+  { role: '地區諮詢委員會',       name: '謝東隆', rotary: 'Paper',     club: '大甲北區扶輪社' },
+  { role: '地區諮詢委員會',       name: '劉禮修', rotary: 'Eyes',      club: '台中台美扶輪社' },
+  { role: '地區諮詢委員會',       name: '薛秋雄', rotary: 'Trading',   club: '台中港亞太扶輪社' },
+  { role: '地區諮詢委員會',       name: '楊迺津', rotary: 'Dentist',   club: '台中中央扶輪社' },
+  { role: '地區諮詢委員會',       name: '楊金振', rotary: 'Tony',      club: '台中東南扶輪社' },
+  { role: '地區諮詢委員會',       name: '何信宗', rotary: 'Steel',     club: '豐原東區扶輪社' },
+];
+renderCards(consultData, 'grid-consult');
+
+/* ── 地區助理總監團隊 ── */
+const dagTeamData = [
+  { role: '不分區助理總監', name: '廖禮昇', rotary: 'Lu',        club: '台中大同扶輪社' },
+  { role: '不分區助理總監', name: '游志豪', rotary: 'IC',        club: '台中東區扶輪社' },
+  { role: '不分區助理總監', name: '許秀珍', rotary: 'Lady Chair',club: '台中山海屯扶輪社' },
+  { role: '不分區助理總監', name: '潘尚文', rotary: 'David Pan', club: '台中港區扶輪社' },
+  { role: 'A區地區助理總監', name: '楊碩翰', rotary: 'Grand',   club: '台中大屯扶輪社' },
+  { role: 'B區地區助理總監', name: '蔡適禮', rotary: 'Trust',   club: '台中東興扶輪社' },
+  { role: 'C區地區助理總監', name: '周智明', rotary: 'Jou',     club: '豐原北區扶輪社' },
+  { role: 'D區地區助理總監', name: '王瑞文', rotary: 'Ohha',    club: '大甲中央扶輪社' },
+];
+renderCards(dagTeamData, 'grid-dag-team');
+
+/* ── 分區助理總監 ── */
+const dagData = [
+  { role: 'A-1分區助理總監', name: '賴玉寶', rotary: 'Polly',   club: '台中文教扶輪社' },
+  { role: 'A-2分區助理總監', name: '葉采寧', rotary: 'Kate',    club: '台中柳川扶輪社' },
+  { role: 'A-3分區助理總監', name: '劉界東', rotary: 'Morti',   club: '台中大光扶輪社' },
+  { role: 'B-1分區助理總監', name: '陳梓銘', rotary: 'Webb',    club: '台中中興扶輪社' },
+  { role: 'B-2分區助理總監', name: '蔡銘座', rotary: 'Archi',   club: '台中東北扶輪社' },
+  { role: 'B-3分區助理總監', name: '翁政宏', rotary: 'Angelo',  club: '台中天元扶輪社' },
+  { role: 'C-1分區助理總監', name: '張喜盛', rotary: 'Tony',    club: '豐原扶輪社' },
+  { role: 'C-2分區助理總監', name: '朱鎮正', rotary: 'H-Beam',  club: '豐原北區扶輪社' },
+  { role: 'C-3分區助理總監', name: '林金成', rotary: 'Joint',   club: '豐原西北扶輪社' },
+  { role: 'D-1分區助理總監', name: '林政杰', rotary: 'Bento',   club: '台中港亞太扶輪社' },
+  { role: 'D-2分區助理總監', name: '陳榮富', rotary: 'Archi',   club: '大甲扶輪社' },
+  { role: 'D-3分區助理總監', name: '林輝煌', rotary: 'Machine', club: '台中港中央扶輪社' },
+];
+renderCards(dagData, 'grid-dag');
+
+/* ── 分區副秘書長 ── */
+const secData = [
+  { role: 'A-1分區副秘書長', name: '施士尉', rotary: 'Success',   club: '台中文教扶輪社' },
+  { role: 'A-2分區副秘書長', name: '呂明政', rotary: 'Mark',      club: '台中柳川扶輪社' },
+  { role: 'A-3分區副秘書長', name: '石翔升', rotary: 'Tea Stone', club: '台中大光扶輪社' },
+  { role: 'B-1分區副秘書長', name: '朱峻毅', rotary: 'Mario',     club: '台中中興扶輪社' },
+  { role: 'B-2分區副秘書長', name: '賴明興', rotary: 'Star',      club: '台中東北扶輪社' },
+  { role: 'B-3分區副秘書長', name: '王正杏', rotary: 'Saint',     club: '台中天元扶輪社' },
+  { role: 'C-1分區副秘書長', name: '邱居亮', rotary: 'Paint',     club: '豐原扶輪社' },
+  { role: 'C-2分區副秘書長', name: '陳仲廉', rotary: 'Chen',      club: '豐原北區扶輪社' },
+  { role: 'C-3分區副秘書長', name: '李仁傑', rotary: 'Tim',       club: '豐原西北扶輪社' },
+  { role: 'D-1分區副秘書長', name: '張世鴻', rotary: 'CNC',       club: '台中港亞太扶輪社' },
+  { role: 'D-2分區副秘書長', name: '陳政宏', rotary: 'Lagis',     club: '大甲扶輪社' },
+  { role: 'D-3分區副秘書長', name: '林志隆', rotary: 'Lyon',      club: '台中港中央扶輪社' },
+];
+renderCards(secData, 'grid-sec');
+
+/* ── 地區秘書處 ── */
+const secretariatData = [
+  { role: '地區秘書長',   name: '林溢男', rotary: 'William',   club: '台中港東區扶輪社' },
+  { role: '地區副秘書長', name: '陳俊良', rotary: 'JC',        club: '台中大屯扶輪社' },
+  { role: '地區副秘書長', name: '陳敬達', rotary: 'Alan',      club: '台中向上扶輪社' },
+  { role: '地區副秘書長', name: '王錦龍', rotary: 'Dragon',    club: '台中東南扶輪社' },
+  { role: '地區副秘書長', name: '吳健安', rotary: 'Chief',     club: '台中南區扶輪社' },
+  { role: '地區副秘書長', name: '陳政鴻', rotary: 'Arthur',    club: '台中潭雅神扶輪社' },
+  { role: '地區副秘書長', name: '黃朝國', rotary: 'Kent',      club: '台中港西濱扶輪社' },
+  { role: '地區副秘書長', name: '李益銘', rotary: 'Marketer',  club: '大甲中央扶輪社' },
+  { role: '地區執行秘書', name: '陳儀安', rotary: 'Rita',      club: '台中中英扶輪社' },
+  { role: '地區執行秘書', name: '賴成榮', rotary: 'Design',    club: '台中向上扶輪社' },
+  { role: '地區執行秘書', name: '張立翰', rotary: 'Pharmacy',  club: '台中東南扶輪社' },
+  { role: '地區執行秘書', name: '林明賦', rotary: 'Mark',      club: '台中曙光扶輪社' },
+  { role: '地區執行秘書', name: '洪睿萱', rotary: 'Villa',     club: '后里扶輪社' },
+  { role: '地區執行秘書', name: '張世杰', rotary: 'Laser',     club: '豐原北區扶輪社' },
+  { role: '地區執行秘書', name: '蔡維欣', rotary: 'Guess',     club: '大甲扶輪社' },
+  { role: '地區執行秘書', name: '陳仲佑', rotary: 'Johnny',    club: '台中港中央扶輪社' },
+  { role: '地區執行秘書', name: '江孝昇', rotary: 'Arthur',    club: '台中港東區扶輪社' },
+];
+renderCards(secretariatData, 'grid-secretariat');
+
+/* ── 地區財務法務 ── */
+const financeData = [
+  { role: '地區財務長',   name: '陳東昌', rotary: 'CPA',      club: '豐原扶輪社' },
+  { role: '地區會計長',   name: '許進興', rotary: 'CPA',      club: '台中南區扶輪社' },
+  { role: '地區法務長',   name: '陳盈光', rotary: 'Lawyer',   club: '台中港都扶輪社' },
+  { role: '地區副法務長', name: '邱奕賢', rotary: 'Lawyer',   club: '台中文文教扶輪社' },
+  { role: '地區副法務長', name: '黃逸仁', rotary: 'Attorney', club: '台中台興扶輪社' },
+  { role: '地區副法務長', name: '王金陵', rotary: 'Lawyer',   club: '大雅扶輪社' },
+];
+renderCards(financeData, 'grid-finance');
+
+/* ── 地區總監辦公室 ── */
+const govOfficeData = [
+  { role: '地區總監辦公室主任',   name: '陳旭偉', rotary: 'Paper',    club: '台中港東區扶輪社' },
+  { role: '地區總監辦公室顧問',   name: '張明星', rotary: 'Star',     club: '台中港東區扶輪社' },
+  { role: '地區總監辦公室副主任', name: '楊朝叡', rotary: 'Building', club: '台中港東區扶輪社' },
+  { role: '地區總監辦公室副主任', name: '顏維滄', rotary: 'Case',     club: '台中港東區扶輪社' },
+  { role: '地區總監辦公室副主任', name: '蔡一郎', rotary: 'Cotton',   club: '台中港東區扶輪社' },
+  { role: '地區總監辦公室副主任', name: '顏貴森', rotary: 'Tea',      club: '台中港東區扶輪社' },
+  { role: '地區總監辦公室副主任', name: '黃白親', rotary: 'Wood',     club: '台中港中央扶輪社' },
+];
+renderCards(govOfficeData, 'grid-govoffice');
+
+/* ── 地區寶眷委員會 ── */
+const spousesData = [
+  { role: '地區寶眷委員會主委',   name: '李春月', rotary: 'Moon',               club: '台中港東區扶輪社' },
+  { role: '地區寶眷委員會顧問',   name: '林秀珊', rotary: 'Susan, PDG Mintong 夫人', club: '台中大屯扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '張雅惠', rotary: 'William 夫人',        club: '台中港東區扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '蘇欣妤', rotary: 'YoYo, Safe 夫人',     club: '台中大屯扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '尤綺雯', rotary: 'Judy, Timothy 夫人',  club: '台中大屯扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '徐麗花', rotary: 'IC 夫人',             club: '台中東區扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '林美莉', rotary: 'Jou 夫人',            club: '豐原北區扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '蔡淑英', rotary: 'Ohha 夫人',           club: '大甲中央扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '曾杏如', rotary: 'Trust 夫人',          club: '台中東興扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '林品汝', rotary: 'Sophia, Lu 夫人',     club: '台中大同扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '林增森', rotary: 'Chair 夫人',          club: '豐原扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '劉美娟', rotary: 'Villa 夫人',          club: '台中港東區扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '陳信宏', rotary: 'Joseph, Kate 尊眷',   club: '台中柳川扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '林婉莉', rotary: 'Rebecca, Morti 夫人', club: '台中大光扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '謝昆芳', rotary: 'Webb 夫人',           club: '台中中興扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '莊玫君', rotary: 'Archi 夫人',          club: '台中東北扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '莊惠娟', rotary: 'Clara, Angelo 夫人',  club: '台中天元扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '劉秀珠', rotary: 'Tony 夫人',           club: '豐原扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '阮氏玄', rotary: 'H-Beam 夫人',         club: '豐原北區扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '劉玉花', rotary: 'Joint 夫人',          club: '豐原西北扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '李宥融', rotary: 'Bento 夫人',          club: '台中港亞太扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '陳采鈺', rotary: 'Archi 夫人',          club: '大甲扶輪社' },
+  { role: '地區寶眷委員會副主委', name: '陳玲玉', rotary: 'Machine 夫人',        club: '台中港中央扶輪社' },
+];
+renderCards(spousesData, 'grid-spouses');
+
+/* ── 地區親睦委員會 ── */
+const fellowshipData = [
+  { role: '地區親睦委員會主委',   name: '侯尊仁', rotary: 'Sake II',   club: '台中港東南扶輪社' },
+  { role: '地區親睦委員會副主委', name: '嚴宏偉', rotary: 'KK',        club: '台中文心扶輪社' },
+  { role: '地區親睦委員會副主委', name: '謝德亮', rotary: 'Willie',    club: '台中中區扶輪社' },
+  { role: '地區親睦委員會副主委', name: '黃學通', rotary: 'Aqua',      club: '台中中區扶輪社' },
+  { role: '地區親睦委員會副主委', name: '李世偉', rotary: 'Carrier',   club: '台中市政扶輪社' },
+  { role: '地區親睦委員會副主委', name: '陳亮羽', rotary: 'Kaitlyn',   club: '台中柳川扶輪社' },
+  { role: '地區親睦委員會副主委', name: '陳金源', rotary: 'Crystal',   club: '台中高爾夫扶輪社' },
+  { role: '地區親睦委員會副主委', name: '張舜評', rotary: 'Dollar',    club: '台中大屯扶輪社' },
+  { role: '地區親睦委員會副主委', name: '朱文種', rotary: 'J House',   club: '台中大光扶輪社' },
+  { role: '地區親睦委員會副主委', name: '林智雄', rotary: 'Brian',     club: '台中向上扶輪社' },
+  { role: '地區親睦委員會副主委', name: '徐靜鈴', rotary: 'Arlene',    club: '台中台美扶輪社' },
+  { role: '地區親睦委員會副主委', name: '賴美滿', rotary: 'Charlene',  club: '台中台美扶輪社' },
+  { role: '地區親睦委員會副主委', name: '吳宇生', rotary: 'Diamond',   club: '台中惠來扶輪社' },
+  { role: '地區親睦委員會副主委', name: '陳慧如', rotary: 'Angel',     club: '台中馬拉松扶輪社' },
+  { role: '地區親睦委員會副主委', name: '郭威廷', rotary: 'Kitty',     club: '台中馬拉松扶輪社' },
+  { role: '地區親睦委員會副主委', name: '郭銘勛', rotary: 'Toyohala',  club: '豐原扶輪社' },
+  { role: '地區親睦委員會副主委', name: '張麗鳳', rotary: 'Megane',    club: '豐原中央扶輪社' },
+  { role: '地區親睦委員會副主委', name: '程東霖', rotary: 'Life',      club: '豐原西北扶輪社' },
+  { role: '地區親睦委員會副主委', name: '吳美芳', rotary: 'Professor', club: '台中山海屯扶輪社' },
+  { role: '地區親睦委員會副主委', name: '陳春秀', rotary: 'Show',      club: '台中山海屯扶輪社' },
+  { role: '地區親睦委員會副主委', name: '楊大慶', rotary: 'DC',        club: '台中潭雅神扶輪社' },
+  { role: '地區親睦委員會副主委', name: '陳招辛', rotary: 'Tony',      club: '台中港區扶輪社' },
+  { role: '地區親睦委員會副主委', name: '李品宏', rotary: 'Jordan',    club: '苑裡扶輪社' },
+  { role: '地區親睦委員會副主委', name: '王亨年', rotary: 'Nice',      club: '大甲北區扶輪社' },
+  { role: '地區親睦委員會副主委', name: '黃春惠', rotary: 'Smooth',    club: '大甲百齡扶輪社' },
+  { role: '地區親睦委員會副主委', name: '何品廉', rotary: 'Highball',  club: '台中港東南扶輪社' },
+  { role: '地區親睦委員會副主委', name: '陳景裕', rotary: 'Rich',      club: '台中港西南扶輪社' },
+  { role: '地區親睦委員會副主委', name: '黃棟國', rotary: 'Sono',      club: '台中港東區扶輪社' },
+  { role: '地區親睦委員會副主委', name: '巫志華', rotary: 'Test',      club: '大肚扶輪社' },
+];
+renderCards(fellowshipData, 'grid-fellowship');
+
+/* ── 地區年會委員會 ── */
+const annConfData = [
+  { role: '地區年會委員會主委',       name: '黃文彬', rotary: 'Planner',  club: '台中東友扶輪社' },
+  { role: '地區年會諮詢主委',         name: '薛秋雄', rotary: 'Trading I',club: '台中港東區扶輪社' },
+  { role: '地區年會諮詢顧問',         name: '郭榮昌', rotary: 'Master I', club: '台中大屯扶輪社' },
+  { role: '地區年會諮詢顧問',         name: '林育民', rotary: 'Link I',   club: '台中省都扶輪社' },
+  { role: '地區年會副主委',           name: '廖禮昇', rotary: 'Lu I',     club: '台中大同扶輪社' },
+  { role: '地區年會副主委',           name: '林玉霞', rotary: 'Amy',      club: '台中中央扶輪社' },
+  { role: '地區年會副主委',           name: '朱文種', rotary: 'J House',  club: '台中大光扶輪社' },
+  { role: '地區年會副主委',           name: '謝文鴻', rotary: 'Eagle',    club: '台中南區扶輪社' },
+  { role: '地區年會副主委',           name: '林子烋', rotary: 'Simmons',  club: '豐原西南扶輪社' },
+  { role: '地區年會副主委',           name: '李奎',   rotary: 'Volvo',    club: '台中港東區扶輪社' },
+  { role: '祕書長',                   name: '黃聖葆', rotary: 'Frank',    club: '台中市政扶輪社' },
+  { role: '副祕書長',                 name: '謝德亮', rotary: 'Willie',   club: '台中中區扶輪社' },
+  { role: '副祕書長',                 name: '許雅玲', rotary: 'Amy',      club: '台中南光扶輪社' },
+  { role: '副祕書長',                 name: '林慶安', rotary: 'Money',    club: '大雅扶輪社' },
+  { role: '副祕書長',                 name: '黃俊傑', rotary: 'Steel',    club: '台中港都扶輪社' },
+  { role: '副祕書長',                 name: '張美足', rotary: 'Mandy',    club: '台中台美扶輪社' },
+  { role: '副祕書長',                 name: '江鏡林', rotary: 'Mirror',   club: '台中中州扶輪社' },
+  { role: '廣告長',                   name: '吳健安', rotary: 'Chief',    club: '台中南區扶輪社' },
+  { role: '會計長',                   name: '柯俊穎', rotary: 'Consultant',club:'台中東友扶輪社' },
+  { role: '副會計長',                 name: '陳品嘉', rotary: 'C.P.C',   club: '台中東友扶輪社' },
+  { role: '執行會計',                 name: '林建銘', rotary: 'Jamie',    club: '台中市政扶輪社' },
+  { role: '執行祕書',                 name: '蘇瑜揮', rotary: 'Josh',     club: '台中市政扶輪社' },
+  { role: '地區年會協調中心主委',     name: '劉易鑫', rotary: 'Design',   club: '台中東友扶輪社' },
+  { role: '地區年會協調中心副主委',   name: '王重韶', rotary: 'Archi.',   club: '台中東友扶輪社' },
+  { role: '場內協調人',               name: '張星輝', rotary: 'Star',     club: '台中大屯扶輪社' },
+  { role: '場內助理協調人',           name: '王婉柔', rotary: 'Zora',     club: '台中市政扶輪社' },
+  { role: '場外協調人',               name: '黃朝國', rotary: 'Kent',     club: '台中港西濱扶輪社' },
+  { role: '場地設計協調人',           name: '林亞青', rotary: 'Archi',    club: '台中市政扶輪社' },
+  { role: '場地設計協調人',           name: '鄭豪柏', rotary: 'Archi',    club: '台中台興扶輪社' },
+  { role: '資訊組',                   name: '陳世茂', rotary: 'Simon',    club: '台中東友扶輪社' },
+  { role: '資訊組',                   name: '江孝昇', rotary: 'Arthur',   club: '台中港東區扶輪社' },
+  { role: '資訊組',                   name: '劉冠佑', rotary: 'Estate',   club: '台中港東區扶輪社' },
+  { role: '地區年會簡報中心',         name: '蕭必享', rotary: 'Walker',   club: '台中東友扶輪社' },
+  { role: '地區年會簡報中心',         name: '江孝昇', rotary: 'Arthur',   club: '台中港東區扶輪社' },
+  { role: '地區年會簡報中心',         name: '劉冠佑', rotary: 'Estates',  club: '台中港東區扶輪社' },
+  { role: '地區年會簡報中心',         name: '吳柏憲', rotary: 'Brian',    club: '台中港西濱扶輪社' },
+  { role: '地區年會簡報中心',         name: '陳俞任', rotary: 'Oil',      club: '台中港西濱扶輪社' },
+];
+renderCards(annConfData, 'grid-annconf');
+
+/* ── 年會總務委員會 ── */
+const annGeneralData = [
+  { role: '主委',         name: '侯彬彬', rotary: 'Gas',       club: '台中港東區扶輪社' },
+  { role: '副主委',       name: '陳昆展', rotary: 'Can Ban',   club: '台中港中區扶輪社' },
+  { role: '副主委',       name: '蔡木飲', rotary: 'Machine',   club: '台中港東區扶輪社' },
+  { role: '執行長',       name: '顏貴森', rotary: 'Tea',       club: '台中港東區扶輪社' },
+  { role: '燈光音響錄影組',name: '陳俊欽', rotary: 'RyanS',    club: '台中市政扶輪社' },
+  { role: '攝影組',       name: '賴仲崑', rotary: 'Eastman',   club: '大甲中央扶輪社' },
+  { role: '禮品庶務組',   name: '王志雄', rotary: 'Iron-Mans', club: '台中港西南扶輪社' },
+  { role: '工讀生組',     name: '巫兆文', rotary: 'Hotel',     club: '台中港東南扶輪社' },
+  { role: '會場工務組',   name: '林政孝', rotary: 'Andy Lin',  club: '台中港中央扶輪社' },
+  { role: '茶水點心便當組',name: '林煥龍', rotary: 'Auditor',  club: '台中港東區扶輪社' },
+  { role: '無線電組',     name: '溫正隆', rotary: 'Along',     club: '大肚扶輪社' },
+  { role: '無線電組顧問', name: '洪銘辰', rotary: 'Copper',    club: '彰化中區扶輪社' },
+];
+renderCards(annGeneralData, 'grid-annconf-general');
+
+/* ── 年會議事委員會 ── */
+const annAgendaData = [
+  { role: '主委',       name: '王志成', rotary: 'Goods',    club: '台中省都扶輪社' },
+  { role: '副主委',     name: '林百領', rotary: 'Car',      club: '台中省都扶輪社' },
+  { role: '副主委',     name: '王雲以', rotary: 'Iri',      club: '台中東昇扶輪社' },
+  { role: '執行長',     name: '謝武志', rotary: 'Alan',     club: '台中省都扶輪社' },
+  { role: '編錄印刷組', name: '蔡光哲', rotary: 'Rick',     club: '台中省都扶輪社' },
+  { role: '分組討論組', name: '賴品佑', rotary: 'Building', club: '台中立心扶輪社' },
+  { role: '提案組',     name: '蔡三章', rotary: 'Eyes',     club: '台中扶輪社' },
+  { role: '頒獎表揚組', name: '陳英傑', rotary: 'Hammer',   club: '台中達文西扶輪社' },
+  { role: '程序組',     name: '廖朝昕', rotary: 'Power',    club: '台中省都扶輪社' },
+  { role: '多媒體拍攝組',name: '黃國維', rotary: 'King',    club: '台中惠來扶輪社' },
+  { role: '多媒體播放組',name: '楊承皓', rotary: 'Hao',     club: '台中台興扶輪社' },
+];
+renderCards(annAgendaData, 'grid-annconf-agenda');
+
+/* ── 年會接待委員會 ── */
+const annReceptionData = [
+  { role: '主委',       name: '徐碧琴', rotary: 'Gina',      club: '台中山海屯扶輪社' },
+  { role: '副主委',     name: '林益源', rotary: 'Diamond',   club: '豐原西南扶輪社' },
+  { role: '副主委',     name: '藍宸睿', rotary: 'Breaker',   club: '豐原西屯扶輪社' },
+  { role: '副主委',     name: '張關位', rotary: 'Mentor',    club: '豐原扶輪社' },
+  { role: '執行長',     name: '趙雅萍', rotary: 'Grace',     club: '台中山海屯扶輪社' },
+  { role: '註冊組',     name: '錢錦輝', rotary: 'Auto',      club: '大雅扶輪社' },
+  { role: '貴賓接待組', name: '徐碧琴', rotary: 'Gina',      club: '台中山海屯扶輪社' },
+  { role: '外賓接待組', name: '蘇麗鈴', rotary: 'Lighting',  club: '台中中央扶輪社' },
+  { role: 'RIPR晚宴組', name: '張璦元', rotary: 'HR',        club: '台中潭雅神扶輪社' },
+  { role: 'RIPR節目組', name: '張白欣', rotary: 'White',     club: '台中中央扶輪社' },
+  { role: 'RIPR節目組', name: '黃淳彌', rotary: 'DJ Nana',   club: '台中中央扶輪社' },
+  { role: 'VTT接待組',  name: '廖陳宣有',rotary: 'Paul',     club: '台中台興扶輪社' },
+  { role: 'RYE接待組',  name: '方閔正', rotary: 'Vincent',   club: '台中市政扶輪社' },
+  { role: '糾察組',     name: '陳大瞬', rotary: 'Paint',     club: '豐原北區扶輪社' },
+  { role: '公關組',     name: '鄭俊杰', rotary: 'Jack',      club: '台中東北扶輪社' },
+  { role: '扶青社組',   name: '何本立', rotary: 'Nice',      club: '台中東區扶輪社' },
+  { role: '扶少團組',   name: '林綉合', rotary: 'Aluminum',  club: '大肚扶輪社' },
+];
+renderCards(annReceptionData, 'grid-annconf-reception');
+
+/* ── 年會活動委員會 ── */
+const annActivityData = [
+  { role: '主委',       name: '范群亮', rotary: 'Patent',  club: '台中南區扶輪社' },
+  { role: '副主委',     name: '許勝迪', rotary: 'Glass',   club: '台中東友扶輪社' },
+  { role: '副主委',     name: '黃小娟', rotary: 'Maple',   club: '台中中英扶輪社' },
+  { role: '執行長',     name: '林春進', rotary: 'Chin',    club: '台中南區扶輪社' },
+  { role: '副執行長',   name: '吳豐裕', rotary: 'Bert',    club: '台中南區扶輪社' },
+  { role: '副執行長',   name: '張宏銘', rotary: 'Bruce',   club: '台中南區扶輪社' },
+  { role: '場內佈置組', name: '林戴啟', rotary: 'TC',      club: '台中東區扶輪社' },
+  { role: '場外佈置組', name: '郭鳳玉', rotary: 'Jade',    club: '台中惠中扶輪社' },
+  { role: '舞台管理組', name: '蔡欣儒', rotary: 'Filter',  club: '台中馬拉松扶輪社' },
+  { role: '友誼商店組', name: '陳慶璋', rotary: 'Star',    club: '台中南門扶輪社' },
+  { role: '友誼之家組', name: '謝政洋', rotary: 'Nano',    club: '台中中區扶輪社' },
+  { role: '摸彩組',     name: '張清權', rotary: 'Office',  club: '台中東友扶輪社' },
+  { role: '展覽組',     name: '謝溫國', rotary: 'DJ',      club: '台中大屯扶輪社' },
+  { role: '桌椅組',     name: '黃培展', rotary: 'Johnny',  club: '台中東北扶輪社' },
+  { role: '高爾夫球組', name: '陳宏龍', rotary: 'Civils',  club: '台中東興扶輪社' },
+];
+renderCards(annActivityData, 'grid-annconf-activity');
+
+/* ── 年會服務委員會 ── */
+const annServiceData = [
+  { role: '主委',       name: '蔣德勇', rotary: 'Paper',    club: '台中中央扶輪社' },
+  { role: '副主委',     name: '蔣翼隆', rotary: 'Allen',    club: '台中港區扶輪社' },
+  { role: '副主委',     name: '劉恩杰', rotary: 'Chef',     club: '台中大同扶輪社' },
+  { role: '執行長',     name: '張正明', rotary: 'Akira',    club: '大甲中央扶輪社' },
+  { role: '膳食組',     name: '蔣翼隆', rotary: 'Allen',    club: '台中港區扶輪社' },
+  { role: '停車場組',   name: '吳哲瓏', rotary: 'Print',    club: '台中惠來扶輪社' },
+  { role: '交通指揮組', name: '紀崇楠', rotary: 'Daniel',   club: '大甲扶輪社' },
+  { role: '寶眷引導組', name: '鄭采琳', rotary: 'Irene',    club: '大甲百齡扶輪社' },
+  { role: '保健組',     name: '吳蘭達', rotary: 'Johnson',  club: '苑裡扶輪社' },
+  { role: '環境保護組', name: '高永鋒', rotary: 'Kao Sir',  club: '大甲北區扶輪社' },
+  { role: '大會服務組', name: '王勤惠', rotary: 'Bernice',  club: '台中港西濱扶輪社' },
+  { role: '會後服務組', name: '蔡三章', rotary: 'Eyes',     club: '台中扶輪社' },
+  { role: '支援服務組', name: '何明松', rotary: 'Leo',      club: '台中羽球扶輪社' },
+];
+renderCards(annServiceData, 'grid-annconf-service');
+
+/* ── 年會節目委員會 ── */
+const annProgramData = [
+  { role: '主委',       name: '李佩璇', rotary: 'Tax',      club: '台中台美扶輪社' },
+  { role: '副主委',     name: '陳俊狄', rotary: 'Ryan',     club: '台中市政扶輪社' },
+  { role: '副主委',     name: '熊亞萍', rotary: 'Kuma',     club: '台中朝富扶輪社' },
+  { role: '執行長',     name: '陳婉鈴', rotary: 'Lynn',     club: '台中台美扶輪社' },
+  { role: '大會節目組', name: '蔡進鎧', rotary: 'Simon',    club: '台中東南扶輪社' },
+  { role: '扶輪晚會組', name: '吳麗容', rotary: 'CPA',      club: '台中台美扶輪社' },
+  { role: '寶眷聯誼組', name: '劉宜欣', rotary: 'Shimmer',  club: '台中市政扶輪社' },
+  { role: '寶眷場佈組', name: '江耿碩', rotary: 'Box',      club: '豐原東區扶輪社' },
+  { role: '大會司儀組', name: '劉禮修', rotary: 'Eyes',     club: '台中台美扶輪社' },
+];
+renderCards(annProgramData, 'grid-annconf-program');
+
+/* ── 地區總監月刊編輯委員會 ── */
+const newsletterData = [
+  { role: '地區總監月刊編輯委員會主委',   name: '薛顯浚', rotary: 'Webber',     club: '大甲扶輪社' },
+  { role: '地區總監月刊編輯委員會副主委', name: '張星輝', rotary: 'Star',       club: '台中大屯扶輪社' },
+  { role: '地區總監月刊編輯委員會副主委', name: '吳育萱', rotary: 'Aimee',      club: '台中大同扶輪社' },
+  { role: '廣告推廣委員會主委',           name: '李世偉', rotary: 'Carrier',    club: '台中市政扶輪社' },
+  { role: '總編輯',                       name: '周惠萍', rotary: 'Minna',      club: '台中立心扶輪社' },
+  { role: '編輯顧問',                     name: '陳政雄', rotary: 'Offset',     club: '台中扶輪社' },
+  { role: '執行編輯',                     name: '郭威廷', rotary: 'Kitty',      club: '台中馬拉松扶輪社' },
+  { role: '執行編輯',                     name: '劉惠櫻', rotary: 'Melissa',    club: '台中市政扶輪社' },
+  { role: '主筆',                         name: '林允進', rotary: 'Propeller',  club: '台中扶輪社' },
+  { role: '主筆',                         name: '薛秋雄', rotary: 'Trading',    club: '台中港亞太扶輪社' },
+  { role: '主筆',                         name: '周鴻仁', rotary: 'Innovation', club: '台中南門扶輪社' },
+  { role: '主筆',                         name: '趙文華', rotary: 'Aircon',     club: '大肚扶輪社' },
+  { role: '英文編輯',                     name: '廖祿昇', rotary: 'Lu',         club: '台中大同扶輪社' },
+  { role: '日文編輯',                     name: '林岳毅', rotary: 'Youngbank',  club: '台中立心扶輪社' },
+  { role: '日文編輯',                     name: '長白清子',rotary: 'Kiyoko',    club: '台中大同扶輪社' },
+  { role: '韓文編輯',                     name: '洪志慧', rotary: 'Fashion',    club: '台中中央扶輪社' },
+  { role: 'A區採訪副主委',                name: '陳彥甫', rotary: 'Fedex',      club: '台中柳川扶輪社' },
+  { role: 'B區採訪副主委',                name: '黃國維', rotary: 'King',       club: '台中惠來扶輪社' },
+  { role: 'C區採訪副主委',                name: '張麗鳳', rotary: 'Megane',     club: '豐原中央扶輪社' },
+  { role: 'D區採訪副主委',                name: '王孟埰', rotary: 'Food',       club: '台中港西濱扶輪社' },
+  { role: '不分區採訪副主委',             name: '黃晟原', rotary: 'Yan',        club: '台中大屯扶輪社' },
+  { role: '採訪委員',                     name: '王飛龍', rotary: 'Dragon',     club: '台中立心扶輪社' },
+  { role: '採訪委員',                     name: '劉英山', rotary: 'Buildings',  club: '台中大屯扶輪社' },
+  { role: '採訪委員',                     name: '周芯語', rotary: 'Sini',       club: '台中市政扶輪社' },
+  { role: '採訪委員',                     name: '許珮真', rotary: 'Amber',      club: '台中市政扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '賴慈芳', rotary: 'Janice',     club: '台中市政扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '高芷薰', rotary: 'Ina',        club: '台中市政扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '謝德亮', rotary: 'Willie',     club: '台中中區扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '黃學通', rotary: 'Aqua',       club: '台中中區扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '賴育生', rotary: 'Kaipy',      club: '台中立文教扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '詹琇鈞', rotary: 'Landy',      club: '台中柳川扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '王佩君', rotary: 'Nancy',      club: '台中台美扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '洪宇駿', rotary: 'Weber',      club: '台中南光扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '張世杰', rotary: 'Laser',      club: '豐原北區扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '陳建宏', rotary: 'Ray',        club: '台中潭雅神扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '朱鐿澐', rotary: 'Print',      club: '台中潭雅神扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '賴鴻',   rotary: 'Jus',        club: '台中潭雅神扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '廖冠淵', rotary: 'Web',        club: '豐原西北扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '陳嘉文', rotary: 'Lawyer',     club: '豐原西北扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '陳俞任', rotary: 'Oil',        club: '台中港西濱扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '陳治州', rotary: 'Cooper',     club: '台中港西濱扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '許家源', rotary: 'Yostyle',    club: '大甲中央扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '林佩韻', rotary: 'Candy',      club: '大甲百齡扶輪社' },
+  { role: '地區總監月刊編輯委員會',       name: '蔡俊鎧', rotary: 'Eddie',      club: '台中市政扶青社' },
+  { role: '地區總監月刊編輯委員會',       name: '張郁靖', rotary: 'Ada',        club: '台中市政扶青社' },
+];
+renderCards(newsletterData, 'grid-newsletter');
+
+/* ── 地區學習委員會 ── */
+const learningData = [
+  { role: '地區學習委員會主委',       name: '楊迺津', rotary: 'Dentist',  club: '台中中央扶輪社' },
+  { role: '地區學習委員會特別顧問',   name: '劉昭惠', rotary: 'Music',    club: '台中中央扶輪社' },
+  { role: '地區學習委員會特別顧問',   name: '張光瑤', rotary: 'Concept',  club: '台中南門扶輪社' },
+  { role: '地區學習委員會特別顧問',   name: '賴光雄', rotary: 'Jim',      club: '台中扶輪社' },
+  { role: 'DLFS 主委',               name: '林聖堯', rotary: 'Dennis',   club: '台中達文西扶輪社' },
+  { role: 'GMS 主委',                name: '許荃鈞', rotary: 'Stanley',  club: '大肚扶輪社' },
+  { role: 'AG & DTLS 主委',          name: '姚嘉派', rotary: 'Pie',      club: '台中東興扶輪社' },
+  { role: 'PELS 主委',               name: '梁俊仁', rotary: 'Dion',     club: '台中港東區扶輪社' },
+  { role: 'DTA 主委',                name: '曾榮孟', rotary: 'Jamie',    club: '台中扶輪社' },
+  { role: 'DVCW 主委',               name: '藍宸睿', rotary: 'Breaker',  club: '豐原西北扶輪社' },
+  { role: 'IDLTM 主委',              name: '溫正隆', rotary: 'Along',    club: '大肚扶輪社' },
+  { role: 'IDLTM 總幹事',            name: '李泉盛', rotary: 'Richard',  club: '大甲中央扶輪社' },
+];
+renderCards(learningData, 'grid-learning');
+
+/* ── 地區特別委員會核心 ── */
+const specialCoreData = [
+  { role: '地區特別委員會主委',         name: '張光雄', rotary: 'Mintong', club: '台中大屯扶輪社' },
+  { role: '地區特別委員會副主委',       name: '李有義', rotary: 'George',  club: '大甲中央扶輪社' },
+  { role: '地區特別委員會副主委',       name: '尤昭明', rotary: 'Air',     club: '台中大同扶輪社' },
+  { role: '地區特別委員會副主委',       name: '張振益', rotary: 'Ethan',   club: '神岡扶輪社' },
+  { role: '地區特別委員會副主委',       name: '吳慶松', rotary: 'Simon',   club: '台中大同扶輪社' },
+  { role: '地區投票代表資格審查委員會主委',name: '謝東隆',rotary: 'Paper', club: '大甲北區扶輪社' },
+];
+renderCards(specialCoreData, 'grid-special-core');
+
+/* ── 地區DEI推廣委員會 ── */
+const deiData = [
+  { role: '地區DEI推廣委員會主委', name: '周素蘭', rotary: 'Nice',       club: '大甲百齡扶輪社' },
+  { role: '地區DEI推廣委員會顧問', name: '尤昭明', rotary: 'Air',        club: '台中大同扶輪社' },
+  { role: '地區DEI推廣委員會副主委',name: '李宜毅', rotary: 'Essen',     club: '台中大同扶輪社' },
+  { role: '地區DEI推廣委員會副主委',name: '蘇仙宜', rotary: 'Attorney',  club: '台中台美扶輪社' },
+  { role: '地區DEI推廣委員會副主委',name: '楊保安', rotary: 'CPA',       club: '台中西區扶輪社' },
+  { role: '地區DEI推廣委員會副主委',name: '王翼升', rotary: 'Eason',     club: '台中潭雅神扶輪社' },
+  { role: '地區DEI推廣委員會副主委',name: '陳盈光', rotary: 'Lawyer',    club: '台中港都扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '陳育仁', rotary: 'Lawyer',     club: '台中大光扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '洪明儒', rotary: 'Lawyer',     club: '台中惠來扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '童玉蘭', rotary: 'Janice',     club: '台中立心扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '蔡淑敏', rotary: 'Shu-Min',    club: '台中大同扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '陳敬達', rotary: 'Alan',       club: '台中向上扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '郭子惼', rotary: 'NGO',        club: '台中扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '張志成', rotary: 'Philip',     club: '台中東昇扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '黃國維', rotary: 'King',       club: '台中惠來扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '陳志豪', rotary: 'Matsu',      club: '豐原扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '洪慎蓮', rotary: 'Life',       club: '豐原中央扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '吳美芳', rotary: 'Professors', club: '台中山海屯扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '黃志銘', rotary: 'Jackies',    club: '台中港西濱扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '藍淑賢', rotary: 'Furniture',  club: '大甲百齡扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '廖春蓉', rotary: 'Lisa',       club: '大甲百齡扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '高大富', rotary: 'Rich',       club: '大肚扶輪社' },
+  { role: '地區DEI推廣委員會委員', name: '張郁靖', rotary: 'Ada',        club: '台中市政扶青社' },
+  { role: '地區DEI推廣委員會委員', name: '蔡俊鎧', rotary: 'Eddie',      club: '台中市政扶青社' },
+];
+renderCards(deiData, 'grid-dei');
+
+/* ── 地區基金與學習院 ── */
+const fundRliData = [
+  { role: '地區永久基金暨鉅額捐獻委員會主委',name: '劉禮修', rotary: 'Eyes',    club: '台中台美扶輪社' },
+  { role: '地區永久基金暨鉅額捐獻委員會副主委',name:'賴仁淙', rotary: 'Ears',   club: '台中南門扶輪社' },
+  { role: '地區扶輪領導學院(RLI)主委',       name: '楊琇惠', rotary: 'Serena',  club: '台中中央扶輪社' },
+  { role: '地區扶輪領導學院(RLI)副主委',     name: '林志明', rotary: 'Design',  club: '台中惠來扶輪社' },
+  { role: '地區扶輪領導學院(RLI)副主委',     name: '林殷世', rotary: 'Lawyer',  club: '神岡扶輪社' },
+  { role: '地區扶輪領導學院(RLI)副主委',     name: '王孟埰', rotary: 'Food',    club: '台中港西濱扶輪社' },
+  { role: '地區扶輪領導學院(RLI)副主委',     name: '蔡文裕', rotary: 'Tony',    club: '台中港東南扶輪社' },
+  { role: '地區米山獎學金委員會主委',         name: '林允進', rotary: 'Propeller',club:'台中扶輪社' },
+  { role: '地區中華扶輪獎學生聯誼委員會主委', name: '吳傳森', rotary: 'Erison',  club: '台中東南扶輪社' },
+  { role: '地區RI國際年會推動委員會主委',     name: '邱世文', rotary: 'Dental',  club: '豐原扶輪社' },
+  { role: '地區扶輪和平獎學金聯誼會主委',     name: '王裕麟', rotary: 'Shoes',   club: '台中港東區扶輪社' },
+];
+renderCards(fundRliData, 'grid-fund-rli');
+
+/* ── 地區體育藝文委員會 ── */
+const sportsData = [
+  { role: '地區自行車委員會主委',   name: '楊家清', rotary: 'H2O',       club: '台中港東區扶輪社' },
+  { role: '地區自行車委員會顧問',   name: '孫誠',   rotary: 'Gordon',    club: '台中大屯扶輪社' },
+  { role: '地區自行車委員會顧問',   name: '王志弘', rotary: 'Sports',    club: '台中港東南扶輪社' },
+  { role: '地區自行車委員會執行長', name: '蔡連裕', rotary: 'Areto',     club: '大甲中央扶輪社' },
+  { role: '地區高爾夫球委員會主委', name: '陳宏龍', rotary: 'Civil',     club: '台中東興扶輪社' },
+  { role: '地區高爾夫球委員會副主委',name: '孫誠',  rotary: 'Gordon',    club: '台中大屯扶輪社' },
+  { role: '地區高爾夫球委員會副主委',name: '楊保定',rotary: 'Teacher',   club: '台中港東區扶輪社' },
+  { role: '地區高爾夫球委員會副主委',name: '蔡瀚德',rotary: 'Stroller',  club: '台中高爾夫扶輪社' },
+  { role: '地區高爾夫球委員會副主委',name: '郭清涼',rotary: 'A-Liang',   club: '台中西區扶輪社' },
+  { role: '地區高爾夫球委員會副主委',name: '王志傑',rotary: 'Jason',     club: '台中中州扶輪社' },
+  { role: '地區馬拉松委員會主委',   name: '林勝結', rotary: 'Audit',     club: '台中中興扶輪社' },
+  { role: '地區馬拉松委員會執行長', name: '吳俊吉', rotary: 'Carven',    club: '台中中興扶輪社' },
+  { role: '地區登山健行委員會主委', name: '許來春', rotary: 'Guard',     club: '台中港東區扶輪社' },
+  { role: '地區登山健行委員會副主委',name: '林芳如',rotary: 'Elle',      club: '台中潭雅神扶輪社' },
+  { role: '地區登山健行委員會副主委',name: '林家政',rotary: 'Tweeter',   club: '台中港區扶輪社' },
+  { role: '地區羽毛球委員會主委',   name: '何明松', rotary: 'Leo',       club: '台中羽球扶輪社' },
+  { role: '地區羽毛球委員會副主委', name: '劉美蘭', rotary: 'CPA',       club: '台中潭雅神扶輪社' },
+  { role: '地區羽毛球委員會副主委', name: '洪廷彥', rotary: 'Assets',    club: '台中高爾夫扶輪社' },
+  { role: '地區文藝推廣委員會主委', name: '蔡巾壯', rotary: 'Full Yuan', club: '台中港中區扶輪社' },
+  { role: '地區文藝推廣委員會副主委',name: '陳孟森',rotary: 'Archi',     club: '台中港中區扶輪社' },
+  { role: '地區關懷老人及疾病防治委員會主委',name:'趙崇勳',rotary:'Brain',club:'台中東南扶輪社' },
+];
+renderCards(sportsData, 'grid-sports');
+
+/* ── 地區社區服務委員會 ── */
+const communityData = [
+  { role: '地區災難救助委員會主委',       name: '林承忠', rotary: 'Chemical',  club: '台中省都扶輪社' },
+  { role: '地區災難救助委員會副主委',     name: '王志傑', rotary: 'Jason',     club: '台中中州扶輪社' },
+  { role: '地區經濟與扶輪社區發展委員會主委',name:'楊澄源',rotary: 'X.O',     club: '台中向上扶輪社' },
+  { role: '地區經濟與扶輪社區發展委員會副主委',name:'紀永豐',rotary:'Fish',   club: '台中港西南扶輪社' },
+  { role: '地區地帶研習會推廣委員會主委', name: '廖勝揮', rotary: 'Lighting',  club: '台中扶輪社' },
+  { role: '地區地帶研習會推廣委員會副主委',name: '黃敏宏',rotary: 'Bank',     club: '台中港東區扶輪社' },
+  { role: '地區獎勵委員會主委',           name: '李順安', rotary: 'Surgeon',   club: '苑裡扶輪社' },
+  { role: '地區獎勵委員會副主委',         name: '陳正忠', rotary: 'Jo',        club: '苑裡扶輪社' },
+  { role: '地區獎勵委員會副主委',         name: '繆淑靖', rotary: 'Judy',      club: '苑裡扶輪社' },
+  { role: '地區基礎教育與識字委員會主委', name: '許耀文', rotary: 'Chem',      club: '台中港東南扶輪社' },
+  { role: '地區基礎教育與識字委員會副主委',name:'陳建忠', rotary: 'Center',   club: '台中大屯扶輪社' },
+  { role: '地區基礎教育與識字委員會副主委',name:'宋尚儒', rotary: 'Song',     club: '石岡扶輪社' },
+  { role: '地區基礎教育與識字委員會副主委',name:'花錦忠', rotary: 'Flower',   club: '台中港西南扶輪社' },
+  { role: '地區和平與衝突預防委員會主委', name: '陳敏聰', rotary: 'Concrete',  club: '台中中州扶輪社' },
+  { role: '地區和平與衝突預防委員會副主委',name:'紀俊銘', rotary: 'POS',      club: '台中惠來扶輪社' },
+  { role: '地區疾病治療與預防委員會主委', name: '張玉霞', rotary: 'Master',    club: '大甲百齡扶輪社' },
+  { role: '地區疾病治療與預防委員會副主委',name:'洪芬灼', rotary: 'Ivy',      club: '大甲百齡扶輪社' },
+  { role: '地區疾病治療與預防委員會副主委',name:'謝秀惠', rotary: 'Webbing',  club: '大甲百齡扶輪社' },
+  { role: '地區水資源與衛生委員會主委',   name: '李金聲', rotary: 'Doctor',    club: '台中西區扶輪社' },
+  { role: '地區水資源與衛生委員會副主委', name: '陳祿裕', rotary: 'Tell-Me',   club: '台中西區扶輪社' },
+  { role: '地區水資源與衛生委員會副主委', name: '朱志民', rotary: 'Mountain',  club: '石岡扶輪社' },
+];
+renderCards(communityData, 'grid-community');
+
+/* ── 地區特別委員會（國際服務）── */
+const specialIntlData = [
+  { role: '地區國際醫療關懷委員會主委',   name: '顏精華', rotary: 'Brain',    club: '豐原北區扶輪社' },
+  { role: '地區國際醫療關懷委員會副主委', name: '謝溫國', rotary: 'DJ',       club: '台中大屯扶輪社' },
+  { role: '地區國際醫療關懷委員會副主委', name: '陳敬達', rotary: 'Alan',     club: '台中向上扶輪社' },
+  { role: '地區國際醫療關懷委員會副主委', name: '趙崇勳', rotary: 'Brain',    club: '台中東南扶輪社' },
+  { role: '地區國際醫療關懷委員會副主委', name: '游銘堂', rotary: 'Tony',     club: '台中惠來扶輪社' },
+  { role: '地區國際醫療關懷委員會副主委', name: '陳力平', rotary: 'Ali',      club: '大甲中央扶輪社' },
+  { role: '地區台日親睦促進委員會主委',   name: '陳政雄', rotary: 'Offset',   club: '台中扶輪社' },
+  { role: '地區國際姊妹扶輪社及地區推薦委員會主委', name: '楊金振', rotary: 'Tony', club: '台中東南扶輪社' },
+  { role: '地區環境保護委員會主委',       name: '林麗珠', rotary: 'Case',     club: '台中中央扶輪社' },
+  { role: '地區環境保護委員會副主委',     name: '李茂萍', rotary: 'Mabel',    club: '台中中央扶輪社' },
+  { role: '地區環境保護委員會副主委',     name: '張淑霞', rotary: 'Sarah',    club: '台中中央扶輪社' },
+  { role: '第九屆盲人環台公益路跑委員會主委',name:'汪世旭',rotary:'Lobsang',  club: '台中馬拉松扶輪社' },
+  { role: '第九屆盲人環台公益路跑委員會副主委',name:'羅垓玉',rotary:'Kennys', club: '豐原富春扶輪社' },
+  { role: '第九屆盲人環台公益路跑委員會副主委',name:'郭偉毓',rotary:'Allen',  club: '台中港中央扶輪社' },
+  { role: '地區母親與兒童健康委員會主委', name: '李翠娟', rotary: 'Jane',     club: '台中中英扶輪社' },
+  { role: '地區母親與兒童健康委員會副主委',name: '石家昱',rotary: 'Life',     club: '台中潭雅神扶輪社' },
+  { role: '台北國際年會服務委員會主委',   name: '廖祿昇', rotary: 'Lu',       club: '台中大同扶輪社' },
+  { role: '台北國際年會服務委員會副主委', name: '郭子惼', rotary: 'NGO',      club: '台中扶輪社' },
+  { role: '台北國際年會服務委員會副主委', name: '李宜毅', rotary: 'Essen',    club: '台中大同扶輪社' },
+  { role: '台北國際年會服務委員會副主委', name: '廖文維', rotary: 'Dennis',   club: '台中朝富扶輪社' },
+  { role: '台北國際年會服務委員會副主委', name: '林群賀', rotary: 'Joe',      club: '台中朝富扶輪社' },
+  { role: '台北國際年會服務委員會副主委', name: '蘇世偉', rotary: 'Jackal',   club: '后里扶輪社' },
+  { role: '台北國際年會服務委員會副主委', name: '陳建東', rotary: 'East',     club: '台中港東區扶輪社' },
+  { role: '地區策略計畫委員會主委',       name: '張光瑤', rotary: 'Concept',  club: '台中南門扶輪社' },
+];
+renderCards(specialIntlData, 'grid-special-intl');
+
+/* ── 地區扶輪基金委員會 ── */
+const foundationData = [
+  { role: '地區扶輪基金委員會主委',   name: '陳福振', rotary: 'Bill',      club: '豐原西南扶輪社' },
+  { role: '地區扶輪基金委員會副主委', name: '張光瑤', rotary: 'Concept',   club: '台中南門扶輪社' },
+  { role: '地區扶輪基金委員會副主委', name: '陳敬達', rotary: 'Alan',      club: '台中向上扶輪社' },
+  { role: '地區扶輪基金委員會副主委', name: '鍾尹堂', rotary: 'Marketing', club: '台中惠中扶輪社' },
+  { role: '地區扶輪基金委員會副主委', name: '顏精華', rotary: 'Brain',     club: '豐原北區扶輪社' },
+  { role: '地區扶輪基金委員會副主委', name: '趙文華', rotary: 'Aircon',    club: '大肚扶輪社' },
+  { role: '地區扶輪基金委員會副主委', name: '侯彬彬', rotary: 'Gas',       club: '台中港東區扶輪社' },
+  { role: '地區保羅哈里斯會員(PHS)主委',name:'朱鎮正',rotary: 'H-Beams',  club: '豐原北區扶輪社' },
+  { role: '地區獎助金委員會主委',     name: '王翠婷', rotary: 'Olivias',   club: '台中中央扶輪社' },
+  { role: '地區獎助金委員會副主委',   name: '陳東澤', rotary: 'Tonys',     club: '大甲扶輪社' },
+  { role: '地區獎助金委員會副主委',   name: '王瑞意', rotary: 'Boxs',      club: '台中港東區扶輪社' },
+  { role: '地區獎助金委員會副主委',   name: '陳桂蓮', rotary: 'Donnas',    club: '台中台美扶輪社' },
+  { role: '地區獎助金委員會委員',     name: '廖陳宣有',rotary: 'Pauls',    club: '台中台興扶輪社' },
+  { role: '地區獎助金委員會委員',     name: '吳育萱', rotary: 'Aimees',    club: '台中大同扶輪社' },
+  { role: '地區獎助金委員會委員',     name: '蔡宜君', rotary: 'Alices',    club: '台中中央扶輪社' },
+  { role: '地區募款委員會主委',       name: '謝東隆', rotary: 'Papers',    club: '大甲北區扶輪社' },
+  { role: '地區年度計畫捐獻(APF)委員會主委',name:'陳俊雄',rotary:'Joy',   club: '台中東區扶輪社' },
+  { role: '地區年度計畫捐獻(APF)委員會副主委',name:'郭子惼',rotary:'NGO', club: '台中扶輪社' },
+  { role: '地區年度計畫捐獻(APF)委員會副主委',name:'張志成',rotary:'Philip',club:'台中東昇扶輪社' },
+  { role: '地區年度計畫捐獻(APF)委員會副主委',name:'黃俊益',rotary:'Glory',club:'豐原東區扶輪社' },
+  { role: '地區年度計畫捐獻(APF)委員會副主委',name:'黃峰杰',rotary:'A-Jay',club:'台中港西南扶輪社' },
+];
+renderCards(foundationData, 'grid-foundation');
+
+/* ── 地區特別委員會（基金學術）── */
+const specialFundData = [
+  { role: '地區保管委員會主委',                 name: '李佩璇', rotary: 'Tax',       club: '台中台美扶輪社' },
+  { role: '地區保管委員會副主委',               name: '張晏慈', rotary: 'Joanna',    club: '台中惠中扶輪社' },
+  { role: '地區保管委員會副主委',               name: '劉潤琳', rotary: 'Data',      club: '大肚扶輪社' },
+  { role: '地區EREY推廣委員會主委',             name: '陳彥昌', rotary: 'Vance',     club: '台中港西濱扶輪社' },
+  { role: '地區EREY推廣委員會副主委(A區)',      name: '郭書昕', rotary: 'Sharon',    club: '台中中英扶輪社' },
+  { role: '地區EREY推廣委員會副主委(B區)',      name: '郭政賢', rotary: 'Designer',  club: '台中惠中扶輪社' },
+  { role: '地區EREY推廣委員會副主委(C區)',      name: '廖梓婷', rotary: 'Sunny',     club: '豐原中央扶輪社' },
+  { role: '地區EREY推廣委員會副主委(D區)',      name: '李德義', rotary: 'Rich',      club: '台中港都扶輪社' },
+  { role: '地區扶輪和平獎學金委員會主委',       name: '黃展雄', rotary: 'Paper',     club: '豐原東區扶輪社' },
+  { role: '地區獎學金委員會主委',               name: '郭銘勛', rotary: 'Toyohala',  club: '豐原扶輪社' },
+  { role: '地區職業訓練團隊委員會(VTT)主委',   name: '廖陳宣有',rotary: 'Pauls',    club: '台中台興扶輪社' },
+  { role: '地區中華扶輪教育基金委員會主委',     name: '郭素昭', rotary: 'Sue',       club: '台中中央扶輪社' },
+  { role: '地區中華扶輪教育基金委員會副主委(A區)',name:'蔡宜君',rotary:'Alice',     club: '台中中央扶輪社' },
+  { role: '地區中華扶輪教育基金委員會副主委(B區)',name:'張美足',rotary:'Mandys',    club: '台中台美扶輪社' },
+  { role: '地區中華扶輪教育基金委員會副主委(C區)',name:'廖秀姿',rotary:'Cheryl',    club: '豐原中央扶輪社' },
+  { role: '地區中華扶輪教育基金委員會副主委(D區)',name:'陳森茂',rotary:'Textile',   club: '台中港東南扶輪社' },
+  { role: '地區永久基金暨巨額捐獻委員會主委',   name: '劉禮修', rotary: 'Eyes',      club: '台中台美扶輪社' },
+  { role: '地區前受獎委員會主委',               name: '鄭啟陞', rotary: 'K-Say',     club: '豐原富春扶輪社' },
+  { role: '地區AKS委員會主委',                 name: '廖俊清', rotary: 'Stationary',club: '台中中興扶輪社' },
+  { role: '地區中華扶輪教育基金審查委員會召集人',name:'張梅英', rotary: 'Land',     club: '台中中央扶輪社' },
+  { role: '地區中華扶輪教育基金審查委員會委員', name: '林允進', rotary: 'Propeller', club: '台中扶輪社' },
+  { role: '地區中華扶輪教育基金審查委員會委員', name: '施士慶', rotary: 'Success',   club: '台中文教扶輪社' },
+  { role: '地區中華扶輪教育基金審查委員會委員', name: '陳貴端', rotary: 'Sporn',     club: '台中大屯扶輪社' },
+  { role: '地區中華扶輪教育基金審查委員會委員', name: '顏精華', rotary: 'Brain',     club: '豐原北區扶輪社' },
+  { role: '地區阿奇·柯藍夫協會說明委員會主委', name: '林允進', rotary: 'Propeller', club: '台中扶輪社' },
+  { role: '地區消除小兒麻痺委員會主委',         name: '游銘堂', rotary: 'Tony',      club: '台中惠來扶輪社' },
+];
+renderCards(specialFundData, 'grid-special-fund');
+
+/* ── 地區社務行政委員會 ── */
+const adminData = [
+  { role: '地區社務行政委員會主委',         name: '陳光龍', rotary: 'Oscar',     club: '台中東南扶輪社' },
+  { role: '地區社務行政委員會副主委',       name: '李永松', rotary: 'Scale',     club: '台中省都扶輪社' },
+  { role: '地區社務行政委員會副主委',       name: '張仲雄', rotary: 'Light',     club: '台中東南扶輪社' },
+  { role: '地區社務行政委員會副主委',       name: '邱德興', rotary: 'Oak',       club: '豐原北區扶輪社' },
+  { role: '地區社務行政委員會副主委',       name: '王炯超', rotary: 'Wang',      club: '台中港區扶輪社' },
+  { role: '地區社務行政委員會副主委',       name: '王正雄', rotary: 'Shoes',     club: '台中港中區扶輪社' },
+  { role: '地區社長秘書聯誼會主委',         name: '林正治', rotary: 'Villa',     club: '台中港東區扶輪社' },
+  { role: '地區社長秘書聯誼會副主委',       name: '林世修', rotary: 'Jason',     club: '台中港東區扶輪社' },
+  { role: '地區聯誼活動委員會主委',         name: '劉美香', rotary: 'Soy',       club: '台中中央扶輪社' },
+  { role: '地區扶輪論壇委員會主委',         name: '吳宏亮', rotary: 'Patent',    club: '台中扶輪社' },
+  { role: '地區扶輪中央系統RCC委員會主委',  name: '黃志銘', rotary: 'Jackie',    club: '台中港西濱扶輪社' },
+  { role: '地區扶輪禮儀推廣委員會主委',     name: '李勝華', rotary: 'Cupola',    club: '豐原西北扶輪社' },
+  { role: '地區扶輪櫥窗Service Center委員會主委',name:'蔡淑敏',rotary:'Shu-Min',club:'台中大同扶輪社' },
+  { role: '地區扶輪家庭委員會主委',         name: '謝明河', rotary: 'Jacky',     club: '台中港區扶輪社' },
+  { role: '地區扶輪家庭委員會副主委',       name: '鄭陽春', rotary: 'Broker',    club: '台中港區扶輪社' },
+  { role: '地區扶輪家庭委員會副主委',       name: '鄭憶碩', rotary: 'Color',     club: '苑裡扶輪社' },
+  { role: '地區節目人才庫委員會主委',       name: '葉永斌', rotary: 'Building',  club: '台中港區扶輪社' },
+  { role: '地區節目人才庫委員會副主委',     name: '陳紫山', rotary: 'Jason',     club: '台中港區扶輪社' },
+  { role: '地區節目人才庫委員會副主委',     name: '王叔榮', rotary: 'Lawyer',    club: '台中南門扶輪社' },
+  { role: '地區節目人才庫委員會副主委',     name: '張清欽', rotary: 'Natural',   club: '苑裡扶輪社' },
+  { role: '地區節目人才庫委員會副主委',     name: '黃吉文', rotary: 'Color',     club: '台中港西南扶輪社' },
+  { role: '地區扶輪雜誌推廣委員會主委',     name: '王友民', rotary: 'Teacher',   club: '台中高美扶輪社' },
+  { role: '地區扶輪精神推廣委員會主委',     name: '吳義村', rotary: 'Boss',      club: '台中港亞太扶輪社' },
+  { role: '地區扶輪精神推廣委員會副主委',   name: '陳榮輝', rotary: 'Rice',      club: '台中港亞太扶輪社' },
+  { role: '地區扶輪精神推廣委員會副主委',   name: '楊昇界', rotary: 'Builder',   club: '台中港西南扶輪社' },
+  { role: '地區網路資訊委員會主委',         name: '江孝昇', rotary: 'Arthur',    club: '台中港東區扶輪社' },
+  { role: '地區網路資訊委員會副主委',       name: '吳育萱', rotary: 'Aimee',     club: '台中大同扶輪社' },
+  { role: '地區網路資訊委員會副主委',       name: '黃國維', rotary: 'King',      club: '台中惠來扶輪社' },
+  { role: '地區網路資訊委員會副主委',       name: '王孟埰', rotary: 'Food',      club: '台中港西濱扶輪社' },
+  { role: '地區網路資訊委員會副主委',       name: '陳銘峰', rotary: 'Hacker',    club: '台中市政扶青社' },
+  { role: '地區網路資訊委員會副主委',       name: '王佩琪', rotary: 'Chichi',    club: '台中東南扶青社' },
+  { role: '地區攝影美學委員會主委',         name: '賴仲崑', rotary: 'Eastman',   club: '大甲中央扶輪社' },
+  { role: '地區攝影美學委員會顧問',         name: '金學宏', rotary: 'Rack',      club: '彰化中區扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '古亭河', rotary: 'Tim',       club: '台中扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '陳柏霖', rotary: 'Michael',   club: '台中扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '黃冠誌', rotary: 'KC',        club: '台中柳川扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '蕭必享', rotary: 'Walker',    club: '台中東友扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '嚴宏毅', rotary: 'Lungyen',   club: '台中馬拉松扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '戴茂發', rotary: 'CNC',       club: '豐原扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '吳柏憲', rotary: 'Brian',     club: '台中港西濱扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '黃宗禮', rotary: 'Level',     club: '大甲北區扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '劉春蔚', rotary: 'CanDa',     club: '大甲北區扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '劉家豪', rotary: 'Henry',     club: '大甲中央扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '劉冠佑', rotary: 'Estate',    club: '台中港東區扶輪社' },
+  { role: '地區攝影美學委員會副主委',       name: '王麗紅', rotary: 'Guard 夫人',club: '台中港東區扶輪社' },
+  { role: '地區扶輪感動委員會主委',         name: '林立人', rotary: 'James',     club: '台中省都扶輪社' },
+];
+renderCards(adminData, 'grid-admin');
+
+/* ── 地區社員委員會 ── */
+const membershipData = [
+  { role: '地區社員委員會主委',         name: '江瑞啟', rotary: 'Lexus',    club: '台中立心扶輪社' },
+  { role: '地區社員委員會顧問',         name: '孫誠',   rotary: 'Gordon',   club: '台中大屯扶輪社' },
+  { role: '地區社員委員會副主委',       name: '嚴宏偉', rotary: 'KK',       club: '台中立心扶輪社' },
+  { role: '地區社員委員會副主委',       name: '王俊源', rotary: 'Material', club: '台中惠中扶輪社' },
+  { role: '地區社員委員會副主委',       name: '陳坤和', rotary: 'Cowboy',   club: '豐原東區扶輪社' },
+  { role: '地區社員委員會副主委',       name: '梁明德', rotary: 'Power',    club: '大甲北區扶輪社' },
+  { role: '地區扶輪社發展委員會主委',   name: '王孟堃', rotary: 'Food',     club: '台中港西濱扶輪社' },
+  { role: '地區扶輪社發展委員會副主委', name: '張宏銘', rotary: 'Bruce',    club: '台中南區扶輪社' },
+  { role: '地區扶輪社發展委員會副主委', name: '陳美諭', rotary: 'Renee',    club: '台中港西濱扶輪社' },
+  { role: '地區扶輪社發展委員會副主委', name: '余建擇', rotary: 'Cotton',   club: '台中立心扶輪社' },
+  { role: '地區防止社員流失委員會主委', name: '彭王賜', rotary: 'Roy',      club: '台中中州扶輪社' },
+  { role: '地區防止社員流失委員會副主委',name:'謝咏霖', rotary: 'Maru',    club: '台中港區扶輪社' },
+  { role: '地區防止社員流失委員會副主委',name:'何淑鈴', rotary: 'Meiji',   club: '台中立心扶輪社' },
+  { role: '地區新扶輪社發展委員會主委', name: '謝德亮', rotary: 'Willie',   club: '台中中區扶輪社' },
+  { role: '地區新扶輪社發展委員會副主委',name:'陳金源', rotary: 'Crystal', club: '台中高爾夫扶輪社' },
+  { role: '地區新扶輪社發展委員會副主委',name:'李崇銘', rotary: 'Eddie',   club: '台中立心扶輪社' },
+  { role: '地區新扶輪社發展委員會副主委',name:'黃勁維', rotary: 'James',   club: '台中市政扶輪社' },
+  { role: '地區圓桌論壇委員會主委',     name: '李世偉', rotary: 'Carrier',  club: '台中市政扶輪社' },
+  { role: '地區圓桌論壇委員會副主委',   name: '黃志仲', rotary: 'Jason',    club: '台中立心扶輪社' },
+  { role: '地區圓桌論壇委員會副主委',   name: '陳慧如', rotary: 'Angel',    club: '台中馬拉松扶輪社' },
+  { role: '地區圓桌論壇委員會副主委',   name: '黃智揚', rotary: 'Wales',    club: '豐原富春扶輪社' },
+  { role: '地區圓桌論壇委員會副主委',   name: '黃忠信', rotary: 'Johnson',  club: '大甲扶輪社' },
+  { role: '地區衛星扶輪社推廣委員會主委',name:'林明賦', rotary: 'Mark',    club: '台中曙光扶輪社' },
+  { role: '地區衛星扶輪社推廣委員會副主委',name:'陳芝宇',rotary: 'CY',    club: '台中曙光扶輪社' },
+  { role: '地區衛星扶輪社推廣委員會副主委',name:'張達諾',rotary:'Terence', club: '台中曙光扶輪社' },
+  { role: '地區衛星扶輪社推廣委員會副主委',name:'張文銘',rotary:'Stanley', club: '台中曙光扶輪社' },
+  { role: '地區衛星扶輪社推廣委員會副主委',name:'陳宗呈',rotary:'Moneys',  club: '台中曙光扶輪社' },
+  { role: '地區寶眷入扶輪社推廣委員會主委',name:'郭威廷',rotary:'Kitty',  club: '台中馬拉松扶輪社' },
+  { role: '地區寶眷入扶輪社推廣委員會副主委',name:'鄧昌勝',rotary:'Arthur',club:'台中羽球扶輪社' },
+  { role: '地區寶眷入扶輪社推廣委員會副主委',name:'林芳如',rotary:'Vivian',club:'台中中英扶輪社' },
+];
+renderCards(membershipData, 'grid-membership');
+
+/* ── 地區公共形象委員會 ── */
+const pubImageData = [
+  { role: '地區公共形象委員會主委',       name: '鄭俊杰', rotary: 'Jack',       club: '台中東北扶輪社' },
+  { role: '地區公共形象委員會諮詢顧問',   name: '廖陳宣有',rotary: 'Paul',      club: '台中台興扶輪社' },
+  { role: '地區公共形象委員會諮詢顧問',   name: '林久丰', rotary: 'Joe',        club: '台中東友扶輪社' },
+  { role: '地區公共形象委員會副主委',     name: '林義弘', rotary: 'Consultant', club: '台中港東區扶輪社' },
+  { role: '副主委執行長',                 name: '黃聖棠', rotary: 'Frank',      club: '台中市政扶輪社' },
+  { role: '副主委暨執行長',               name: '張宏名', rotary: 'John',       club: '台中南光扶輪社' },
+  { role: '副主委暨副執行長',             name: '蘇瑜輝', rotary: 'Josh',       club: '台中市政扶輪社' },
+  { role: 'A區主委',                     name: '林群賀', rotary: 'Joe',        club: '台中朝富扶輪社' },
+  { role: 'B區主委',                     name: '吳宇生', rotary: 'Diamond',    club: '台中惠來扶輪社' },
+  { role: 'C區主委',                     name: '楊大慶', rotary: 'DC',         club: '台中潭雅神扶輪社' },
+  { role: 'D區主委',                     name: '巫志華', rotary: 'Test',       club: '大肚扶輪社' },
+  { role: '社群媒體委員會主委',           name: '黃國維', rotary: 'King',       club: '台中惠來扶輪社' },
+  { role: '社群媒體委員會副主委',         name: '高炎順', rotary: 'Darren',     club: '台中惠來扶輪社' },
+  { role: '社群媒體委員會副主委',         name: '陳溫仁', rotary: 'Win',        club: '台中東南扶青社' },
+  { role: '社群媒體委員會副主委',         name: '游舜安', rotary: 'Stephen',    club: '台中惠來扶青社' },
+  { role: '社群媒體委員會A區副主委',      name: '賴玉霞', rotary: 'Polly',      club: '台中文教扶輪社' },
+  { role: '社群媒體委員會B區副主委',      name: '郭誌佑', rotary: 'Hero',       club: '台中惠來扶輪社' },
+  { role: '社群媒體委員會C區副主委',      name: '廖梓婷', rotary: 'Sunny',      club: '豐原中央扶輪社' },
+  { role: '社群媒體委員會D區副主委',      name: '劉冠佑', rotary: 'Estate',     club: '台中港東區扶輪社' },
+  { role: '地區扶輪品牌推廣委員會主委',   name: '黃培展', rotary: 'Johnny',     club: '台中東北扶輪社' },
+  { role: '地區扶輪品牌推廣委員會主委',   name: '王孟埰', rotary: 'Food',       club: '台中港西濱扶輪社' },
+  { role: '地區扶輪品牌推廣委員會副主委', name: '曹慶文', rotary: 'Pi',         club: '台中市政扶輪社' },
+  { role: '地區與學校關係委員會主委',     name: '薛光豐', rotary: 'Math',       club: '台中東北扶輪社' },
+  { role: '地區與學校關係委員會副主委',   name: '王清德', rotary: 'Dean',       club: '台中玉山扶輪社' },
+  { role: '地區跨扶輪社團關係委員會主委', name: '楊燕秋', rotary: 'Angel',      club: '台中港區扶輪社' },
+  { role: '地區與媒體關係委員會主委',     name: '童玉蘭', rotary: 'Janice',     club: '台中立心扶輪社' },
+  { role: '地區與媒體關係委員會副主委',   name: '黃睿寓', rotary: 'Family',     club: '台中潭雅神扶輪社' },
+  { role: '地區危機處理諮詢委員會主委',   name: '林俊雄', rotary: 'Lawyer',     club: '台中東興扶輪社' },
+];
+renderCards(pubImageData, 'grid-pubimage');
+
+/* ── 地區服務計畫委員會 ── */
+const servicePlanData = [
+  { role: '地區服務計畫委員會主委',   name: '林維崧', rotary: 'Safe',      club: '台中大屯扶輪社' },
+  { role: '地區服務計畫委員會A區副主委',name:'黃良柱', rotary: 'Yellow',   club: '台中省都扶輪社' },
+  { role: '地區服務計畫委員會B區副主委',name:'賴美滿', rotary: 'Charlene', club: '台中台美扶輪社' },
+  { role: '地區服務計畫委員會C區副主委',name:'陳志豪', rotary: 'Matsu',    club: '豐原扶輪社' },
+  { role: '地區服務計畫委員會D區副主委',name:'趙文華', rotary: 'Aircon',   club: '大肚扶輪社' },
+  { role: '地區扶輪日委員會主委',     name: '郭子寬', rotary: 'Timothy',   club: '台中大屯扶輪社' },
+  { role: '地區扶輪日委員會顧問',     name: '張明星', rotary: 'Star',      club: '台中港東區扶輪社' },
+  { role: '地區扶輪日委員會副主委',   name: '江鏡林', rotary: 'Mirror',    club: '台中中州扶輪社' },
+  { role: '地區扶輪日委員會副主委',   name: '林維耀', rotary: 'Kitchen',   club: '台中馬拉松扶輪社' },
+  { role: '地區扶輪日委員會副主委',   name: '高基讚', rotary: 'City',      club: '后里扶輪社' },
+  { role: '地區扶輪日委員會副主委',   name: '蔡木飲', rotary: 'Machine',   club: '台中港東區扶輪社' },
+  { role: '地區扶輪日委員會副主委',   name: '郭偉毓', rotary: 'Allen',     club: '台中港中央扶輪社' },
+  { role: '地區扶輪日委員會副主委',   name: '陳建成', rotary: 'James',     club: '豐原扶輪社' },
+  { role: '地區扶輪日委員會執行長',   name: '姚武邦', rotary: 'Woody',     club: '台中大屯扶輪社' },
+  { role: '地區扶輪日委員會副執行長', name: '姚之浩', rotary: 'Ian',       club: '台中大屯扶輪社' },
+  { role: '行政組召集人',             name: '張宏名', rotary: 'John',      club: '台中南光扶輪社' },
+  { role: '財務組',                   name: '陳冠文', rotary: 'Rich',      club: '豐原富春扶輪社' },
+  { role: '醫療保健/糾察組',          name: '熊亞萍', rotary: 'Kuma',      club: '台中朝富扶輪社' },
+  { role: '環保衛生組',               name: '何明松', rotary: 'Leo',       club: '台中羽球扶輪社' },
+  { role: '行政資源組',               name: '張采總', rotary: 'Angel',     club: '台中南光扶輪社' },
+  { role: '貴賓接待組',               name: '李佩璇', rotary: 'Tax',       club: '台中台美扶輪社' },
+  { role: '禮品組',                   name: '江耿碩', rotary: 'Box',       club: '豐原東區扶輪社' },
+  { role: '工讀生組',                 name: '徐碧琴', rotary: 'Gina',      club: '台中山海屯扶輪社' },
+  { role: '扶青協調組',               name: '何本立', rotary: 'Nice',      club: '台中東區扶輪社' },
+  { role: '扶青協調組',               name: '陳溫仁', rotary: 'Win',       club: '台中東南扶青社' },
+  { role: '會場組召集人',             name: '謝德亮', rotary: 'Willie',    club: '台中中區扶輪社' },
+  { role: '音響舞台組',               name: '張逸家', rotary: 'Zero',      club: '台中大屯扶輪社' },
+  { role: '企劃組',                   name: '吳育萱', rotary: 'Aimee',     club: '台中大同扶輪社' },
+  { role: '會場硬體組',               name: '劉恩杰', rotary: 'Chef',      club: '台中大同扶輪社' },
+  { role: '紀錄組',                   name: '薛顯浚', rotary: 'Webber',    club: '大甲扶輪社' },
+  { role: '拍照影像組',               name: '賴仲崑', rotary: 'Eastman',   club: '大甲中央扶輪社' },
+  { role: '拍照影像組',               name: '張麗鳳', rotary: 'Megane',    club: '豐原中央扶輪社' },
+  { role: '拍照影像組',               name: '林財賜', rotary: 'Megane',    club: '豐原西北扶輪社' },
+  { role: '機電(水)組',               name: '黃學通', rotary: 'Aqua',      club: '台中中區扶輪社' },
+  { role: '結案統籌組',               name: '林柏劭', rotary: 'Lawyer',    club: '台中柳川扶輪社' },
+  { role: '節目組召集人',             name: '施宇哲', rotary: 'Taiko',     club: '台中大屯扶輪社' },
+  { role: '會節目主持組',             name: '楊家勳', rotary: 'B.B.Q',     club: '台中大屯扶輪社' },
+  { role: '節目組暖場',               name: '郭威廷', rotary: 'Kitty',     club: '台中馬拉松扶輪社' },
+  { role: '節目驚豔扶輪',             name: '莊富翔', rotary: 'Louis',     club: '台中大光扶輪社' },
+  { role: '節目驚豔扶輪',             name: '李翠娟', rotary: 'Jane',      club: '台中中英扶輪社' },
+  { role: '節目小舞台表演區',         name: '劉宜欣', rotary: 'Simmer',    club: '台中市政扶輪社' },
+  { role: '節目互動遊戲區',           name: '陳智鴻', rotary: 'Wolf',      club: '台中曙光扶輪社' },
+  { role: '節目無毒好尬舞',           name: '陳佳瑛', rotary: 'Bonnie',    club: '台中文教扶輪社' },
+  { role: '節目繪畫比賽',             name: '劉哲志', rotary: 'Picasso',   club: '台中大屯扶輪社' },
+  { role: '節目互動遊戲區+發放禮品',  name: '方閔正', rotary: 'Vincent',   club: '台中市政扶輪社' },
+  { role: '節目互動遊戲區+發放禮品',  name: '林綉合', rotary: 'Aluminum',  club: '大肚扶輪社' },
+  { role: '招商組召集人',             name: '鄭俊杰', rotary: 'Jack',      club: '台中東北扶輪社' },
+  { role: '招商組副召集人',           name: '陳俊良', rotary: 'JC',        club: '台中大屯扶輪社' },
+  { role: '名店美食街',               name: '黃培展', rotary: 'Johnny',    club: '台中東北扶輪社' },
+  { role: '扶輪精品街',               name: '張舜評', rotary: 'Dollar',    club: '台中大屯扶輪社' },
+  { role: '公益1+1',                  name: '鄭豪柏', rotary: 'Archi',     club: '台中台興扶輪社' },
+  { role: '團結行善公益組召集人',     name: '陳敬達', rotary: 'Alan',      club: '台中向上扶輪社' },
+  { role: 'GG案成果發表',             name: '林建銘', rotary: 'Jamie',     club: '台中市政扶輪社' },
+  { role: '反毒成果發表',             name: '陳木柱', rotary: 'School',    club: '台中大屯扶輪社' },
+  { role: '25-26服務計畫成果發表',    name: '謝溫國', rotary: 'DJ',        club: '台中大屯扶輪社' },
+];
+renderCards(servicePlanData, 'grid-service-plan');
+
+/* ── 地區社區與職業服務 ── */
+const communityVocData = [
+  { role: '地區扶輪社區服務團委員會(RCCs)主委',name:'鄭明彰', rotary:'Casting', club:'大甲中央扶輪社' },
+  { role: '地區扶輪社區服務團委員會副主委',     name:'王俐婷', rotary:'Beauty',  club:'台中立心扶輪社' },
+  { role: '地區扶輪社區服務團委員會副主委',     name:'何志修', rotary:'Sugar',   club:'台中南門扶輪社' },
+  { role: '地區扶輪社區服務團委員會副主委',     name:'廖顯彬', rotary:'Fuse',    club:'大雅扶輪社' },
+  { role: '地區扶輪社區服務團委員會副主委',     name:'陳正雄', rotary:'Lagis',   club:'大甲北區扶輪社' },
+  { role: '地區扶輪社區服務團委員會副主委',     name:'陳錫應', rotary:'Building',club:'台中東北扶輪社' },
+  { role: '地區扶輪社區服務團委員會副主委',     name:'鄧富美', rotary:'English', club:'台中中央扶輪社' },
+  { role: '地區扶輪社區服務團委員會副主委',     name:'林鴻明', rotary:'Rock',    club:'台中東友扶輪社' },
+  { role: '地區扶輪社區服務團委員會副主委',     name:'魏大和', rotary:'Fire',    club:'台中惠來扶輪社' },
+  { role: '地區扶輪社區服務團委員會副主委',     name:'莊朝輝', rotary:'Julian',  club:'大甲中央扶輪社' },
+  { role: '地區職業服務委員會主委',             name:'莊瓊瑤', rotary:'Joan',    club:'台中山海屯扶輪社' },
+  { role: '地區職業服務委員會副主委',           name:'黃秋榮', rotary:'Hank',    club:'豐原富春扶輪社' },
+  { role: '地區職業服務委員會副主委',           name:'林保恩', rotary:'Jenny',   club:'台中山海屯扶輪社' },
+  { role: '地區扶輪社區發展委員會主委',         name:'黃添松', rotary:'Matsu',   club:'豐原北區扶輪社' },
+];
+renderCards(communityVocData, 'grid-community-voc');
+
+/* ── 地區扶輪之子委員會 ── */
+const rotaractData = [
+  { role: '地區扶輪之子委員會主委',   name: '陳阿澤', rotary: 'Incense',  club: '台中港東區扶輪社' },
+  { role: '地區扶輪之子委員會副主委', name: '洪嘉鴻', rotary: 'Attorney', club: '台中西區扶輪社' },
+  { role: '地區扶輪之子委員會副主委', name: '陳俊雄', rotary: 'House',    club: '台中惠來扶輪社' },
+  { role: '地區扶輪之子委員會副主委', name: '紀福仁', rotary: 'Truck',    club: '神岡扶輪社' },
+  { role: '地區扶輪之子委員會副主委', name: '王俊卿', rotary: 'Falali',   club: '台中港東區扶輪社' },
+  { role: '地區扶輪之子委員會副主委', name: '謝金標', rotary: 'Polo',     club: '台中港東區扶輪社' },
+  { role: '地區扶輪之子委員會副主委', name: '童家隆', rotary: 'Paper',    club: '台中港中區扶輪社' },
+  { role: '地區扶輪之子委員會副主委', name: '王垂坤', rotary: 'Food',     club: '苑裡扶輪社' },
+  { role: '地區扶輪之子委員會副主委', name: '蕭勝吉', rotary: 'Bank',     club: '豐原扶輪社' },
+  { role: '地區扶輪之子委員會副主委', name: '侯至益', rotary: 'System',   club: '台中大屯扶輪社' },
+];
+renderCards(rotaractData, 'grid-rotaract');
+
+/* ── 地區國際服務委員會 ── */
+const intlServiceData = [
+  { role: '地區國際服務委員會主委',   name: '陳敬達', rotary: 'Alan',       club: '台中向上扶輪社' },
+  { role: '地區國際服務委員會副主委', name: '趙文華', rotary: 'Aircon',     club: '大肚扶輪社' },
+  { role: '地區國際服務委員會副主委', name: '陳東澤', rotary: 'Tony',       club: '大甲扶輪社' },
+  { role: '地區國際服務委員會副主委', name: '蔡淑敏', rotary: 'Shu-Min',    club: '台中大同扶輪社' },
+  { role: '地區國際服務委員會副主委', name: '顏精華', rotary: 'Brain',      club: '豐原北區扶輪社' },
+  { role: '地區國際服務委員會副主委', name: '游志豪', rotary: 'IC',         club: '台中東區扶輪社' },
+  { role: '地區國際服務委員會A區副主委',name:'周志憲',rotary: 'Chuck',      club: '台中立心扶輪社' },
+  { role: '地區國際服務委員會B區副主委',name:'趙崇勳',rotary: 'Brain',      club: '台中東南扶輪社' },
+  { role: '地區國際服務委員會C區副主委',name:'廖梓婷',rotary: 'Sunny',      club: '豐原中央扶輪社' },
+  { role: '地區國際服務委員會D區副主委',name:'吳美亮',rotary: 'Style',      club: '大甲百齡扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '張志成', rotary: 'Philip',     club: '台中東昇扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '陳盈光', rotary: 'Lawyer',     club: '台中港都扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '陳力平', rotary: 'Ali',        club: '大甲中央扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '何孟璋', rotary: 'Lorie',      club: '台中向上扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '王翠婷', rotary: 'Olivia',     club: '台中中央扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '李佩璇', rotary: 'Tax',        club: '台中台美扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '鄧富美', rotary: 'Englishs',   club: '台中中央扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '郭子寬', rotary: 'Timothy',    club: '台中大屯扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '廖祿昇', rotary: 'Lu',         club: '台中大同扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '許秀珍', rotary: 'Lady Chair', club: '台中山海屯扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '廖陳宣有',rotary: 'Paul',      club: '台中台興扶輪社' },
+  { role: '地區國際服務委員會委員',   name: '游銘堂', rotary: 'Tony',       club: '台中惠來扶輪社' },
+  { role: '地區扶輪社區服務委員會主委',name: '張宜凱', rotary: 'Titan',     club: '台中台興扶輪社' },
+];
+renderCards(intlServiceData, 'grid-intl-service');
+
+/* ── 地區其他服務委員會 ── */
+const miscServiceData = [
+  { role: '地區反毒委員會主委',       name: '陳木柱', rotary: 'School',    club: '台中大屯扶輪社' },
+  { role: '地區反毒委員會副主委',     name: '邱奕冀', rotary: 'Lawyer',    club: '台中達文西扶輪社' },
+  { role: '地區反毒委員會副主委',     name: '石辦升', rotary: 'Tea Stone', club: '台中大光扶輪社' },
+  { role: '地區反毒委員會副主委',     name: '詹富森', rotary: 'Water',     club: '台中大屯扶輪社' },
+  { role: '地區服務夥伴委員會主委',   name: '許美玲', rotary: 'The Lin',   club: '台中山海屯扶輪社' },
+  { role: '地區消除C肝委員會主委',    name: '黃興舒', rotary: 'Health',    club: '東勢扶輪社' },
+  { role: '地區消除C肝委員會副主委',  name: '吳長錠', rotary: 'Tim',       club: '豐原扶輪社' },
+  { role: '世界淨灘日委員會主委',     name: '謝德亮', rotary: 'Willies',   club: '台中中區扶輪社' },
+  { role: '世界淨灘日委員會副主委',   name: '謝政洋', rotary: 'Nano',      club: '台中中區扶輪社' },
+  { role: '世界淨灘日委員會副主委',   name: '王榮聖', rotary: 'Vincent',   club: '豐原東區扶輪社' },
+  { role: '世界淨灘日委員會副主委',   name: '高永鋒', rotary: 'Kao sir',   club: '大甲北區扶輪社' },
+  { role: '世界淨灘日委員會副主委',   name: '蔡榮鑫', rotary: 'RC',        club: '台中港西南扶輪社' },
+  { role: '世界淨灘日委員會副主委',   name: '黃聖心', rotary: 'ESG',       club: '台中高美扶輪社' },
+  { role: '世界淨灘日委員會副主委',   name: '陳溫仁', rotary: 'Wins',      club: '台中東南扶青社' },
+];
+renderCards(miscServiceData, 'grid-misc-service');
+
+/* ── 地區新世代委員會（RYE）── */
+const ryeData = [
+  { role: '地區新世代委員會主委',         name: '許正達', rotary: 'Carbon',    club: '台中東區扶輪社' },
+  { role: '地區新世代委員會A區副主委',    name: '鄧富美', rotary: 'English',   club: '台中中央扶輪社' },
+  { role: '地區新世代委員會B區副主委',    name: '洪宗智', rotary: 'George',    club: '台中東區扶輪社' },
+  { role: '地區新世代委員會C區副主委',    name: '林子炊', rotary: 'Simmons',   club: '豐原西南扶輪社' },
+  { role: '地區新世代委員會D區副主委',    name: '王進發', rotary: 'Caesar',    club: '台中港西南扶輪社' },
+  { role: 'RYE委員會主委',               name: '方閔正', rotary: 'Vincent',   club: '台中市政扶輪社' },
+  { role: 'RYE委員會執行長',             name: '張宏名', rotary: 'John',      club: '台中南光扶輪社' },
+  { role: 'Inbound協調人',               name: '許正達', rotary: 'Carbon',    club: '台中東區扶輪社' },
+  { role: 'Inbound協調人',               name: '鄧富美', rotary: 'English',   club: '台中中央扶輪社' },
+  { role: 'Inbound副協調人(A/B區)',       name: '卓羿羽', rotary: 'Emma',      club: '台中市政扶輪社' },
+  { role: 'Inbound副協調人(C/D區)',       name: '陳俞任', rotary: 'Oil',       club: '台中港西濱扶輪社' },
+  { role: 'Outbound協調人',              name: '黃聖棠', rotary: 'Frank',     club: '台中市政扶輪社' },
+  { role: 'Outbound副協調人(A/B區)',      name: '吳政訓', rotary: 'Anatomy',   club: '台中省都扶輪社' },
+  { role: 'Outbound副協調人(C/D區)',      name: '林丙申', rotary: 'Kenchiku',  club: '台中南門扶輪社' },
+  { role: 'Outbound訓練組副主委',         name: '林綉合', rotary: 'Aluminum',  club: '大肚扶輪社' },
+  { role: '訓練組委員',                   name: '吳啟炘', rotary: 'Friday',    club: '豐原西南扶輪社' },
+  { role: '訓練組委員',                   name: '劉宜欣', rotary: 'Shimmer',   club: '台中市政扶輪社' },
+  { role: '訓練組委員',                   name: '許珮真', rotary: 'Amber',     club: '台中市政扶輪社' },
+  { role: '訓練組委員',                   name: '黃朝國', rotary: 'Kent',      club: '台中港西濱扶輪社' },
+  { role: 'Inbound活動組副主委',          name: '鄭俊杰', rotary: 'Jack',      club: '台中東北扶輪社' },
+  { role: '活動組委員',                   name: '王浩權', rotary: 'Mega',      club: '台中南光扶輪社' },
+  { role: '活動組委員',                   name: '黃傳程', rotary: 'Rick',      club: '台中市政扶輪社' },
+  { role: '活動組委員',                   name: '李政翰', rotary: 'Allen',     club: '大甲中央扶輪社' },
+  { role: '活動組委員',                   name: '戴宇鑫', rotary: 'Denny',     club: '台中南光扶輪社' },
+  { role: '短期交換委員',                 name: '李沛儒', rotary: 'Gloria',    club: '台中市政扶輪社' },
+  { role: 'RYEMT年會籌備委員',            name: '曾世志', rotary: 'RC',        club: '台中東區扶輪社' },
+  { role: 'RYEMT年會籌備委員',            name: '林政男', rotary: 'Attorneys', club: '台中東區扶輪社' },
+  { role: 'A區副主委',                   name: '王晟鐘', rotary: 'C.B.',      club: '台中市政扶輪社' },
+  { role: 'A區協調人',                   name: '傅學璋', rotary: 'Stanley',   club: '台中大屯扶輪社' },
+  { role: 'A區家訪委員',                 name: '謝德亮', rotary: 'Willie',    club: '台中中區扶輪社' },
+  { role: 'A區家訪委員',                 name: '黃學通', rotary: 'Aqua',      club: '台中中區扶輪社' },
+  { role: 'B區協調人',                   name: '陳文明', rotary: 'Justin',    club: '台中南光扶輪社' },
+  { role: 'B區家訪委員',                 name: '許雅玲', rotary: 'Amy',       club: '台中南光扶輪社' },
+  { role: 'B區家訪委員',                 name: '何秉宸', rotary: 'Jason',     club: '台中曙光扶輪社' },
+  { role: 'B區家訪委員',                 name: '廖陳宣有',rotary: 'Paul',     club: '台中台興扶輪社' },
+  { role: 'C區家訪委員',                 name: '張友千', rotary: 'Spencer',   club: '台中市政扶輪社' },
+  { role: 'C區家訪委員',                 name: '謝璋文', rotary: 'Press',     club: '豐原北區扶輪社' },
+  { role: 'C區家訪委員',                 name: '許佳蓉', rotary: 'Tea',       club: '台中山海屯扶輪社' },
+  { role: 'D區副主委',                   name: '許家源', rotary: 'Yostyle',   club: '大甲中央扶輪社' },
+  { role: 'D區家訪委員',                 name: '許荃鈞', rotary: 'Stanley',   club: '大肚扶輪社' },
+  { role: 'D區家訪委員',                 name: '薛顯浚', rotary: 'Webber',    club: '大甲扶輪社' },
+  { role: 'D區家訪委員',                 name: '江孝昇', rotary: 'Arthur',    club: '台中港東區扶輪社' },
+  { role: 'D區家訪委員',                 name: '沈文裕', rotary: 'Arthur',    club: '苑裡扶輪社' },
+  { role: '諮詢委員 22-23',              name: '張逸家', rotary: 'Zero',      club: '台中大屯扶輪社' },
+  { role: 'RYE辦事處執行秘書',           name: '吳佳怡', rotary: 'Zoe',       club: '' },
+  { role: '愛心媽媽志工召集人',           name: '馮尹亭', rotary: 'Lesly',     club: '台中市政扶輪社' },
+  { role: '愛心媽媽志工',                name: '賴杏宜', rotary: 'Jessica',   club: '台中東區扶輪社' },
+  { role: '愛心媽媽志工',                name: '蔡佳蓉', rotary: 'Candice',   club: '台中市政扶輪社' },
+];
+renderCards(ryeData, 'grid-rye');
+
+/* ── 地區Rotaract委員會 ── */
+const rotaractCommData = [
+  { role: '地區Rotaract委員會主委', name: '何本立', rotary: 'Nice',    club: '台中東區扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '林世杰', rotary: 'Genki',   club: '台中中區扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '李世偉', rotary: 'Carrier', club: '台中市政扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '林明賦', rotary: 'Mark',    club: '台中曙光扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '陳芝宇', rotary: 'CY',      club: '台中曙光扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '黃培展', rotary: 'Johnny',  club: '台中東北扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '許正達', rotary: 'Carbon',  club: '台中東區扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '林龍佑', rotary: 'Power',   club: '台中東區扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '王雲以', rotary: 'Iri',     club: '台中東昇扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '陳彥甫', rotary: 'Fedex',   club: '台中柳川扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '潘俊恩', rotary: 'Nemo',    club: '台中西區扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '郭威廷', rotary: 'Kitty',   club: '台中馬拉松扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '蔡松庭', rotary: 'Ting',    club: '台中港西濱扶輪社' },
+  { role: '地區Rotaract委員會副主委',name: '陳溫仁', rotary: 'Win',     club: '台中東南扶青社' },
+];
+renderCards(rotaractCommData, 'grid-rotaract-comm');
+
+/* ── 地區Interact委員會暨扶少年會 ── */
+const interactCommData = [
+  { role: '地區Interact委員會主委',   name: '林綉合', rotary: 'Aluminum', club: '大肚扶輪社' },
+  { role: '地區Interact委員會副主委', name: '許荃鈞', rotary: 'Stanley',  club: '大肚扶輪社' },
+  { role: '地區Interact委員會副主委', name: '魏彰志', rotary: 'Parsons',  club: '台中東友扶輪社' },
+  { role: '地區Interact委員會執行長', name: '張宏名', rotary: 'Johns',    club: '台中南光扶輪社' },
+  { role: '地區Interact委員會副執行長',name:'蘇瑜輝', rotary: 'Joshs',   club: '台中市政扶輪社' },
+  { role: '地區Interact委員會副執行長',name:'江孝昇', rotary: 'Arthur',  club: '台中港東區扶輪社' },
+  { role: 'A區副主委',               name: '黃聖棠', rotary: 'Frank',    club: '台中市政扶輪社' },
+  { role: 'B區副主委',               name: '鄭俊杰', rotary: 'Jack',     club: '台中東北扶輪社' },
+  { role: 'C區副主委',               name: '吳啟炘', rotary: 'Friday',   club: '豐原西南扶輪社' },
+  { role: 'D區副主委',               name: '許家源', rotary: 'Yostyle',  club: '大甲中央扶輪社' },
+  { role: '扶少年會主委',             name: '高大富', rotary: 'Rich',     club: '大肚扶輪社' },
+  { role: '扶少年會總幹事',           name: '陳怡如', rotary: 'Wanda',    club: '大肚扶輪社' },
+  { role: '團務輔導召集人',           name: '劉昭銘', rotary: 'Sirus',    club: '台中大光扶輪社' },
+  { role: '新團輔導召集人',           name: '沈文裕', rotary: 'Arthur',   club: '苑裡扶輪社' },
+  { role: '扶少推廣召集人',           name: '楊大慶', rotary: 'DC',       club: '台中潭雅神扶輪社' },
+  { role: '團員增長召集人',           name: '陳明典', rotary: 'Michael',  club: '神岡扶輪社' },
+  { role: '學校協調召集人',           name: '林丙申', rotary: 'Kenchiku', club: '台中南門扶輪社' },
+  { role: '跨校活動召集人',           name: '郭威廷', rotary: 'Kitty',    club: '台中馬拉松扶輪社' },
+  { role: '姐妹地區召集人',           name: '謝德亮', rotary: 'Willie',   club: '台中中區扶輪社' },
+  { role: '聯合服務召集人',           name: '黃學通', rotary: 'Aqua',     club: '台中中區扶輪社' },
+  { role: '國際交流召集人',           name: '王浩權', rotary: 'Mega',     club: '台中南光扶輪社' },
+  { role: '健康促進召集人',           name: '周佳賢', rotary: 'Life',     club: '台中馬拉松扶輪社' },
+  { role: '青少年保護召集人',         name: '王翼升', rotary: 'Eason',    club: '台中潭雅神扶輪社' },
+  { role: '公共協調召集人',           name: '蔣壽聰', rotary: 'Milan',    club: '台中山海屯扶輪社' },
+  { role: '網路扶輪社群召集人',       name: '賴仁傑', rotary: 'Marco',    club: '台中南區扶輪社' },
+  { role: '扶青小組召集人',           name: '張瑱芝', rotary: 'ZK',       club: '台中扶青社' },
+];
+renderCards(interactCommData, 'grid-interact-comm');
+
+/* ── 地區RYLA委員會 ── */
+const rylaData = [
+  { role: 'RYLA委員會主委',       name: '張宏名', rotary: 'John',       club: '台中南光扶輪社' },
+  { role: 'RYLA委員會顧問',       name: '許正達', rotary: 'Carbon',     club: '台中東區扶輪社' },
+  { role: '副主委暨執行長',       name: '黃聖棠', rotary: 'Frank',      club: '台中市政扶輪社' },
+  { role: '副執行長',             name: '許雅玲', rotary: 'Amy',        club: '台中南光扶輪社' },
+  { role: '副執行長',             name: '江耿碩', rotary: 'Box',        club: '豐原東區扶輪社' },
+  { role: '副執行長',             name: '江孝昇', rotary: 'Arthur',     club: '台中港東區扶輪社' },
+  { role: '營主任',               name: '劉宜欣', rotary: 'Shimmer',    club: '台中市政扶輪社' },
+  { role: '開訓典禮召集人',       name: '吳政訓', rotary: 'Anatomy',    club: '台中省都扶輪社' },
+  { role: '結訓典禮召集人',       name: '鄧富美', rotary: 'English',    club: '台中中央扶輪社' },
+  { role: '推廣召集人(A區)',      name: '王翠婷', rotary: 'Olivia',     club: '台中中央扶輪社' },
+  { role: '推廣召集人(B區)',      name: '莊賜濱', rotary: 'Poster',     club: '台中南門扶輪社' },
+  { role: '推廣召集人(C區)',      name: '林子炊', rotary: 'Simmons',    club: '豐原西南扶輪社' },
+  { role: '推廣召集人(D區)',      name: '蔣德勇', rotary: 'Paper',      club: '大甲中央扶輪社' },
+  { role: '報到小組召集人',       name: '許珮真', rotary: 'Amber',      club: '台中市政扶輪社' },
+  { role: '報名作業召集人',       name: '李沛儒', rotary: 'Gloria',     club: '台中市政扶輪社' },
+  { role: '營隊活動召集人',       name: '陳奕烈', rotary: 'Eason',      club: '台中向上扶輪社' },
+  { role: '醫療小組召集人',       name: '陳力平', rotary: 'Ali',        club: '大甲中央扶輪社' },
+  { role: '晚會活動召集人',       name: '郭威廷', rotary: 'Kitty',      club: '台中馬拉松扶輪社' },
+  { role: '保險事務召集人',       name: '黃文君', rotary: 'Ivy',        club: '台中山海屯扶輪社' },
+  { role: '活動佈置召集人',       name: '謝德亮', rotary: 'Willie',     club: '台中中區扶輪社' },
+  { role: '住宿事務召集人',       name: '黃學通', rotary: 'Aqua',       club: '台中中區扶輪社' },
+  { role: '營隊膳食召集人',       name: '王浩權', rotary: 'Mega',       club: '台中南光扶輪社' },
+  { role: '競賽評分召集人',       name: '薛顯浚', rotary: 'Webber',     club: '大甲扶輪社' },
+  { role: '青少年保護召集人',     name: '陳育仁', rotary: 'Lawyer',     club: '台中大光扶輪社' },
+  { role: '交換學生召集人',       name: '方閔正', rotary: 'Vincent',    club: '台中市政扶輪社' },
+  { role: '扶少推廣召集人',       name: '林綉合', rotary: 'Aluminum',   club: '大肚扶輪社' },
+  { role: '交通小組召集人',       name: '李世偉', rotary: 'Carrier',    club: '台中市政扶輪社' },
+  { role: '扶青小組召集人',       name: '何本立', rotary: 'Nice',       club: '台中東區扶輪社' },
+  { role: '小隊輔召集人',         name: '陳溫仁', rotary: 'Win',        club: '台中東南扶青社' },
+  { role: '攝影小組召集人',       name: '曹慶文', rotary: 'Pi',         club: '台中市政扶輪社' },
+  { role: '網路宣傳召集人',       name: '王婉柔', rotary: 'Zora',       club: '台中市政扶輪社' },
+  { role: '安全維護召集人',       name: '王耀宗', rotary: 'Marble',     club: '台中大屯扶輪社' },
+];
+renderCards(rylaData, 'grid-ryla');
+
+/* ── 地區扶輪公益網委員會 ── */
+const rcNetData = [
+  { role: '地區扶輪公益網委員會主委',   name: '王宗仁', rotary: 'Karajan',  club: '大甲中央扶輪社' },
+  { role: '地區扶輪公益網委員會顧問',   name: '江瑞啟', rotary: 'Lexus',    club: '台中立心扶輪社' },
+  { role: '地區扶輪公益網委員會顧問',   name: '黃聖棠', rotary: 'Frank',    club: '台中市政扶輪社' },
+  { role: '地區扶輪公益網委員會顧問',   name: '張麗鳳', rotary: 'Megane',   club: '豐原中央扶輪社' },
+  { role: '地區扶輪公益網委員會執行長', name: '王俊源', rotary: 'Material', club: '台中惠中扶輪社' },
+  { role: '地區扶輪公益網委員會財務長', name: '謝德亮', rotary: 'Willie',   club: '台中中區扶輪社' },
+  { role: 'A區推廣副主委',             name: '李世偉', rotary: 'Carrier',  club: '台中市政扶輪社' },
+  { role: 'B區推廣副主委',             name: '莊賜濱', rotary: 'Poster',   club: '台中南區扶輪社' },
+  { role: 'C區推廣副主委',             name: '房松暉', rotary: 'Angel',    club: '豐原富春扶輪社' },
+  { role: 'D區推廣副主委',             name: '廖建燊', rotary: 'Matata',   club: '台中港西濱扶輪社' },
+  { role: 'A區副主委',                 name: '賴育生', rotary: 'Kaipy',    club: '台中文教扶輪社' },
+  { role: 'A區副主委',                 name: '陳彥甫', rotary: 'Fedex',    club: '台中柳川扶輪社' },
+  { role: 'A區副主委',                 name: '黃學通', rotary: 'Aqua',     club: '台中中區扶輪社' },
+  { role: 'A區副主委',                 name: '張郁靖', rotary: 'Ada',      club: '台中市政扶青社' },
+  { role: 'B區副主委',                 name: '陳耀西', rotary: 'Claudio',  club: '台中大光扶輪社' },
+  { role: 'B區副主委',                 name: '洪富金', rotary: 'King',     club: '台中南門扶輪社' },
+  { role: 'B區副主委',                 name: '席凱壽', rotary: 'Trust Me', club: '台中馬拉松扶輪社' },
+  { role: 'C區副主委',                 name: '陳秀容', rotary: 'Show',     club: '台中山海屯扶輪社' },
+  { role: 'C區副主委',                 name: '吳啟炘', rotary: 'Friday',   club: '豐原西南扶輪社' },
+  { role: 'C區副主委',                 name: '邱坤朋', rotary: 'Astone',   club: '豐原西北扶輪社' },
+  { role: 'C區副主委',                 name: '林財賜', rotary: 'Megane',   club: '豐原西北扶輪社' },
+  { role: 'C區副主委',                 name: '賴惠玲', rotary: 'Serlina',  club: '台中山海屯扶輪社' },
+  { role: 'D區副主委',                 name: '蔡育家', rotary: 'Trophy',   club: '台中港西濱扶輪社' },
+  { role: 'D區副主委',                 name: '蔡依儒', rotary: 'Irene',    club: '台中港西濱扶輪社' },
+  { role: 'D區副主委',                 name: '莊朝輝', rotary: 'Julian',   club: '大甲中央扶輪社' },
+  { role: 'D區副主委',                 name: '卓詠宸', rotary: 'Winner',   club: '大甲中央扶輪社' },
+  { role: 'D區副主委',                 name: '王淑瑤', rotary: 'Anya',     club: '大甲百齡扶輪社' },
+  { role: 'D區副主委',                 name: '林欣瑩', rotary: 'Believe',  club: '台中港東南扶輪社' },
+];
+renderCards(rcNetData, 'grid-rcnet');
+
+/* ── 地區生命橋樑助學計畫委員會 ── */
+const bridgeData = [
+  { role: '地區生命橋樑助學計畫主委',   name: '吳政訓', rotary: 'Anatomy',    club: '台中省都扶輪社' },
+  { role: '執行長',                     name: '張宏名', rotary: 'John',        club: '台中南光扶輪社' },
+  { role: '秘書長',                     name: '鄭俊杰', rotary: 'Jack',        club: '台中東北扶輪社' },
+  { role: '財務長',                     name: '林子炊', rotary: 'Simmons',     club: '豐原西南扶輪社' },
+  { role: '副主委兼書審召集人',         name: '黃聖棠', rotary: 'Frank',       club: '台中市政扶輪社' },
+  { role: '副主委兼甄試召集人',         name: '許正達', rotary: 'Carbon',      club: '台中東區扶輪社' },
+  { role: '副主委兼總導師',             name: '周惠萍', rotary: 'Minna',       club: '台中立心扶輪社' },
+  { role: '副主委兼教務長',             name: '鄧富美', rotary: 'English',     club: '台中中央扶輪社' },
+  { role: '副主委兼學務長',             name: '薛顯浚', rotary: 'Webber',      club: '大甲扶輪社' },
+  { role: '副主委兼總務長',             name: '陳俞任', rotary: 'Oil',         club: '台中港西濱扶輪社' },
+  { role: '副主委兼輔導長',             name: '劉宜欣', rotary: 'Shimmer',     club: '台中市政扶輪社' },
+  { role: '計劃推廣召集人',             name: '范群亮', rotary: 'Patent',      club: '台中南區扶輪社' },
+  { role: '職業參訪召集人',             name: '王浩權', rotary: 'Mega',        club: '台中南光扶輪社' },
+  { role: '未來進路召集人',             name: '郭子寬', rotary: 'Timothy',     club: '台中大屯扶輪社' },
+  { role: '志工服務召集人',             name: '稅宏羲', rotary: 'HiFi',        club: '豐原西南扶輪社' },
+  { role: '保險事務召集人',             name: '陳乃溱', rotary: 'Melody',      club: '台中市政扶輪社' },
+  { role: '社群網路召集人',             name: '江耿碩', rotary: 'Box',         club: '豐原東區扶輪社' },
+  { role: '模擬面試召集人',             name: '廖述達', rotary: 'Patent',      club: '台中惠來扶輪社' },
+  { role: '公共關係協調人',             name: '郭威廷', rotary: 'Kitty',       club: '台中馬拉松扶輪社' },
+  { role: '分組討論召集人',             name: '翁郁琇', rotary: 'Ellen',       club: '台中大光扶輪社' },
+  { role: '學生權益召集人',             name: '林溫智', rotary: 'David',       club: '台中玉山扶輪社' },
+  { role: '導師事務協調人',             name: '許珮真', rotary: 'Amber',       club: '台中市政扶輪社' },
+  { role: '例會報告召集人',             name: '許雅玲', rotary: 'Amy',         club: '台中南光扶輪社' },
+  { role: '評分小組召集人',             name: '林丙申', rotary: 'Kenchiku',    club: '台中南門扶輪社' },
+  { role: '課堂作業召集人',             name: '周鴻仁', rotary: 'Innovation',  club: '台中南門扶輪社' },
+  { role: '成績管理召集人',             name: '張立翰', rotary: 'Pharmacy',    club: '台中東南扶輪社' },
+  { role: '開訓典禮召集人',             name: '林綉合', rotary: 'Aluminum',    club: '大肚扶輪社' },
+  { role: '結訓典禮召集人',             name: '蔣壽聰', rotary: 'Milan',       club: '台中山海屯扶輪社' },
+  { role: '校友會召集人',               name: '方閔正', rotary: 'Vincent',     club: '台中市政扶輪社' },
+];
+renderCards(bridgeData, 'grid-bridge');
+
+/* ── 地區新世代其他委員會 ── */
+const youthMiscData = [
+  { role: '地區扶輪青少年保護關懷委員會主委',name:'陳鶴儀', rotary:'Lawyer',  club:'台中港東區扶輪社' },
+  { role: '地區扶輪友誼交換委員會(RFE)主委',name:'趙文華', rotary:'Aircon',   club:'大肚扶輪社' },
+  { role: '地區扶輪友誼交換委員會(RFE)副主委',name:'陳慧如',rotary:'Angel',  club:'台中馬拉松扶輪社' },
+  { role: '地區青少年三對三籃球推廣委員會主委',name:'謝咏霖',rotary:'Maru',  club:'台中港區扶輪社' },
+  { role: '地區青少年三對三籃球推廣委員會副主委',name:'王志弘',rotary:'Sports',club:'台中港東南扶輪社' },
+  { role: '地區青少年三對三籃球推廣委員會副主委',name:'林紀甫',rotary:'Barts', club:'台中扶輪社' },
+  { role: '地區青少年三對三籃球推廣委員會副主委',name:'廖永憲',rotary:'Daniel',club:'台中南光扶輪社' },
+  { role: '地區青少年三對三籃球推廣委員會副主委',name:'胡少宏',rotary:'Cam',  club:'豐原東區扶輪社' },
+  { role: '地區青少年三對三籃球推廣委員會執行長',name:'蔣翼隆',rotary:'Allen',club:'台中港區扶輪社' },
+  { role: '執行秘書',                   name: '鄭文欽', rotary: 'Sports',     club: '台中港區扶輪社' },
+  { role: '副執行長',                   name: '顏子清', rotary: 'Truck',      club: '台中港北區扶輪社' },
+  { role: '副執行長',                   name: '葉沂凱', rotary: 'House',      club: '台中港亞太扶輪社' },
+  { role: '副執行長',                   name: '王勤惠', rotary: 'Bernice',    club: '台中港西濱扶輪社' },
+  { role: '註冊組長',                   name: '廖建燊', rotary: 'Matata',     club: '台中港西濱扶輪社' },
+  { role: '禮品組長',                   name: '蔡育家', rotary: 'Trophy',     club: '台中港西濱扶輪社' },
+  { role: '禮品副組長',                 name: '蔡依儒', rotary: 'Irene',      club: '台中港西濱扶輪社' },
+  { role: '總務組長',                   name: '楊志鴻', rotary: 'Life',       club: '台中港區扶輪社' },
+  { role: '總務副組長',                 name: '許金龍', rotary: 'Allen',      club: '台中港北區扶輪社' },
+  { role: '總務副組長',                 name: '林富美', rotary: 'Fu-Mei',     club: '台中港亞太扶輪社' },
+  { role: '總務副組長',                 name: '王予宥', rotary: 'Yumi',       club: '台中港西濱扶輪社' },
+  { role: '膳食組長',                   name: '陳招辛', rotary: 'Tony',       club: '台中港區扶輪社' },
+  { role: '財務組長',                   name: '陳佳蓮', rotary: 'Linda',      club: '台中港區扶輪社' },
+  { role: '裁判組長',                   name: '蔡木凱', rotary: 'Amu',        club: '台中港西濱扶輪社' },
+  { role: '醫務組長',                   name: '黃棟國', rotary: 'Sono',       club: '台中港東區扶輪社' },
+];
+renderCards(youthMiscData, 'grid-youth-misc');
+
+/* ── Nav ── */
+function _load(key, fallback) {
+  try { const v = localStorage.getItem('r3461_' + key); return v ? JSON.parse(v) : fallback; } catch(e) { return fallback; }
+}
+function _flatToNested(flat) {
+  const result = []; let group = null;
+  flat.forEach(item => {
+    if (item.level === 1) { group = { title: item.label, items: [] }; result.push(group); }
+    else if (item.level === 2 && group) { group.items.push({ label: item.label, url: item.url }); }
+  });
+  return result.filter(g => g.items.length > 0);
+}
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [
+      { label: 'RI社長',         url: 'ri-president.html' },
+      { label: 'RI現況',         url: 'ri-current.html' },
+    ],[
+      { label: '地區總監',   url: 'governor.html', hi: true },
+      { label: '3461各社資訊',   url: 'clubs.html', hi: true },
+      { label: '地區組織名錄',   url: 'directory.html', hi: true },
+      { label: '年度重要工作目標', url: 'annual-goals.html', hi: true },
+    ],[
+      { label: '總監當選人',     url: '#' },
+      { label: '總監提名人',     url: '#' },
+      { label: '歷屆社長、總監', url: '#' },
+    ],
+  ]},
+  { title: '進行事', items: [
+    { label: '地區行事曆', url: 'calendar.html', hi: true },
+    { label: '扶輪日',     url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },
+    { label: '地區年會',   url: 'conference.html', hi: true },
+    { label: '國際年會',   url: 'international-convention.html', hi: true },
+    { label: '服務計劃',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' },
+  ]},
+  { title: '秀成果', items: [
+    { label: 'RYLA',   url: 'ryla.html' },
+    { label: 'RYE',    url: 'rye.html' },
+    { label: 'NGSE',   url: 'ngse.html' },
+    { label: 'Rotaract', url: 'rotaract.html' },
+    { label: 'Interact', url: 'interact.html', hi: true },
+    { label: '生命橋樑', url: '#' },
+  ]},
+  { title: '回顧庫', items: [
+    { label: '總監月刊',     url: 'governor-monthly.html?nocache=1', hi: true },
+    { label: '公共形象新聞', url: 'news.html' },
+    { label: 'RI 成果展示', url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },
+    { label: '扶輪之子',     url: '#' },
+    { label: '扶輪 Shorts',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5323/2112-0' },
+    { label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' },
+  ]},
+  { title: '學知識', items: [
+    { label: '扶輪簡介',   url: 'rotary-intro.html' },
+    { label: '七大焦點領域', url: 'focus-areas.html' },
+    { label: '扶輪標誌', url: 'rotary-logo.html', hi: true },
+    { label: '扶輪基金',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },
+    { label: '扶輪現況',   url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' },
+  ]},
+  { title: '連結', columns: [
+    [
+      { label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },
+      { label: '地區扶輪社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },
+      { label: '地區扶青社',   url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },
+      { label: '地區扶少圍',   url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },
+      { label: '扶輪公益網',     url: 'https://17rcn.org/' },
+      { label: '扶輪領導學院',   url: 'https://www.rlitw.org/' },
+    ],[
+      { label: '職業服務', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },
+      { label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },
+      { label: '相關連結', url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' },
+    ],
+  ]},
+  { title: '更多資源', items: [
+    { label: '年度主題',         url: '#' },
+    { label: '下載專區',         url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },
+    { label: '品牌中心', url: 'https://brandcenter.rotary.org/' },
+    { label: '台灣扶輪下載',     url: 'https://taiwan-rotary.org/download/' },
+  ]},
+];
+// 前台固定使用 MENU_DEFAULTS（支援多欄），admin 另有獨立選單管理
+const menuData = MENU_DEFAULTS;
+function buildNavItems(container) {
+  menuData.forEach(group => {
+    const item = document.createElement('div');
+    item.className = 'nav-item';
+    let subHtml = '';
+    const mkLink = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener"${i.hi?' class="nav-hi"':''}>${i.label}</a>`;
+    if (group.columns) {
+      const colsHtml = group.columns.map(col =>
+        `<div class="sub-menu-col">${col.map(mkLink).join('')}</div>`
+      ).join('');
+      subHtml = `<div class="sub-menu sub-menu--cols">${colsHtml}</div>`;
+    } else {
+      subHtml = `<div class="sub-menu">${(group.items||[]).map(mkLink).join('')}</div>`;
+    }
+    item.innerHTML = `<div class="nav-link">${group.title}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>${subHtml}`;
+    container.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+const mobileMenu = document.getElementById('mobileMenu');
+menuData.forEach(group => {
+  const item = document.createElement('div');
+  item.className = 'mobile-nav-item';
+  const allItems = group.columns ? group.columns.flat() : (group.items||[]);
+  item.innerHTML = `<div class="mobile-nav-top"><span>${group.title}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="mobile-sub">${allItems.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener">${i.label}</a>`).join('')}</div>`;
+  item.querySelector('.mobile-nav-top').addEventListener('click', () => item.classList.toggle('expanded'));
+  mobileMenu.appendChild(item);
+});
+const hamburger = document.getElementById('hamburger');
+function _syncMobTop() {
+  const hdr = document.getElementById('siteHeader');
+  if (hdr && window.innerWidth <= 900) mobileMenu.style.top = hdr.offsetHeight + 'px';
+}
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) _syncMobTop();
+});
+window.addEventListener('scroll', () => { if (mobileMenu.classList.contains('open')) _syncMobTop(); }, { passive: true });
+window.addEventListener('resize', () => { if (mobileMenu.classList.contains('open')) _syncMobTop(); }, { passive: true });
+mobileMenu.addEventListener('click', e => {
+  if (e.target === mobileMenu) { mobileMenu.classList.remove('open'); hamburger.classList.remove('open'); document.body.style.overflow = ''; }
+});
+</script>
+<script src="search.js"></script>
+</body>
+</html>

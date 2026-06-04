@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>扶輪 Shorts | 國際扶輪第3461地區</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a458b;
+      --dark: #1a2d5c;
+      --gold: #f0c040;
+      --overlay: rgba(26,45,92,0.92);
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── Site Header ── */
+    .site-header { position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.15); background: url('images/nav-bg.jpg') left center / cover no-repeat; background-color: #dce8f0; flex-shrink: 0; }
+    .header-logo-row { background: transparent; height: 100px; display: flex; align-items: center; padding: 0 24px; }
+    .header-logo-inner { max-width: 1440px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .site-logo { display: flex; align-items: center; flex-shrink: 0; }
+    .site-logo img { width: 437px; height: 82px; object-fit: contain; display: block; }
+    .header-slogan img { height: 72px; width: auto; object-fit: contain; display: block; }
+    .compact-nav { display: none; align-items: stretch; flex: 1; height: 100%; overflow: visible; }
+    .compact-nav .nav-item { flex: 1; position: relative; }
+    .header-nav-row { background: transparent; }
+    .desktop-nav { display: flex; align-items: stretch; width: 100%; }
+    .nav-item { flex: 1; position: relative; }
+    .nav-link { display: flex; align-items: center; justify-content: center; gap: 4px; color: #222; font-size: 16.5px; font-weight: 600; text-decoration: none; height: 52px; width: 100%; white-space: nowrap; transition: background 0.18s, color 0.18s; cursor: pointer; letter-spacing: 0.5px; }
+    .nav-link:hover, .nav-item:hover .nav-link { background: rgba(0,0,0,0.12); color: #000; }
+    .nav-link svg { flex-shrink: 0; }
+    .sub-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; min-width: 170px; box-shadow: 0 6px 24px rgba(0,0,0,0.15); border-top: 3px solid var(--gold); z-index: 200; }
+    .nav-item:hover .sub-menu { display: block; }
+    .sub-menu a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background 0.15s, color 0.15s; text-decoration: none; }
+    .sub-menu a:last-child { border-bottom: none; }
+    .sub-menu a:hover { background: var(--primary); color: #fff; }
+    .sub-menu--cols { display: none; position: absolute; top: 100%; left: 0; background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,0.15); border-top: 3px solid var(--gold); z-index: 200; flex-direction: row; min-width: 480px; }
+    .nav-item:hover .sub-menu--cols { display: flex; }
+    .nav-item:last-child .sub-menu, .nav-item:last-child .sub-menu--cols, .nav-item:nth-last-child(2) .sub-menu, .nav-item:nth-last-child(2) .sub-menu--cols { left: auto; right: 0; }
+    .sub-menu-col { min-width: 160px; border-right: 1px solid #f0f0f0; flex: 1; }
+    .sub-menu-col:last-child { border-right: none; }
+    .sub-menu-col a { display: block; padding: 16px 17px; font-size: 15.5px; color: var(--dark); border-bottom: 1px solid #f0f0f0; transition: background 0.15s, color 0.15s; white-space: nowrap; text-decoration: none; }
+    .sub-menu-col a:last-child { border-bottom: none; }
+    .sub-menu-col a:hover { background: var(--primary); color: #fff; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #333; border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav-row { display: none; background: transparent; height: 48px; align-items: center; justify-content: flex-end; padding: 0 16px; }
+    .mobile-menu { display: none; position: fixed; top: 188px; left: 0; right: 0; bottom: 0; background: var(--overlay); z-index: 999; overflow-y: auto; padding-bottom: 40px; }
+    .mobile-menu.open { display: block; }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .mobile-nav-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer; }
+    .mobile-nav-top svg { transition: transform 0.25s; }
+    .mobile-nav-item.expanded .mobile-nav-top svg { transform: rotate(90deg); }
+    .mobile-sub { display: none; background: rgba(255,255,255,0.05); }
+    .mobile-nav-item.expanded .mobile-sub { display: block; }
+    .mobile-sub a { display: block; padding: 12px 36px; color: rgba(255,255,255,0.8); font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.15s; text-decoration: none; }
+    .mobile-sub a:hover { color: var(--gold); }
+    @media screen and (max-width: 900px) {
+      .header-logo-row { height: 80px; padding: 0 16px; }
+      .site-logo img { width: auto; height: 52px; max-width: 280px; }
+      .header-slogan, .desktop-nav { display: none; }
+      .compact-nav { display: none !important; }
+      .mobile-nav-row { display: flex; }
+      .hamburger { display: flex; }
+      .mobile-menu { top: 128px; }
+    }
+
+    /* ── 影片主區 ── */
+    .shorts-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 頂部工具列 */
+    .shorts-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: #1a1a1a;
+      border-bottom: 1px solid #333;
+      flex-shrink: 0;
+    }
+    .shorts-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .shorts-title svg { flex-shrink: 0; }
+    .shorts-yt-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      background: #ff0000;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .shorts-yt-btn:hover { background: #cc0000; }
+
+    /* iframe 區 */
+    .shorts-frame-wrap {
+      flex: 1;
+      position: relative;
+      background: #0f0f0f;
+    }
+    .shorts-frame-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* 若 iframe 被擋，顯示 fallback */
+    .shorts-fallback {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      height: 100%;
+      padding: 40px;
+      text-align: center;
+      color: #aaa;
+    }
+    .shorts-fallback svg { opacity: 0.4; }
+    .shorts-fallback p { font-size: 16px; line-height: 1.8; }
+    .shorts-fallback a {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; background: #ff0000; color: #fff;
+      border-radius: 10px; text-decoration: none; font-size: 16px; font-weight: 700;
+      transition: background 0.2s;
+    }
+    .shorts-fallback a:hover { background: #cc0000; }
+  </style>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-logo-row">
+    <div class="header-logo-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/logo_02.png" alt="Rotary District 3461">
+      </a>
+      <div class="header-slogan">
+        <img src="images/2526slogan.png" alt="2025-26 年度主題">
+      </div>
+      <nav class="compact-nav" id="compactNav"></nav>
+    </div>
+      <button class="hamburger" id="hamburger" aria-label="選單"><span></span><span></span><span></span></button>
+  </div>
+  <div class="header-nav-row">
+    <nav class="desktop-nav" id="desktopNav"></nav>
+  </div>
+  <div class="mobile-nav-row">
+    
+  </div>
+  <div class="mobile-menu" id="mobileMenu"></div>
+</header>
+
+<!-- ══ 主體 ══ -->
+<div class="shorts-main">
+  <!-- 工具列 -->
+  <div class="shorts-toolbar">
+    <div class="shorts-title">
+      <!-- YouTube Shorts icon -->
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <rect width="24" height="24" rx="6" fill="#ff0000"/>
+        <path d="M17.5 10.5l-3-1.73A2 2 0 0 0 12 10.5v3a2 2 0 0 0 2.5 1.73l3-1.73a2 2 0 0 0 0-3z" fill="#fff"/>
+        <path d="M10 8H7a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z" fill="#fff"/>
+      </svg>
+      扶輪 Shorts
+    </div>
+    <a class="shorts-yt-btn" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ff0000"/></svg>
+      前往 YouTube 觀看
+    </a>
+  </div>
+
+  <!-- iframe 嵌入 -->
+  <div class="shorts-frame-wrap" id="frameWrap">
+    <iframe
+      id="shortsFrame"
+      src="https://www.youtube.com/embed?listType=user_uploads&list=Rotary3461&rel=0&modestbranding=1"
+      title="扶輪 Shorts"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+    <!-- 若 iframe 被 YouTube 擋住時顯示 -->
+    <div class="shorts-fallback" id="fallback">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="#fff"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ff0000"/></svg>
+      <p>YouTube 限制直接嵌入，<br>請點下方按鈕前往觀看。</p>
+      <a href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ff0000"/></svg>
+        前往 YouTube 觀看 Shorts
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+function _load(key, fallback) {
+  try { const v = localStorage.getItem('r3461_' + key); return v ? JSON.parse(v) : fallback; } catch(e) { return fallback; }
+}
+
+const MENU_DEFAULTS = [
+  { title: '扶輪人', columns: [
+    [{ label: 'RI社長', url: 'ri-president.html' },{ label: 'RI現況', url: 'ri-current.html' }],
+    [{ label: '地區總監', url: 'governor.html', hi: true },{ label: '3461各社資訊', url: 'clubs.html', hi: true },{ label: '地區組織名錄', url: 'directory.html', hi: true },{ label: '年度重要工作目標', url: 'annual-goals.html', hi: true }],
+    [{ label: '總監當選人', url: 'governor-elect.html' },{ label: '總監提名人', url: '#' },{ label: '歷屆社長、總監', url: '#' }],
+  ]},
+  { title: '進行事', items: [{ label: '地區行事曆', url: 'calendar.html', hi: true },{ label: '扶輪日', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4385/2199-7005' },{ label: '地區年會', url: 'conference.html', hi: true },{ label: '國際年會', url: 'international-convention.html', hi: true },{ label: '服務計劃', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5350/2273-0' }]},
+  { title: '秀成果', items: [{ label: 'RYLA', url: 'ryla.html' },{ label: 'RYE', url: 'rye.html' },{ label: 'NGSE', url: 'ngse.html' },{ label: 'Rotaract', url: 'rotaract.html', hi: true },{ label: 'Interact', url: 'interact.html', hi: true },{ label: '生命橋樑', url: '#' }]},
+  { title: '回顧庫', items: [{ label: '總監月刊', url: 'governor-monthly.html?nocache=1', hi: true },{ label: '公共形象新聞', url: 'news.html' },{ label: 'RI 成果展示', url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },{ label: '扶輪之子', url: '#' },{ label: '扶輪 Shorts', url: 'https://www.youtube.com/@Rotary3461/shorts' },{ label: '扶輪百工百業', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5326/2116-0' }]},
+  { title: '學知識', items: [{ label: '扶輪簡介', url: 'rotary-intro.html' },{ label: '七大焦點領域', url: 'focus-areas.html' },{ label: '扶輪標誌', url: 'rotary-logo.html', hi: true },{ label: '扶輪基金', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/5355/2279-0' },{ label: '扶輪現況', url: 'https://www.rotary3461.org/RWD/M1_2/tw/1617/4367/3996-0' }]},
+  { title: '連結', columns: [
+    [{ label: '台灣12地區網站', url: 'https://taiwan-rotary.org/article/index.php?id=7' },{ label: '地區扶輪社', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2286-0' },{ label: '地區扶青社', url: 'https://www.rotary3461.org/RWD/U3/tw/1617/4452/2287-0' },{ label: '地區扶少圍', url: 'http://www.rotary3461.org/RWD/M1_1/tw/1617/4417/0' },{ label: '扶輪公益網', url: 'https://17rcn.org/' },{ label: '扶輪領導學院', url: 'https://www.rlitw.org/' }],
+    [{ label: '職業服務', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?type2=870' },{ label: '地區人才庫', url: 'http://sca.myqr.com.tw/NewShop/27/TypeGoods?Name=SP-K-' },{ label: '相關連結', url: 'https://www.rotary3461.org/RWD/M1_1/tw/1617/4421/0' }],
+  ]},
+  { title: '更多資源', items: [{ label: '年度主題', url: '#' },{ label: '下載專區', url: 'http://www.rotary3461.org/RWD/M1_2/tw/1617/4379/4338-0' },{ label: '品牌中心', url: 'https://brandcenter.rotary.org/' },{ label: '台灣扶輪下載', url: 'https://taiwan-rotary.org/download/' }]},
+];
+const menuData = MENU_DEFAULTS;
+
+function buildNavItems(container) {
+  menuData.forEach(group => {
+    const item = document.createElement('div'); item.className = 'nav-item';
+    const mkLink = i => `<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}" rel="noopener"${i.hi?' class="nav-hi"':''}>${i.label}</a>`;
+    let subHtml = '';
+    if (group.columns) {
+      subHtml = `<div class="sub-menu sub-menu--cols">${group.columns.map(col=>`<div class="sub-menu-col">${col.map(mkLink).join('')}</div>`).join('')}</div>`;
+    } else {
+      subHtml = `<div class="sub-menu">${(group.items||[]).map(mkLink).join('')}</div>`;
+    }
+    item.innerHTML = `<div class="nav-link">${group.title}<svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>${subHtml}`;
+    container.appendChild(item);
+  });
+}
+buildNavItems(document.getElementById('desktopNav'));
+buildNavItems(document.getElementById('compactNav'));
+
+function buildMobileMenu() {
+  const mm = document.getElementById('mobileMenu');
+  menuData.forEach(group => {
+    const ni = document.createElement('div'); ni.className = 'mobile-nav-item';
+    const allItems = group.columns ? group.columns.flat() : (group.items||[]);
+    ni.innerHTML = `<div class="mobile-nav-top">${group.title}<svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4l3 4 3-4" fill="none" stroke="#fff" stroke-width="1.5"/></svg></div><div class="mobile-sub">${allItems.map(i=>`<a href="${i.url||'#'}" target="${(i.url||'').startsWith('http')?'_blank':'_self'}">${i.label}</a>`).join('')}</div>`;
+    ni.querySelector('.mobile-nav-top').addEventListener('click', () => ni.classList.toggle('expanded'));
+    mm.appendChild(ni);
+  });
+}
+buildMobileMenu();
+
+function toggleMobileMenu() {
+  const mm2 = document.getElementById('mobileMenu');
+  const hbg = document.getElementById('hamburger');
+  const hdr = document.getElementById('siteHeader');
+  const open = mm2.classList.toggle('open');
+  hbg.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}
+window.addEventListener('scroll', () => {
+  const mm2 = document.getElementById('mobileMenu');
+  const hdr = document.getElementById('siteHeader');
+  if (mm2 && mm2.classList.contains('open') && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}, { passive: true });
+window.addEventListener('resize', () => {
+  const mm2 = document.getElementById('mobileMenu');
+  const hdr = document.getElementById('siteHeader');
+  if (mm2 && mm2.classList.contains('open') && hdr) mm2.style.top = hdr.offsetHeight + 'px';
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* 高度自適應 */
+function resizeFrame() {
+  const header = document.getElementById('siteHeader');
+  const toolbar = document.querySelector('.shorts-toolbar');
+  const wrap = document.getElementById('frameWrap');
+  if (wrap && header && toolbar) {
+    wrap.style.height = (window.innerHeight - header.offsetHeight - toolbar.offsetHeight) + 'px';
+  }
+}
+resizeFrame();
+window.addEventListener('resize', resizeFrame);
+
+/* 若 iframe 載入後內容被 YouTube 阻擋（空白頁），顯示 fallback */
+document.getElementById('shortsFrame').addEventListener('load', function() {
+  try {
+    const doc = this.contentDocument || this.contentWindow.document;
+    if (!doc || doc.body.innerHTML === '') {
+      document.getElementById('fallback').style.display = 'flex';
+      this.style.display = 'none';
+    }
+  } catch(e) {
+    /* cross-origin：YouTube 有內容，不顯示 fallback */
+  }
+});
+</script>
+<script src="search.js"></script>
+</body>
+</html>
