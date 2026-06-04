@@ -1107,6 +1107,20 @@
           </div>
         </div>
         <div class="card">
+          <div class="card-header"><div class="card-title">☁️ GitHub 雲端自動同步設定</div></div>
+          <div class="card-body">
+            <div class="info-box" style="margin-bottom:14px;">設定後，每次點「儲存」即自動同步到線上網站，約 1-2 分鐘生效。Token 僅存在本機瀏覽器，不會上傳至伺服器。</div>
+            <div class="form-row single"><div class="form-group">
+              <label>GitHub Personal Access Token（ghp_…）</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="password" id="github-token-input" placeholder="ghp_…" style="flex:1;font-family:monospace;font-size:12px;" autocomplete="off">
+                <button class="btn btn-primary btn-sm" onclick="saveGitHubToken()">儲存 Token</button>
+              </div>
+              <div id="github-token-status" style="font-size:12px;margin-top:4px;color:#9ca3af;"></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="card">
           <div class="card-header"><div class="card-title">🪄 AI 魔術分析設定</div></div>
           <div class="card-body">
             <div class="info-box" style="margin-bottom:14px;">輸入 Anthropic Claude API Key，即可在新增消息／活動時使用「🪄 魔術幫」按鈕，上傳圖片自動辨識文字並填入欄位。<br>Key 僅儲存於本機瀏覽器，不會上傳至任何伺服器。</div>
@@ -2309,13 +2323,65 @@ function saveSection(section) {
   if (['menu','hero','siteinfo','seo','tracking','site'].includes(section)) persistPS();
   else persistState();
   updateStats();
-  toast('✓ 已儲存，前台重新整理後生效', 'success');
+  toast('✓ 已儲存', 'success');
+  syncToGitHub();
 }
 function saveAll() {
   readContactForm(); readSiteinfo(); readSeo(); readTracking(); readSite();
   persistState(); persistPS(); updateStats();
   clearDirty();
-  toast('✓ 全部儲存完成', 'success');
+  toast('✓ 全部儲存完成，正在同步到雲端…', 'success');
+  syncToGitHub();
+}
+
+/* ══════════════════════════════════════
+   GitHub 自動同步
+══════════════════════════════════════ */
+async function syncToGitHub() {
+  const token = localStorage.getItem('r3461_github_token') || '';
+  if (!token) return; // 未設定 token 就略過
+
+  const REPO  = 'haog1214/Rotary3461';
+  const FILE  = 'data-defaults.js';
+  const API   = `https://api.github.com/repos/${REPO}/contents/${FILE}`;
+  const AUTH  = `token ${token}`;
+
+  // 收集要同步的內容
+  const keys = ['r3461_news','r3461_videos','r3461_activities','r3461_sponsors','r3461_poster','r3461_contact'];
+  const out  = {};
+  keys.forEach(k => {
+    try { const v = localStorage.getItem(k); if (v) out[k] = JSON.parse(v); } catch(e) {}
+  });
+  // 海報用穩定網址
+  if (!out['r3461_poster'] || !out['r3461_poster'].length) {
+    out['r3461_poster'] = ['https://pshop.myqr.com.tw/images/RWD_M1_1_Image/1/16775.jpg?187'];
+  }
+
+  const content = `/* data-defaults.js — 後台自動同步 ${new Date().toLocaleString('zh-TW')} */\n(function(){\n  var D=${JSON.stringify(out)};\n  Object.keys(D).forEach(function(k){if(!localStorage.getItem(k))localStorage.setItem(k,JSON.stringify(D[k]));});\n})();\n`;
+  const encoded = btoa(unescape(encodeURIComponent(content)));
+
+  try {
+    // 取得目前檔案的 SHA（更新時必須）
+    const getRes = await fetch(API, { headers: { Authorization: AUTH, Accept: 'application/vnd.github+json' } });
+    const getJson = await getRes.json();
+    const sha = getJson.sha || '';
+
+    // 推送更新
+    const putRes = await fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: AUTH, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `sync: 後台更新 ${new Date().toLocaleString('zh-TW')}`, content: encoded, sha })
+    });
+
+    if (putRes.ok) {
+      toast('☁️ 已同步到雲端，約 1-2 分鐘後線上更新', 'success');
+    } else {
+      const err = await putRes.json();
+      toast('⚠️ 同步失敗：' + (err.message || putRes.status), 'error');
+    }
+  } catch(e) {
+    toast('⚠️ 網路錯誤，同步失敗', 'error');
+  }
 }
 
 // EXPORT
@@ -2637,6 +2703,26 @@ function savePageEditorAll() {
 /* ══════════════════════════════════════
    🪄 魔術幫 — Claude AI 圖片分析
 ══════════════════════════════════════ */
+function saveGitHubToken() {
+  const input = document.getElementById('github-token-input');
+  const token = (input.value || '').trim();
+  const st = document.getElementById('github-token-status');
+  if (!token) { st.textContent = '請輸入 Token'; st.style.color = '#ef4444'; return; }
+  localStorage.setItem('r3461_github_token', token);
+  input.value = '';
+  st.textContent = '✓ Token 已儲存，往後儲存時自動同步';
+  st.style.color = '#22c55e';
+  toast('✓ GitHub Token 已設定，自動同步已啟用', 'success');
+}
+function loadGitHubTokenStatus() {
+  const token = localStorage.getItem('r3461_github_token') || '';
+  const st = document.getElementById('github-token-status');
+  if (!st) return;
+  if (token) { st.textContent = '✓ Token 已設定，自動同步已啟用'; st.style.color = '#22c55e'; }
+  else { st.textContent = '尚未設定，儲存時不會自動同步'; st.style.color = '#9ca3af'; }
+}
+document.addEventListener('DOMContentLoaded', loadGitHubTokenStatus);
+
 function saveClaudeKey() {
   const key = document.getElementById('claude-api-key').value.trim();
   if (!key) { toast('請輸入 API Key', 'error'); return; }
