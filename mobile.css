@@ -522,10 +522,10 @@
     aspect-ratio: 210 / 297 !important;   /* A4 比例，等比縮放 */
   }
 
-  /* Shorts 播放區：手機全寬置中 */
+  /* Shorts 播放區：手機全寬，高度等比 */
   .info-shorts {
-    width: 60% !important;
-    max-width: 240px !important;
+    width: 55% !important;
+    max-width: 220px !important;
     margin: 0 auto !important;
   }
 

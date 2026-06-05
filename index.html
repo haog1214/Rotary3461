@@ -789,9 +789,10 @@
     }
 
     /* ── 扶輪 Shorts 播放區 ── */
+    /* 海報高度 = 396px × (297/210) ≈ 560px；Shorts寬 = 560 × (9/16) = 315px */
     .info-shorts {
       flex-shrink: 0;
-      width: 200px;
+      width: 315px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -805,7 +806,7 @@
     }
     .info-shorts-player {
       width: 100%;
-      aspect-ratio: 9 / 16;
+      aspect-ratio: 9 / 16;   /* 315px × 16/9 ≈ 560px — 同海報高度 */
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 8px 28px rgba(0,0,0,0.18);
@@ -815,17 +816,23 @@
       width: 100%; height: 100%;
       border: none; display: block;
     }
-    .info-shorts-more {
-      font-size: 12px; font-weight: 600;
-      color: var(--primary);
-      text-decoration: none;
-      padding: 6px 14px;
-      border: 1.5px solid var(--primary);
-      border-radius: 20px;
-      transition: background 0.18s, color 0.18s;
-      white-space: nowrap;
+    .info-shorts-nav {
+      display: flex; align-items: center; gap: 14px;
     }
-    .info-shorts-more:hover { background: var(--primary); color: #fff; }
+    .shorts-nav-btn {
+      width: 34px; height: 34px;
+      background: var(--primary); color: #fff;
+      border: none; border-radius: 50%;
+      font-size: 20px; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.18s, transform 0.12s;
+    }
+    .shorts-nav-btn:hover { background: #14388a; }
+    .shorts-nav-btn:active { transform: scale(0.9); }
+    .shorts-count {
+      font-size: 13px; font-weight: 600;
+      color: #888; min-width: 36px; text-align: center;
+    }
 
     /* ═══════════════════════════════
        MONTHLY MAGAZINE BANNER
@@ -1401,17 +1408,19 @@
           扶輪 Shorts
         </div>
         <div class="info-shorts-player">
-          <iframe
-            src="https://www.youtube.com/embed/1tLbMlrUhRM?autoplay=0&rel=0&modestbranding=1"
+          <iframe id="shortsIframe"
+            src="https://www.youtube.com/embed/1tLbMlrUhRM?rel=0&modestbranding=1"
             title="扶輪 Shorts"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
           </iframe>
         </div>
-        <a class="info-shorts-more" href="https://www.youtube.com/@Rotary3461/shorts" target="_blank" rel="noopener">
-          查看更多 Shorts →
-        </a>
+        <div class="info-shorts-nav">
+          <button class="shorts-nav-btn" onclick="prevShort()">&#8249;</button>
+          <span class="shorts-count" id="shortsCount">1 / 5</span>
+          <button class="shorts-nav-btn" onclick="nextShort()">&#8250;</button>
+        </div>
       </div>
 
       <div class="info-cards">
@@ -1888,6 +1897,25 @@ window.addEventListener('resize', () => {
   }
 }, { passive: true });
 let newsPage = 0;
+
+/* ── 扶輪 Shorts 輪播 ── */
+const SHORTS_IDS = [
+  '1tLbMlrUhRM',
+  '8-tJhWHRNwE',
+  '1D0gKACaWrw',
+  '5hNifVeBuDU',
+  'q5zFC91RAOI',
+];
+let shortsIdx = 0;
+function setShort(i) {
+  shortsIdx = ((i % SHORTS_IDS.length) + SHORTS_IDS.length) % SHORTS_IDS.length;
+  const iframe = document.getElementById('shortsIframe');
+  const count  = document.getElementById('shortsCount');
+  if (iframe) iframe.src = `https://www.youtube.com/embed/${SHORTS_IDS[shortsIdx]}?rel=0&modestbranding=1`;
+  if (count)  count.textContent = `${shortsIdx + 1} / ${SHORTS_IDS.length}`;
+}
+function prevShort() { setShort(shortsIdx - 1); }
+function nextShort() { setShort(shortsIdx + 1); }
 
 function _esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function _linkify(s) {
