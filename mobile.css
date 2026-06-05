@@ -699,49 +699,48 @@
 }
 
 /* ──────────────────────────────────
-   SPONSOR（贊助單位）— 跑馬燈 + 每張滿版等比
+   SPONSOR（贊助單位）— 縮小20% + 一次一筆 snap scroll
 ────────────────────────────────── */
 @media (max-width: 768px) {
   .sponsor-section { padding: 24px 0 !important; }
 
   .sponsor-track-wrap {
     overflow: hidden !important;
-    width: calc(100% - 20px) !important;   /* 左右各留 10px */
+    width: calc(100% - 20px) !important;
     margin: 0 10px !important;
     border-radius: 8px !important;
   }
 
-  /* 維持跑馬燈動畫，但每張改成 100vw 寬 */
+  /* 停止跑馬燈，改 snap scroll */
   .sponsor-track {
     display: flex !important;
-    gap: 10px !important;            /* 圖片間距 10px */
-    width: max-content !important;
-    animation: sponsorScrollMob 23s linear infinite !important;  /* 慢 15%：20s × 1.15 ≈ 23s */
-    overflow: visible !important;
-    scroll-snap-type: none !important;
-    overflow-x: visible !important;
+    animation: none !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    gap: 10px !important;
+    padding: 0 10% !important;          /* 左右留白讓單張置中 */
   }
-  .sponsor-track:hover { animation-play-state: paused !important; }
+  .sponsor-track::-webkit-scrollbar { display: none; }
 
-  /* 每張滿版 + 等比例高度（維持原圖 11:16 比例） */
+  /* 每張縮小20%：原100% → 80vw，等比高度 */
   .sponsor-slide {
-    flex-shrink: 0 !important;
-    width: 100vw !important;
-    aspect-ratio: 11 / 16 !important;  /* 等比例，同桌機版 */
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    scroll-snap-align: none !important;
+    flex: 0 0 80vw !important;
+    width: 80vw !important;
+    max-width: 80vw !important;
+    aspect-ratio: 11 / 16 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
+    scroll-snap-align: center !important;
   }
+  /* 隱藏重複項（跑馬燈用的複製品） */
+  .sponsor-slide.is-duplicate { display: none !important; }
 
   .sponsor-caption {
-    font-size: 15px !important;
-    height: 68px !important;
-  }
-
-  /* 跑馬燈動畫：滿版版本移動一半內容寬度 */
-  @keyframes sponsorScrollMob {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    font-size: 14px !important;
+    height: 60px !important;
   }
 }
 

@@ -2108,7 +2108,7 @@ goTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smoot
   const doubled = [...sponsorImages, ...sponsorImages];
   doubled.forEach(({ src, title, link }, _i) => {
     const slide = document.createElement('div');
-    slide.className = 'sponsor-slide';
+    slide.className = 'sponsor-slide' + (_i >= sponsorImages.length ? ' is-duplicate' : '');
     if (link) { slide.style.cursor = 'pointer'; slide.title = title; slide.addEventListener('click', () => window.open(link, '_blank', 'noopener')); }
     const img = document.createElement('img');
     img.src = src;
