@@ -745,7 +745,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 10px;
       align-items: stretch;
       align-self: stretch;
       justify-content: center;
@@ -766,11 +766,11 @@
     .info-card:hover { transform: translateY(-4px); }
     .info-card-img {
       flex-shrink: 0;
-      width: 160px;
-      height: 90px;
+      height: 100%;
+      aspect-ratio: 16 / 9;
       object-fit: cover; display: block;
-      align-self: center;
-      background: #dde;
+      align-self: stretch;
+      background: #F2F2F2;
     }
     .info-card-label {
       flex: 1;
