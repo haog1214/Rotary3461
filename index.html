@@ -883,13 +883,30 @@
        VIDEO SECTION
     ═══════════════════════════════ */
     .video-section {
-      background: url('images/VIDEL_01.jpg') center / cover no-repeat;
+      background: #f4f6fb;
       height: 800px;
       overflow: hidden;
+      position: relative;
+    }
+    /* 大字裝飾背景 VIDEO */
+    .video-section::before {
+      content: 'VIDEO';
+      position: absolute;
+      top: 0; left: -2%;
+      font-size: 22vw;
+      font-weight: 900;
+      font-family: Arial Black, 'Arial', sans-serif;
+      color: rgba(180, 185, 200, 0.22);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
     }
     .video-section .section-wrap {
       padding-top: 208px;
       padding-bottom: 0;
+      position: relative; z-index: 1;
     }
 
     .video-layout {
