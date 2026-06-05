@@ -745,10 +745,10 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      align-items: center;
-      margin-left: -70px;
-      transform: translateX(-30px);
+      gap: 12px;
+      align-items: stretch;
+      align-self: stretch;
+      justify-content: center;
     }
     .info-card {
       display: flex; flex-direction: row;
@@ -760,7 +760,8 @@
       border: none;
       text-decoration: none; color: inherit;
       transition: transform 0.22s;
-      width: calc(72.45% + 72.45px);
+      width: 100%;
+      flex: 1;
     }
     .info-card:hover { transform: translateY(-4px); }
     .info-card-img {
