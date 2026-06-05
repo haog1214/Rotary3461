@@ -522,6 +522,13 @@
     aspect-ratio: 210 / 297 !important;   /* A4 比例，等比縮放 */
   }
 
+  /* Shorts 播放區：手機全寬置中 */
+  .info-shorts {
+    width: 60% !important;
+    max-width: 240px !important;
+    margin: 0 auto !important;
+  }
+
   /* 卡片：Grid 一排兩個，圖上文下 */
   .info-cards {
     display: grid !important;
