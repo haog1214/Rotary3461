@@ -582,13 +582,16 @@
    VIDEO SECTION（影音專區）
 ────────────────────────────────── */
 @media (max-width: 900px) {
-  /* 背景圖片移除，改白底 */
+  /* 背景圖片移除，改白底，VIDEO裝飾文字隱藏 */
   .video-section {
     height: auto !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     background-image: none !important;
-    background-color: #f4f6fb !important;
+    background-color: #ffffff !important;
+  }
+  .video-section::before {
+    display: none !important;
   }
   .video-section .section-wrap {
     padding-top: 24px !important;
