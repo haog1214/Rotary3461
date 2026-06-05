@@ -10,14 +10,41 @@
 @media (max-width: 900px) {
   :root { --mob-pad: 16px; }
 
-  /* 防止橫向破版 */
-  html, body {
+  /* 防止橫向破版 + 絲滑滑動 */
+  html {
     max-width: 100vw;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    padding-bottom: env(safe-area-inset-bottom);
+    /* GPU 加速，消除滑動卡頓 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* 安全區域（iPhone 瀏海 / 底部 Home Bar） */
-  body { padding-bottom: env(safe-area-inset-bottom); }
+  /* 所有橫向 scroll 容器：允許垂直滑動不被攔截 */
+  .news-cards-wrap,
+  .activity-list,
+  .video-list,
+  .sponsor-track,
+  .year-sidebar,
+  .filter-tabs,
+  .tab-list,
+  .inner-footer-social {
+    touch-action: pan-x !important;
+    -webkit-overflow-scrolling: touch !important;
+    will-change: scroll-position;
+  }
+
+  /* 主要垂直捲動區：確保順暢 */
+  .mobile-menu {
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
 
   /* 共用區塊內距 */
   .section-wrap { padding: 32px var(--mob-pad) !important; }
@@ -725,11 +752,11 @@
   }
   .sponsor-track::-webkit-scrollbar { display: none; }
 
-  /* 每張縮小20%：原100% → 80vw，等比高度 */
+  /* 再縮小20%：80vw × 0.8 = 64vw */
   .sponsor-slide {
-    flex: 0 0 80vw !important;
-    width: 80vw !important;
-    max-width: 80vw !important;
+    flex: 0 0 64vw !important;
+    width: 64vw !important;
+    max-width: 64vw !important;
     aspect-ratio: 11 / 16 !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
