@@ -709,7 +709,7 @@
     /* ═══════════════════════════════
        INFORMATION SECTION
     ═══════════════════════════════ */
-    .info-section { background: #ffffff; }
+    .info-section { background: transparent; }
     .info-inner {
       display: flex;
       gap: 15px;
@@ -722,11 +722,11 @@
       width: 396px;
       aspect-ratio: 210 / 297;
       margin-left: 180px;
-      background: #e8ecf2;
+      background: transparent;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.14);
-      border: 1px solid #d0d8e4;
+      box-shadow: none;
+      border: none;
       display: flex; align-items: center; justify-content: center;
     }
     .info-poster img {
@@ -752,16 +752,16 @@
     .info-card {
       display: flex; flex-direction: row;
       align-items: stretch;
-      background: #fff;
+      background: transparent;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      border: 1px solid #eee;
+      box-shadow: none;
+      border: none;
       text-decoration: none; color: inherit;
-      transition: transform 0.22s, box-shadow 0.22s;
+      transition: transform 0.22s;
       width: calc(50% + 50px);
     }
-    .info-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.13); }
+    .info-card:hover { transform: translateY(-4px); }
     .info-card-img {
       flex-shrink: 0;
       width: 160px;
