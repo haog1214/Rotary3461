@@ -712,7 +712,7 @@
     .info-section { background: transparent; }
     .info-inner {
       display: flex;
-      gap: 15px;
+      gap: 10px;
       align-items: center;
       max-width: 1260px;
       margin: 0 auto;
@@ -747,7 +747,8 @@
       flex-direction: column;
       gap: 16px;
       align-items: center;
-      margin-left: -70px;  /* -100 + 30 */
+      margin-left: -70px;
+      transform: translateX(-30px);
     }
     .info-card {
       display: flex; flex-direction: row;
@@ -759,12 +760,12 @@
       border: none;
       text-decoration: none; color: inherit;
       transition: transform 0.22s;
-      width: calc(50% + 50px);
+      width: calc(72.45% + 72.45px);
     }
     .info-card:hover { transform: translateY(-4px); }
     .info-card-img {
       flex-shrink: 0;
-      width: 160px;
+      width: 80px;
       aspect-ratio: 4 / 3;
       object-fit: cover; display: block;
       background: #dde;
@@ -792,7 +793,7 @@
     /* 海報高度 = 396px × (297/210) ≈ 560px；Shorts寬 = 315px × 0.95 ≈ 299px */
     .info-shorts {
       flex-shrink: 0;
-      width: 299px;
+      width: 284px;
       display: flex;
       flex-direction: column;
       align-items: center;
