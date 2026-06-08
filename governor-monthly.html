@@ -799,10 +799,23 @@ const mobIntroSub  = document.getElementById('mobIntroSub');
 
 let pageFlip = null, totalPages = 0;
 
+/* ── Path-based routing helpers ── */
+function getPathParts() {
+  const m = location.pathname.match(/\/specialissue(?:\/([^/]+))?(?:\/([^/]+))?/);
+  return { yearKey: m ? m[1] || null : null, issueNo: m ? m[2] || null : null };
+}
+function pushYearPath(yearKey) {
+  history.pushState(null, '', '/specialissue/' + yearKey);
+}
+function pushIssuePath(yearKey, issueNo) {
+  history.pushState(null, '', '/specialissue/' + yearKey + '/' + issueNo);
+}
+
 /* ── Build year tabs ── */
 const yearKeys = Object.keys(DATA);
 const yearTabsEl = document.getElementById('yearTabs');
-let activeYear = yearKeys[0];
+const { yearKey: _initYear, issueNo: _initIssue } = getPathParts();
+let activeYear = (_initYear && DATA[_initYear]) ? _initYear : yearKeys[0];
 yearKeys.forEach(k => {
   const btn = document.createElement('button');
   btn.className = 'year-tab' + (k === activeYear ? ' active' : '');
@@ -811,6 +824,7 @@ yearKeys.forEach(k => {
     document.querySelectorAll('.year-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     activeYear = k;
+    pushYearPath(k);
     renderYear(k);
   });
   yearTabsEl.appendChild(btn);
@@ -894,6 +908,12 @@ function renderYear(key) {
     magGrid.appendChild(card);
   });
   document.querySelectorAll('.mag-card.reveal').forEach(el => ro.observe(el));
+
+  /* ── 載入時若 URL 含期數，自動開啟 ── */
+  if (key === activeYear && _initIssue) {
+    const idx = DATA[key].issues.findIndex(iss => iss.no.replace('NO.', '') === _initIssue);
+    if (idx !== -1) setTimeout(() => openFlipper(DATA[key].issues[idx], key, idx), 300);
+  }
 }
 
 /* ── Flipbook ── */
@@ -949,9 +969,10 @@ function toggleMobBottomClose() {
 }
 
 async function openFlipper(issue, yearKey, issueIdx) {
-  /* ── 更新網址 hash，讓每一期有獨立 URL ── */
-  if (yearKey !== undefined && issueIdx !== undefined) {
-    history.pushState(null, '', `#${yearKey}/${issueIdx}`);
+  /* ── 更新網址路徑，讓每一期有獨立 URL ── */
+  if (yearKey !== undefined && issue.no) {
+    const issueNo = issue.no.replace('NO.', '');
+    pushIssuePath(yearKey, issueNo);
   }
   if (pageFlip) { try { pageFlip.destroy(); } catch(_) {} pageFlip = null; }
   totalPages = 0;
@@ -1032,8 +1053,8 @@ function closeFlipper() {
   document.body.style.overflow = '';
   if (pageFlip) { try { pageFlip.destroy(); } catch(_) {} pageFlip = null; }
   bookWrap.innerHTML = '';
-  /* ── 關閉時清除 hash ── */
-  history.pushState(null, '', location.pathname + location.search);
+  /* ── 關閉時回到年度路徑 ── */
+  pushYearPath(activeYear);
 }
 fbClose.addEventListener('click', closeFlipper);
 fbCloseBottom.addEventListener('click', closeFlipper);
@@ -1090,7 +1111,7 @@ const MENU_DEFAULTS = [
     { label: 'Interact', url: 'interact.html', hi: true }, { label: '生命橋樑', url: '#' },
   ]},
   { title: '回顧庫', items: [
-    { label: '總監月刊',      url: 'governor-monthly.html?nocache=1', hi: true },
+    { label: '總監月刊',      url: '/specialissue', hi: true },
     { label: '公共形象新聞', url: 'news.html' },
     { label: 'RI 成果展示',  url: 'https://spc.rotary.org/project?guid=D334C2BF-6C44-44F2-BDDA-F2448D2796C2' },
     { label: '扶輪之子',      url: '#' },
@@ -1174,28 +1195,12 @@ mm.addEventListener('click', e => {
 /* ── Init ── */
 renderYear(activeYear);
 
-/* ── 讀取 URL hash，自動開啟對應期數 ── */
-(function initFromHash() {
-  const hash = location.hash.replace('#', '');   // e.g. "25-26/0"
-  if (!hash) return;
-  const parts = hash.split('/');
-  if (parts.length !== 2) return;
-  const [yearKey, idxStr] = parts;
-  const idx = parseInt(idxStr, 10);
-  const yearData = DATA[yearKey];
-  if (!yearData || isNaN(idx) || idx < 0 || idx >= yearData.issues.length) return;
-
-  // 切換到對應年度 tab
+/* ── 初始路徑若含年度，同步 tab 高亮 ── */
+if (_initYear && DATA[_initYear] && _initYear !== yearKeys[0]) {
   document.querySelectorAll('.year-tab').forEach((btn, i) => {
-    const k = yearKeys[i];
-    btn.classList.toggle('active', k === yearKey);
+    btn.classList.toggle('active', yearKeys[i] === _initYear);
   });
-  activeYear = yearKey;
-  renderYear(yearKey);
-
-  // 等 DOM 更新後開啟
-  setTimeout(() => openFlipper(yearData.issues[idx], yearKey, idx), 200);
-})();
+}
 
 /* 瀏覽器上/下一頁（popstate）同步 */
 window.addEventListener('popstate', () => {
