@@ -922,14 +922,27 @@ function showLoading(w, h, msg) {
     <div class="fb-loading"><div class="spinner"></div><div>${msg}</div></div></div>`;
   pagePill.textContent = '載入中…';
 }
-function showError(w, h) {
-  bookWrap.innerHTML = `<div style="width:${w}px;height:${h}px;display:flex;align-items:center;justify-content:center;">
-    <div class="fb-loading">
-      <div style="font-size:38px">⚠️</div>
-      <div>無法直接載入 PDF</div>
-      ${fbDriveLink.href !== '#' ? `<a href="${fbDriveLink.href}" target="_blank" style="margin-top:12px;background:var(--gold);color:var(--dark);padding:8px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;">在 Drive 開啟</a>` : ''}
-    </div></div>`;
-  pagePill.textContent = '載入失敗';
+function showError(w, h, driveId) {
+  if (driveId) {
+    /* Google Drive iframe 嵌入 */
+    const { w: fw, h: fh } = calcSize(595, 842);
+    const embedW = isMobile() ? fw : fw * 2;
+    bookWrap.innerHTML = `<iframe
+      src="https://drive.google.com/file/d/${driveId}/preview"
+      style="width:${embedW}px;height:${fh}px;border:none;background:#222;"
+      allow="autoplay"
+      allowfullscreen></iframe>`;
+    pagePill.textContent = 'Google Drive 預覽';
+    btnPrev.disabled = btnNext.disabled = true;
+  } else {
+    bookWrap.innerHTML = `<div style="width:${w}px;height:${h}px;display:flex;align-items:center;justify-content:center;">
+      <div class="fb-loading">
+        <div style="font-size:38px">⚠️</div>
+        <div>無法直接載入 PDF</div>
+        ${fbDriveLink.href !== '#' ? `<a href="${fbDriveLink.href}" target="_blank" style="margin-top:12px;background:var(--gold);color:var(--dark);padding:8px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;">在 Drive 開啟</a>` : ''}
+      </div></div>`;
+    pagePill.textContent = '載入失敗';
+  }
 }
 function isMobile() { return window.innerWidth <= 768; }
 
@@ -997,7 +1010,7 @@ async function openFlipper(issue, yearKey, issueIdx) {
   for (const url of urls) {
     try { pdf = await pdfjsLib.getDocument({ url, withCredentials: false }).promise; break; } catch(_) {}
   }
-  if (!pdf) { showError(520, 680); return; }
+  if (!pdf) { showError(520, 680, issue.id || null); return; }
 
   totalPages = pdf.numPages;
   const fp   = await pdf.getPage(1);
