@@ -2352,12 +2352,17 @@ async function syncToGitHub() {
   keys.forEach(k => {
     try { const v = localStorage.getItem(k); if (v) out[k] = JSON.parse(v); } catch(e) {}
   });
+  // 同步總監月刊年度資料
+  try {
+    const ms = localStorage.getItem('r3461_monthly');
+    if (ms) out['r3461_monthly'] = JSON.parse(ms);
+  } catch(e) {}
   // 海報用穩定網址
   if (!out['r3461_poster'] || !out['r3461_poster'].length) {
     out['r3461_poster'] = ['https://pshop.myqr.com.tw/images/RWD_M1_1_Image/1/16775.jpg?187'];
   }
 
-  const content = `/* data-defaults.js — 後台自動同步 ${new Date().toLocaleString('zh-TW')} */\n(function(){\n  var D=${JSON.stringify(out)};\n  Object.keys(D).forEach(function(k){if(!localStorage.getItem(k))localStorage.setItem(k,JSON.stringify(D[k]));});\n})();\n`;
+  const content = `/* data-defaults.js — 後台自動同步 ${new Date().toLocaleString('zh-TW')} */\n(function(){\n  var D=${JSON.stringify(out)};\n  var always=['r3461_monthly'];\n  Object.keys(D).forEach(function(k){if(always.indexOf(k)!==-1||!localStorage.getItem(k))localStorage.setItem(k,JSON.stringify(D[k]));});\n})();\n`;
   const encoded = btoa(unescape(encodeURIComponent(content)));
 
   try {
