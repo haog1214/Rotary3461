@@ -94,7 +94,7 @@
       (yr.issues || []).forEach(issue => {
         items.push({
           title: '總監月刊 ' + (issue.month || issue.no || ''),
-          url: '/specialissue',
+          url: 'governor-monthly.html',
           text: '總監月刊 ' + (issue.month || '') + ' ' + (issue.no || ''),
           tag: '總監月刊',
         });

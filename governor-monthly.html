@@ -1195,6 +1195,11 @@ mm.addEventListener('click', e => {
 /* ── Init ── */
 renderYear(activeYear);
 
+/* ── 頁面載入後立即將網址更新為 /specialissue/{年度} ── */
+if (!location.pathname.startsWith('/specialissue')) {
+  history.replaceState(null, '', '/specialissue/' + activeYear);
+}
+
 /* ── 初始路徑若含年度，同步 tab 高亮 ── */
 if (_initYear && DATA[_initYear] && _initYear !== yearKeys[0]) {
   document.querySelectorAll('.year-tab').forEach((btn, i) => {
