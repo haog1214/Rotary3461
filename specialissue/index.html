@@ -864,6 +864,10 @@ async function renderPdfCover(covEl, pdfPath) {
     covEl.appendChild(cv);
     covEl.classList.add('loaded');
   } catch(e) {
+    covEl.innerHTML = `<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#1a458b,#0d2a5e);color:#fff;gap:8px;">
+      <div style="font-size:13px;font-weight:700;letter-spacing:2px;opacity:.7;">ROTARY</div>
+      <div style="font-size:15px;font-weight:900;letter-spacing:1px;">總監月刊</div>
+    </div>`;
     covEl.classList.add('loaded');
   }
 }
