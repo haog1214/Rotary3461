@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script>
+    /* 攔截 /specialissue/* 的直接存取（重新整理、分享連結） */
+    var p = location.pathname;
+    if (p.startsWith('/specialissue')) {
+      sessionStorage.setItem('si_redirect', p);
+      location.replace('/specialissue/');
+    }
+  </script>
+</head>
+<body></body>
+</html>

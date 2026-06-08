@@ -800,6 +800,15 @@ const mobIntroSub  = document.getElementById('mobIntroSub');
 
 let pageFlip = null, totalPages = 0;
 
+/* ── 404 redirect 還原 ── */
+(function() {
+  var saved = sessionStorage.getItem('si_redirect');
+  if (saved) {
+    sessionStorage.removeItem('si_redirect');
+    history.replaceState(null, '', saved);
+  }
+})();
+
 /* ── Path-based routing helpers ── */
 function getPathParts() {
   const m = location.pathname.match(/\/specialissue(?:\/([^/]+))?(?:\/([^/]+))?/);
