@@ -1133,21 +1133,6 @@
             </div></div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">🪄 AI 魔術分析設定</div></div>
-          <div class="card-body">
-            <div class="info-box" style="margin-bottom:14px;">輸入 Anthropic Claude API Key，即可在新增消息／活動時使用「🪄 魔術幫」按鈕，上傳圖片自動辨識文字並填入欄位。<br>Key 僅儲存於本機瀏覽器，不會上傳至任何伺服器。</div>
-            <div class="form-row single"><div class="form-group">
-              <label>Claude API Key（sk-ant-…）</label>
-              <div style="display:flex;gap:8px;align-items:center;">
-                <input type="password" id="claude-api-key" placeholder="sk-ant-api03-…" style="flex:1;font-family:monospace;font-size:12px;" autocomplete="off">
-                <button class="btn btn-ghost btn-sm" onclick="toggleKeyVisibility()">👁</button>
-                <button class="btn btn-primary btn-sm" onclick="saveClaudeKey()">儲存 Key</button>
-              </div>
-              <div id="claude-key-status" style="font-size:12px;margin-top:4px;color:#9ca3af;"></div>
-            </div></div>
-          </div>
-        </div>
         <div class="save-bar"><button class="btn btn-success" onclick="saveSection('site')">💾 儲存網站設定</button></div>
       </div>
 
@@ -1277,10 +1262,6 @@
       <div class="modal-title" id="sponsorModalTitle">新增贊助單位</div>
       <button class="modal-close" onclick="closeModal('sponsorModal')">✕</button>
     </div>
-    <div id="magic-sponsor-status" style="display:none;padding:8px 20px;background:#faf5ff;border-bottom:1px solid #e9d5ff;font-size:13px;color:#7c3aed;align-items:center;gap:8px;">
-      <span style="width:14px;height:14px;border:2px solid #c4b5fd;border-top-color:#7c3aed;border-radius:50%;display:inline-block;animation:spin .8s linear infinite;"></span>
-      <span id="magic-sponsor-msg">魔術棒分析中…</span>
-    </div>
     <div class="modal-body">
       <input type="hidden" id="sponsor-edit-idx">
 
@@ -1292,10 +1273,6 @@
           <button class="btn btn-ghost btn-sm" onclick="document.getElementById('sponsor-file').click()" style="display:flex;align-items:center;gap:5px;">
             📁 選擇圖片
           </button>
-          <button class="btn btn-sm" style="background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;" onclick="document.getElementById('sponsor-magic-file').click()">
-            🪄 魔術棒
-          </button>
-          <input type="file" id="sponsor-magic-file" accept="image/*" style="display:none" onchange="magicSponsor(this)">
         </div>
         <!-- 圖片預覽（點擊放大） -->
         <div id="sponsor-preview-wrap" style="display:none;margin-top:10px;">
@@ -1770,7 +1747,6 @@ function openSponsorModal(idx = -1) {
   document.getElementById('sponsor-src').value   = s.src   || '';
   document.getElementById('sponsor-link').value  = s.link  || '';
   document.getElementById('sponsor-file-hint').style.display = 'none';
-  document.getElementById('magic-sponsor-status').style.display = 'none';
   updateSponsorPreview(s.src || '');
   openModal('sponsorModal');
 }
@@ -1819,79 +1795,6 @@ function handleSponsorFile(input) {
   hint.textContent = `請將「${file.name}」複製到 images/sponsor/ 資料夾`;
 }
 
-async function magicSponsor(input) {
-  if (!input.files[0]) return;
-  const file = input.files[0];
-  input.value = '';
-  const apiKey = localStorage.getItem('r3461_claude_key');
-  if (!apiKey) { toast('請先到「網站設定」底部設定 Claude API Key', 'error'); return; }
-
-  const statusEl = document.getElementById('magic-sponsor-status');
-  const msgEl    = document.getElementById('magic-sponsor-msg');
-  statusEl.style.display = 'flex';
-  msgEl.textContent = '魔術棒分析中…';
-
-  try {
-    const base64 = await new Promise((res, rej) => {
-      const reader = new FileReader();
-      reader.onload = e => res(e.target.result.split(',')[1]);
-      reader.onerror = rej;
-      reader.readAsDataURL(file);
-    });
-
-    // 同時顯示預覽
-    const src  = 'data:' + file.type + ';base64,' + base64;
-    const wrap = document.getElementById('sponsor-preview-wrap');
-    const img  = document.getElementById('sponsor-preview-img');
-    const zoom = document.getElementById('sponsor-zoom-img');
-    img.src = src;
-    if (zoom) zoom.src = src;
-    wrap.style.display = '';
-
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'content-type': 'application/json',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
-      body: JSON.stringify({
-        model: 'claude-opus-4-5',
-        max_tokens: 512,
-        messages: [{ role: 'user', content: [
-          { type: 'image', source: { type: 'base64', media_type: file.type, data: base64 } },
-          { type: 'text',  text: '請仔細辨識這張圖片中所有可見的文字，包含商標文字、品牌名稱、標語、標題等。以 JSON 格式回傳：{"title":"圖片中最主要的文字或品牌名稱（完整保留中英文，若有多行文字則以空格連接）"}。只回傳 JSON，不要說明。' },
-        ]}],
-      }),
-    });
-
-    if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error?.message || `HTTP ${res.status}`); }
-    const data  = await res.json();
-    const raw   = data.content?.[0]?.text || '';
-    const match = raw.match(/\{[\s\S]*\}/);
-    if (match) {
-      const json = JSON.parse(match[0]);
-      if (json.title) document.getElementById('sponsor-title').value = json.title;
-    }
-    // 設定建議路徑
-    const suggested = `images/sponsor/${file.name}`;
-    document.getElementById('sponsor-src').value = suggested;
-    const hint = document.getElementById('sponsor-file-hint');
-    hint.style.display = '';
-    hint.textContent = `請將「${file.name}」複製到 images/sponsor/ 資料夾`;
-
-    msgEl.textContent = '✅ 分析完成，請確認名稱後儲存';
-    msgEl.style.color = '#059669';
-    setTimeout(() => { statusEl.style.display = 'none'; msgEl.style.color = ''; }, 3000);
-    toast('🪄 魔術棒完成！');
-  } catch(e) {
-    msgEl.textContent = '❌ ' + e.message;
-    msgEl.style.color = '#ef4444';
-    setTimeout(() => { statusEl.style.display = 'none'; msgEl.style.color = ''; }, 4000);
-    toast('分析失敗：' + e.message, 'error');
-  }
-}
 function saveSponsorItem() {
   const idx  = parseInt(document.getElementById('sponsor-edit-idx').value);
   const item = {
@@ -2844,9 +2747,6 @@ function savePageEditorAll() {
   renderYearIssues();
 }
 
-/* ══════════════════════════════════════
-   🪄 魔術幫 — Claude AI 圖片分析
-══════════════════════════════════════ */
 function saveGitHubToken() {
   const input = document.getElementById('github-token-input');
   const token = (input.value || '').trim();
@@ -2867,132 +2767,6 @@ function loadGitHubTokenStatus() {
 }
 document.addEventListener('DOMContentLoaded', loadGitHubTokenStatus);
 
-function saveClaudeKey() {
-  const key = document.getElementById('claude-api-key').value.trim();
-  if (!key) { toast('請輸入 API Key', 'error'); return; }
-  localStorage.setItem('r3461_claude_key', key);
-  const st = document.getElementById('claude-key-status');
-  st.textContent = '✅ Key 已儲存（' + key.slice(0,12) + '…）';
-  st.style.color = '#059669';
-  toast('Claude API Key 已儲存');
-}
-function toggleKeyVisibility() {
-  const el = document.getElementById('claude-api-key');
-  el.type = el.type === 'password' ? 'text' : 'password';
-}
-// 頁面載入時顯示已存的 Key 狀態
-(function initClaudeKey() {
-  const k = localStorage.getItem('r3461_claude_key');
-  if (k) {
-    const st = document.getElementById('claude-key-status');
-    if (st) { st.textContent = '✅ 已設定（' + k.slice(0,12) + '…）'; st.style.color = '#059669'; }
-  }
-})();
-
-async function magicAnalyze(fileInput, modal) {
-  const file = fileInput.files[0];
-  if (!file) return;
-  fileInput.value = '';
-
-  const apiKey = localStorage.getItem('r3461_claude_key');
-  if (!apiKey) {
-    toast('請先到「網站設定」底部設定 Claude API Key', 'error'); return;
-  }
-
-  // 顯示 loading
-  const statusEl = document.getElementById('magic-' + modal + '-status');
-  const msgEl    = document.getElementById('magic-' + modal + '-msg');
-  statusEl.style.display = 'flex';
-  msgEl.textContent = 'AI 分析中，請稍候…';
-
-  try {
-    // 讀圖片為 base64
-    const base64 = await new Promise((res, rej) => {
-      const reader = new FileReader();
-      reader.onload = e => res(e.target.result.split(',')[1]);
-      reader.onerror = rej;
-      reader.readAsDataURL(file);
-    });
-    const mime = file.type || 'image/jpeg';
-
-    // 組 prompt
-    const fieldMap = {
-      news: {
-        date:        '日期（格式 2026.04.21）',
-        title:       '標題',
-        content:     '完整內文（保留換行）',
-        activityUrl: '活動連結網址（若有）',
-      },
-      activity: {
-        name:     '活動名稱',
-        location: '地點',
-        date:     '日期（YYYY-MM-DD，若無法確定留空）',
-        url:      '活動連結網址（若有）',
-      },
-    };
-    const prompt = `請仔細閱讀這張圖片中的所有文字，以 JSON 格式回傳下列欄位（無法辨識或圖片中沒有的欄位請填空字串）：
-${JSON.stringify(fieldMap[modal], null, 2)}
-
-只輸出 JSON，不要任何說明文字。`;
-
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'content-type': 'application/json',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
-      body: JSON.stringify({
-        model: 'claude-opus-4-5',
-        max_tokens: 2048,
-        messages: [{ role: 'user', content: [
-          { type: 'image', source: { type: 'base64', media_type: mime, data: base64 } },
-          { type: 'text',  text: prompt },
-        ]}],
-      }),
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error?.message || `HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-    const raw  = data.content?.[0]?.text || '';
-    const match = raw.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error('AI 未回傳有效 JSON');
-    const json = JSON.parse(match[0]);
-
-    // 填入欄位
-    if (modal === 'news') {
-      if (json.date)        document.getElementById('news-date').value = json.date;
-      if (json.title)       document.getElementById('news-title').value = json.title;
-      if (json.content)     document.getElementById('news-content').value = json.content;
-      if (json.activityUrl) document.getElementById('news-activityUrl').value = json.activityUrl;
-    } else if (modal === 'activity') {
-      if (json.name)     document.getElementById('activity-name').value = json.name;
-      if (json.location) document.getElementById('activity-location').value = json.location;
-      if (json.url)      document.getElementById('activity-url').value = json.url;
-      if (json.date) {
-        document.getElementById('activity-tbd').value = 'false';
-        toggleDateFields();
-        document.getElementById('activity-date').value = json.date;
-      }
-    }
-
-    msgEl.textContent = '✅ 分析完成，請確認欄位內容後儲存';
-    msgEl.style.color = '#059669';
-    setTimeout(() => { statusEl.style.display = 'none'; msgEl.style.color = ''; }, 4000);
-    toast('🪄 魔術分析完成！');
-
-  } catch(e) {
-    msgEl.textContent = '❌ ' + e.message;
-    msgEl.style.color = '#ef4444';
-    setTimeout(() => { statusEl.style.display = 'none'; msgEl.style.color = ''; }, 5000);
-    toast('分析失敗：' + e.message, 'error');
-  }
-}
 
 // NAV GROUP toggle
 function toggleNavGroup() {
