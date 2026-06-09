@@ -1170,11 +1170,28 @@
         <div class="form-group"><label>瀏覽次數</label><input type="number" id="news-views" placeholder="0"></div>
       </div>
       <div class="form-row single"><div class="form-group"><label>標題</label><input type="text" id="news-title" placeholder="消息標題"></div></div>
-      <div class="form-row single"><div class="form-group"><label>封面圖片網址</label><input type="text" id="news-image" placeholder="https://..."></div></div>
+      <div class="form-row single"><div class="form-group">
+        <label>封面圖片網址</label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="text" id="news-image" placeholder="https://..." style="flex:1">
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('news-cover-file').click()" style="white-space:nowrap;flex-shrink:0;">上傳圖片</button>
+          <input type="file" id="news-cover-file" accept="image/*" style="display:none" onchange="handleNewsCoverUpload(this)">
+        </div>
+        <div id="news-cover-status" style="display:none;font-size:12px;color:#f59e0b;margin-top:4px;"></div>
+        <div id="news-cover-preview-wrap" style="display:none;margin-top:6px;"><img id="news-cover-preview" style="max-height:80px;border-radius:6px;border:1px solid #e5e7eb;"></div>
+      </div></div>
       <div class="form-row single"><div class="form-group"><label>活動連結</label><input type="text" id="news-activityUrl" placeholder="https://..."></div></div>
       <div class="form-row single"><div class="form-group"><label>內容</label><textarea id="news-content" rows="6" placeholder="消息內容（支援換行）…"></textarea></div></div>
-      <div class="form-row single"><div class="form-group"><label>內文圖片 1</label><input type="text" id="news-img1" placeholder="https://..."></div></div>
-      <div class="form-row single"><div class="form-group"><label>內文圖片 2</label><input type="text" id="news-img2" placeholder="https://..."></div></div>
+      <div class="form-row single"><div class="form-group">
+        <label>內文圖片</label>
+        <div id="news-imgs-list"></div>
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('news-imgs-file').click()" style="margin-top:6px;display:flex;align-items:center;gap:5px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          一次上傳多張
+        </button>
+        <input type="file" id="news-imgs-file" accept="image/*" multiple style="display:none" onchange="handleNewsImgsUpload(this)">
+        <div id="news-imgs-status" style="display:none;font-size:12px;color:#f59e0b;margin-top:4px;"></div>
+      </div></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('newsModal')">取消</button>
@@ -1590,17 +1607,22 @@ function openNewsModal(idx = -1) {
   document.getElementById('news-image').value       = n.image       || '';
   document.getElementById('news-activityUrl').value = n.activityUrl || '';
   document.getElementById('news-content').value     = n.content     || '';
-  document.getElementById('news-img1').value        = (n.images && n.images[0]) || '';
-  document.getElementById('news-img2').value        = (n.images && n.images[1]) || '';
   document.getElementById('news-views').value       = n.views       || 0;
+  // 初始化封面預覽
+  const coverPrev = document.getElementById('news-cover-preview-wrap');
+  const coverImg  = document.getElementById('news-cover-preview');
+  if (n.image) { coverImg.src = n.image; coverPrev.style.display = ''; }
+  else { coverPrev.style.display = 'none'; }
+  document.getElementById('news-cover-status').style.display = 'none';
+  document.getElementById('news-imgs-status').style.display  = 'none';
+  // 初始化內文圖片列表
+  renderNewsImgsList(n.images || []);
   openModal('newsModal');
 }
 function saveNewsItem() {
   const idx  = parseInt(document.getElementById('news-edit-idx').value);
-  const imgs = [
-    document.getElementById('news-img1').value.trim(),
-    document.getElementById('news-img2').value.trim(),
-  ].filter(Boolean);
+  const imgs = Array.from(document.querySelectorAll('#news-imgs-list .news-img-url-input'))
+    .map(inp => inp.value.trim()).filter(Boolean);
   const item = {
     date:        document.getElementById('news-date').value.trim(),
     title:       document.getElementById('news-title').value.trim(),
@@ -2350,6 +2372,110 @@ function saveAll() {
 /* ══════════════════════════════════════
    GitHub 自動同步
 ══════════════════════════════════════ */
+// ── 圖片上傳至 GitHub ──
+async function uploadImageToGitHub(file) {
+  const token = localStorage.getItem('r3461_github_token') || '';
+  if (!token) throw new Error('尚未設定 GitHub Token，請到網站設定填入');
+  const REPO = 'haog1214/Rotary3461';
+  const AUTH = `token ${token}`;
+  const ext  = file.name.split('.').pop().toLowerCase() || 'jpg';
+  const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const fname = Date.now() + '_' + safe;
+  const path  = 'images/uploads/' + fname;
+  const api   = `https://api.github.com/repos/${REPO}/contents/${path}`;
+
+  const base64 = await new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload  = e => res(e.target.result.split(',')[1]);
+    reader.onerror = rej;
+    reader.readAsDataURL(file);
+  });
+
+  const putRes = await fetch(api, {
+    method: 'PUT',
+    headers: { Authorization: AUTH, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: 'upload: ' + fname, content: base64 }),
+  });
+  if (!putRes.ok) {
+    const err = await putRes.json().catch(() => ({}));
+    throw new Error(err.message || 'HTTP ' + putRes.status);
+  }
+  return `https://raw.githubusercontent.com/${REPO}/main/${path}`;
+}
+
+async function handleNewsCoverUpload(input) {
+  if (!input.files[0]) return;
+  const file   = input.files[0];
+  const status = document.getElementById('news-cover-status');
+  const preview= document.getElementById('news-cover-preview');
+  const wrap   = document.getElementById('news-cover-preview-wrap');
+  // 先顯示本地預覽
+  const localUrl = URL.createObjectURL(file);
+  preview.src = localUrl; wrap.style.display = '';
+  status.style.display = ''; status.style.color = '#f59e0b';
+  status.textContent = '上傳中…';
+  input.value = '';
+  try {
+    const url = await uploadImageToGitHub(file);
+    document.getElementById('news-image').value = url;
+    preview.src = url;
+    status.textContent = '✅ 上傳成功';
+    status.style.color = '#059669';
+    setTimeout(() => { status.style.display = 'none'; }, 3000);
+  } catch(e) {
+    status.textContent = '❌ 上傳失敗：' + e.message;
+    status.style.color = '#dc2626';
+  }
+}
+
+function renderNewsImgsList(urls) {
+  const list = document.getElementById('news-imgs-list');
+  list.innerHTML = '';
+  (urls.length ? urls : ['']).forEach((url, i) => addNewsImgRow(url));
+}
+
+function addNewsImgRow(url) {
+  const list = document.getElementById('news-imgs-list');
+  const row  = document.createElement('div');
+  row.style.cssText = 'display:flex;gap:6px;align-items:center;margin-bottom:6px;';
+  row.innerHTML = `
+    <input type="text" class="news-img-url-input" placeholder="https://..." value="${url||''}"
+      style="flex:1;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;">
+    <button class="btn btn-ghost btn-sm" onclick="this.parentElement.remove()" title="移除" style="flex-shrink:0;">✕</button>
+  `;
+  list.appendChild(row);
+}
+
+async function handleNewsImgsUpload(input) {
+  if (!input.files.length) return;
+  const files  = Array.from(input.files);
+  const status = document.getElementById('news-imgs-status');
+  status.style.display = ''; status.style.color = '#f59e0b';
+  status.textContent = `上傳中 0 / ${files.length}…`;
+  input.value = '';
+
+  // 清空空白列
+  const list = document.getElementById('news-imgs-list');
+  list.querySelectorAll('.news-img-url-input').forEach(inp => { if (!inp.value.trim()) inp.parentElement.remove(); });
+
+  let done = 0;
+  for (const file of files) {
+    try {
+      const url = await uploadImageToGitHub(file);
+      addNewsImgRow(url);
+      done++;
+      status.textContent = `上傳中 ${done} / ${files.length}…`;
+    } catch(e) {
+      status.style.color = '#dc2626';
+      status.textContent = `❌ 「${file.name}」上傳失敗：` + e.message;
+      return;
+    }
+  }
+  status.textContent = `✅ ${done} 張上傳成功`;
+  status.style.color = '#059669';
+  setTimeout(() => { status.style.display = 'none'; }, 3000);
+}
+
 async function syncToGitHub() {
   const token = localStorage.getItem('r3461_github_token') || '';
   if (!token) return; // 未設定 token 就略過
