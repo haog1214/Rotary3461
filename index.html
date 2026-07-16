@@ -1833,7 +1833,7 @@ mobileMenu.addEventListener('click', e => {
   }
 
   const latestIssue = _getLatestIssue();
-  const PDF_LOCAL  = latestIssue?.local || 'pdfs/總監月刊-電子檔/25-26年度/D3461-202605.pdf';
+  const PDF_LOCAL  = latestIssue?.local || '/pdfs/總監月刊-電子檔/25-26年度/D3461-202605.pdf';
   const PDF_REMOTE = 'https://cdnc.heyzine.com/flip-book/pdf/19d5287820b8692edd22d7671669400a68cd3621.pdf';
   const canvas = document.getElementById('hlCoverCanvas');
   const link   = document.getElementById('hlCoverLink');
@@ -2277,7 +2277,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNewsDet
    LATEST MONTHLY COVER (pdf.js)
 ══════════════════════════════════════ */
 (async () => {
-  const LATEST_PDF   = 'pdfs/總監月刊-電子檔/25-26年度/D3461-202606.pdf';
+  const LATEST_PDF   = '/pdfs/總監月刊-電子檔/25-26年度/D3461-202606.pdf';
   const canvas   = document.getElementById('magLatestCanvas');
   const shimmer  = document.getElementById('magLatestShimmer');
   if (!canvas) return;
