@@ -1825,19 +1825,25 @@ mobileMenu.addEventListener('click', e => {
       for (const k of keys) {
         const issues = (monthly[k].issues || []).slice().reverse();
         for (const issue of issues) {
-          if (issue.local || issue.id) return issue;
+          if (issue.local || issue.id) return { yearKey: k, issue };
         }
       }
     } catch(e) {}
     return null;
   }
 
-  const latestIssue = _getLatestIssue();
+  const latestFound = _getLatestIssue();
+  const latestIssue = latestFound?.issue;
   const PDF_LOCAL  = latestIssue?.local || '/pdfs/總監月刊-電子檔/25-26年度/D3461-202605.pdf';
   const PDF_REMOTE = 'https://cdnc.heyzine.com/flip-book/pdf/19d5287820b8692edd22d7671669400a68cd3621.pdf';
   const canvas = document.getElementById('hlCoverCanvas');
   const link   = document.getElementById('hlCoverLink');
   if (!canvas) return;
+
+  // 點擊封面直接開啟該期翻頁閱讀器
+  if (latestFound) {
+    link.href = `/specialissue/${latestFound.yearKey}/${latestFound.issue.no.replace('NO.', '')}`;
+  }
 
   // 動態載入 pdf.js
   await new Promise((res, rej) => {
